@@ -20,7 +20,8 @@ import axios from 'axios';
   }, []);
     return (
         <div  className={css({
-           position: "relative"
+           position: "relative",
+           width: "100%"
             
           })}>
             <table>

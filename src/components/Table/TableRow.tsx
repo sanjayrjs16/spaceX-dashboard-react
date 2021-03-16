@@ -31,7 +31,7 @@ const TableRow: React.FC<TableItems> = ({details}) => {
         <>
         
         {details.length>0?
-                details.map((item) => {
+                details.map((item, index) => {
                     return (
                         <tr key={item.flight_number}  className={css({
                             color: "grey",
@@ -40,7 +40,7 @@ const TableRow: React.FC<TableItems> = ({details}) => {
                             margin: "3rem",
                             width: "100%",
                             
-                          })} onClick={() => {ToggleRowClick(item.flight_number);console.log(showCard)}}>
+                          })} onClick={() => {ToggleRowClick(index);console.log(showCard)}}>
                             <td >{item.flight_number}</td>
                             <td>{item.launch_date_utc}</td>
                             <td>{item.launch_site.site_name}</td>
@@ -51,7 +51,7 @@ const TableRow: React.FC<TableItems> = ({details}) => {
                         </tr>);
                 })
             : <StyledSpinnerNext />}
-            {showCard.show?<Card cardDetails={details[0]}/>:null}
+            {showCard.show?<Card cardDetails={details[showCard.rowIdentifier]} ToggleRowClick={ToggleRowClick} />:null}
         </>
     )
 }

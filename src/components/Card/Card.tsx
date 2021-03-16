@@ -10,15 +10,16 @@ interface CardItems  {
         rocket: any,
         launch_success: boolean
         rocket_name: any,
-    }
+    },
+    ToggleRowClick: any
 };
 
-const Card: React.FC<CardItems> = ({cardDetails}) => {
+const Card: React.FC<CardItems> = ({cardDetails, ToggleRowClick}) => {
     const [css] = useStyletron();
     return (
         <>
-         {console.log("We're in table rows",cardDetails)}
-        <div className={css({
+         {/* {console.log("We're in table rows",cardDetails)} */}
+        <aside className={css({
            
             position: "absolute",
             top: "0",
@@ -26,11 +27,12 @@ const Card: React.FC<CardItems> = ({cardDetails}) => {
             background: "white",
             padding: "2rem",
             margin: "3rem",
-            width: "100%"
+            width: "80%"
           })}> 
          
             <button>{cardDetails.flight_number}</button>
-        </div>
+            <button onClick={ToggleRowClick}>X</button>
+        </aside>
         </>
     )
 }
