@@ -1,4 +1,9 @@
-import React from 'react'
+import React, {useState} from 'react'
+
+import Card from '../Card/Card'; 
+
+import { useStyletron } from "styletron-react";
+import {StyledSpinnerNext} from 'baseui/spinner';
 
 interface TableItems  {
     details: {
@@ -11,13 +16,31 @@ interface TableItems  {
         rocket_name: any,
     }[]
 }
-const TableRow: React.FC<TableItems> = (props) => {
+
+const TableRow: React.FC<TableItems> = ({details}) => {
+    const [showCard, setShowCard] = useState({show: false, rowIdentifier: 0})
+    const [css] = useStyletron();
+    const ToggleRowClick = (rowIdentifier: number) => {
+       
+            setShowCard((prevShowCard) => {
+                return {rowIdentifier, show: !prevShowCard.show }
+            })
+        
+    }
     return (
         <>
-        {props.details!=null?
-                props.details.map((item) => {
+        
+        {details.length>0?
+                details.map((item) => {
                     return (
-                        <tr key={item.flight_number}>
+                        <tr key={item.flight_number}  className={css({
+                            color: "grey",
+                            background: "white",
+                            padding: "8rem",
+                            margin: "3rem",
+                            width: "100%",
+                            
+                          })} onClick={() => {ToggleRowClick(item.flight_number);console.log(showCard)}}>
                             <td >{item.flight_number}</td>
                             <td>{item.launch_date_utc}</td>
                             <td>{item.launch_site.site_name}</td>
@@ -27,8 +50,8 @@ const TableRow: React.FC<TableItems> = (props) => {
                             <td>{item.rocket.rocket_name}</td>
                         </tr>);
                 })
-            :"Loading"}
-            
+            : <StyledSpinnerNext />}
+            {showCard.show?<Card cardDetails={details[0]}/>:null}
         </>
     )
 }
