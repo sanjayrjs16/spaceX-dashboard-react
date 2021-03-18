@@ -39,6 +39,9 @@ const TableRow: React.FC<TableItems> = ({details}) => {
                             padding: "8rem",
                             margin: "3rem",
                             width: "100%",
+                            ":hover": {
+                                border: "20px dashed black"
+                              }
                             
                           })} onClick={() => {ToggleRowClick(index);console.log(showCard)}}>
                             <td >{item.flight_number}</td>
