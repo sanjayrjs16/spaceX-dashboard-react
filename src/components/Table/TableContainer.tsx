@@ -6,18 +6,21 @@ import { useStyletron } from "styletron-react";
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 
-
+import useApiCall from '../../hooks/useApiCall';
 
  const  TableContainer: React.FC = () => {
-    let [items, setItems]: any[] = useState([]);
-    const [css] = useStyletron();
-  useEffect(() => {
-    axios.get('https://api.spacexdata.com/v3/launches?limit=12&sort=launch_year&order=desc')
-    .then((res) => {
-      setItems(res.data);
-      console.log(res.data);
-    })
-  }, []);
+   const [css] = useStyletron();
+  //   let [items, setItems]: any[] = useState([]);
+  //   let boom = useApiCall("boom");
+ 
+  // useEffect(() => {
+  //   axios.get('https://api.spacexdata.com/v3/launches?limit=12&sort=launch_year&order=desc')
+  //   .then((res) => {
+  //     setItems(res.data);
+  //     console.log(res.data);
+  //   })
+  // }, []);
+  let items = useApiCall("boom");
     return (
         <div  className={css({
            position: "relative",
@@ -43,6 +46,7 @@ import axios from 'axios';
             {/* <Table columns={["No.", "Launched (UTC)", "Location", "Mission", "Orbit", "Launch Status", "Rocket"]} data={items.map((item: any) => {
                 return [item.flight_number, item.launch_date_utc, item.launch_site.site_name, item.mission_name, item.rocket.second_stage.payloads[0].orbit, String(item.launch_success), item.rocket.rocket_name ] 
             })} /> */}
+          
         </div>
     )
 }

@@ -20,7 +20,6 @@ const Card: React.FC<CardItems> = ({cardDetails, ToggleRowClick}) => {
         <>
          {/* {console.log("We're in table rows",cardDetails)} */}
         <aside className={css({
-           
             position: "absolute",
             top: "0",
             color: "grey",
