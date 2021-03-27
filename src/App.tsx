@@ -5,7 +5,7 @@ import Navbar from './components/Header/Navbar';
 
 import {Client as Styletron} from 'styletron-engine-atomic';
 import {Provider as StyletronProvider} from 'styletron-react';
-import {LightTheme, BaseProvider, styled} from 'baseui';
+import {LightTheme, BaseProvider, styled, DarkTheme} from 'baseui';
 
 
 const engine = new Styletron();
@@ -20,7 +20,7 @@ const Centered = styled('div', {
 export default function App () {
   return (
     <StyletronProvider value={engine}>
-      <BaseProvider theme={LightTheme}>
+      <BaseProvider theme={DarkTheme}>
         <Centered>
         <div className="App">
             {/* {items.map((item) => {
