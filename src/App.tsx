@@ -15,6 +15,7 @@ const Centered = styled('div', {
   justifyContent: 'center',
   alignItems: 'center',
   height: '100%',
+  width: '100%',
 });
 
 export default function App () {
@@ -22,7 +23,7 @@ export default function App () {
     <StyletronProvider value={engine}>
       <BaseProvider theme={DarkTheme}>
         <Centered>
-        <div className="App">
+          <div className="App">
             {/* {items.map((item) => {
                 return <div>{item.name}</div>
             })} */}

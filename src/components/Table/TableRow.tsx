@@ -36,11 +36,12 @@ const TableRow: React.FC<TableItems> = ({details}) => {
                         <tr key={item.flight_number}  className={css({
                             color: "grey",
                             background: "white",
-                            padding: "8rem",
+                            padding: "2rem",
                             margin: "3rem",
                             width: "100%",
                             ":hover": {
-                                border: "20px dashed black"
+                               
+                                color: "red"
                               }
                             
                           })} onClick={() => {ToggleRowClick(index);console.log(showCard)}}>

@@ -1,7 +1,7 @@
 import React from 'react'
 import TableRow from './TableRow';
 
-import { useStyletron } from "styletron-react";
+import { useStyletron, styled } from "styletron-react";
 
 import {useState, useEffect} from 'react';
 import axios from 'axios';
@@ -19,36 +19,40 @@ import useApiCall from '../../hooks/useApiCall';
   //     setItems(res.data);
   //     console.log(res.data);
   //   })
+  const Thead = styled("thead", () => ({
+        background: "grey",
+        padding: "3rem",
+        margin: "2rem",
+        border: "2rem solid black"
+  }) );
   // }, []);
   let items = useApiCall('https://api.spacexdata.com/','v3/launches', '?limit=12&sort=launch_year&order=desc');
-
     return (
-        <div  className={css({
+            <table className={css({
            position: "relative",
-           width: "100%"
+           width: "100%",
+           tbody: {
+             background: "red"
+           }
             
           })}>
-            <table>
-                <thead>
+                <Thead>
                   <tr>
-                        <td>No.</td>
-                        <td>Launched (UTC)</td>
-                        <td>Location</td>
-                        <td>Mission</td>
-                        <td>Orbit</td>  
-                        <td>Launch Status</td>
-                        <td>Rocket</td>
+                    <td>No.</td>
+                    <td>Launched (UTC)</td>
+                    <td>Location</td>
+                    <td>Mission</td>
+                    <td>Orbit</td>  
+                    <td>Launch Status</td>
+                    <td>Rocket</td>
                   </tr>
-                </thead>
+                </Thead>
                 <tbody>
                     <TableRow details={items} />
                 </tbody>
             </table>
-            {/* <Table columns={["No.", "Launched (UTC)", "Location", "Mission", "Orbit", "Launch Status", "Rocket"]} data={items.map((item: any) => {
-                return [item.flight_number, item.launch_date_utc, item.launch_site.site_name, item.mission_name, item.rocket.second_stage.payloads[0].orbit, String(item.launch_success), item.rocket.rocket_name ] 
-            })} /> */}
           
-        </div>
+
     )
 }
 
