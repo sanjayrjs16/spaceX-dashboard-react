@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 
-import Card from '../Card/Card'; 
+import InfoCard from '../Card/InfoCard'; 
 
 import { useStyletron,  styled  } from "styletron-react";
 import {StyledSpinnerNext} from 'baseui/spinner';
@@ -65,7 +65,7 @@ const TableRow: React.FC<TableItems> = ({details}) => {
                         </tr>);
                 })
             : <tr><td><StyledSpinnerNext /></td></tr>}
-            {showCard.show?<Card cardDetails={details[showCard.rowIdentifier]} ToggleRowClick={ToggleRowClick} />:null}
+            {showCard.show?<InfoCard cardDetails={details[showCard.rowIdentifier]} ToggleRowClick={ToggleRowClick} />:null}
         </>
     )
 }

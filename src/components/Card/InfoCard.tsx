@@ -1,9 +1,19 @@
 import React from 'react'
-import { useStyletron } from "styletron-react";
 
+import { useStyletron } from "styletron-react";
 import useApiCall from '../../hooks/useApiCall';
 
+import SpaceXLogo from '../../resources/SpaceX-Logo.png';
 
+import {
+    Card,
+    StyledBody,
+    StyledAction,
+    StyledThumbnail,
+  } from "baseui/card";
+  import { Button } from "baseui/button";
+  import { Tag, KIND } from "baseui/tag";
+  
 interface CardItems  {
     cardDetails: {
         flight_number: any,
@@ -20,7 +30,7 @@ interface CardItems  {
     ToggleRowClick: any
 };
 
-const Card: React.FC<CardItems> = ({cardDetails, ToggleRowClick}) => {
+const InfoCard: React.FC<CardItems> = ({cardDetails, ToggleRowClick}) => {
     const [css] = useStyletron();
     let items = useApiCall('https://api.spacexdata.com/','v3/missions/', `${cardDetails.mission_id}`);
     let today = new Date();
@@ -28,7 +38,25 @@ const Card: React.FC<CardItems> = ({cardDetails, ToggleRowClick}) => {
         <>
             <tr>
                 <td>
-                    <aside className={css({
+                <Card overrides={{Root: {style: {position: "absolute", top: "0",width: '80%', margin: "5%"}}}}  title={cardDetails.mission_name}>
+                    <StyledThumbnail src={cardDetails.links.mission_patch_small!=null?cardDetails.links.mission_patch_small:SpaceXLogo} />
+                    <StyledBody>
+                        {cardDetails.rocket.rocket_name}{today<cardDetails.launch_date_utc?<Tag closeable={false} kind={KIND.orange}>Upcoming</Tag>:(cardDetails.launch_success?<Tag closeable={false} kind={KIND.positive}>Success</Tag>:<Tag closeable={false} kind={KIND.negative}>Failed</Tag>)}
+                        <br />
+                        {items.description!=null?items.description:"No data available"}
+                    </StyledBody>
+                    <StyledAction>
+                        <Button
+                        overrides={{
+                            BaseButton: { style: { background: "black", color:"white", width: "2%", padding:"0.1rem", position: "absolute", top: 0, right: 0, margin: "0.5rem" , ":hover": { color: "black"}} }
+                        }}
+                        
+                       onClick={ToggleRowClick}>
+                       X   
+                        </Button>
+                    </StyledAction>
+                </Card>
+                    {/* <aside className={css({
                                         position: "absolute",
                                         top: "0",
                                         color: "grey",
@@ -56,11 +84,11 @@ const Card: React.FC<CardItems> = ({cardDetails, ToggleRowClick}) => {
                        <div>{cardDetails.rocket_name}</div>
                      
                        
-                    </aside>
+                    </aside> */}
                </td>
             </tr>
         </>
     )
 }
 
-export default Card;
+export default InfoCard;
