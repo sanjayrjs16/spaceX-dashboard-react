@@ -7,7 +7,7 @@ export default function useApiCall(baseUrl: string, resource: string, query: str
         axios.get(baseUrl+resource+query)
         .then((res) => {
           setItems(res.data);
-          console.log(res.data);
+          console.log("Inside useApiCall hook, got the data as ", res.data);
         })
       }, []);
     return items;

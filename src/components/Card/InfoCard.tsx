@@ -4,6 +4,10 @@ import { useStyletron } from "styletron-react";
 import useApiCall from '../../hooks/useApiCall';
 
 import SpaceXLogo from '../../resources/SpaceX-Logo.png';
+import WikiLogo from '../../resources/Wikipedia-W-logo.svg';
+import YTLogo from '../../resources/YouTube_logo.svg';
+import WebsiteLogo from '../../resources/SpaceX-logo-mini.png';
+import TwitterLogo from '../../resources/Twitter-logo.png';
 
 import {
     Card,
@@ -32,27 +36,64 @@ interface CardItems  {
 
 const InfoCard: React.FC<CardItems> = ({cardDetails, ToggleRowClick}) => {
     const [css] = useStyletron();
-    let items = useApiCall('https://api.spacexdata.com/','v3/missions/', `${cardDetails.mission_id}`);
+    let items = useApiCall('https://api.spacexdata.com/','v3/missions', `/${cardDetails.mission_id}`);
+    console.log("The mission details in Info Card", items);
     let today = new Date();
     return (
         <>
             <tr>
                 <td>
-                <Card overrides={{Root: {style: {position: "absolute", top: "0",width: '80%', margin: "5%"}}}}  title={cardDetails.mission_name}>
+                <Card overrides={{Root: {style: {position: "absolute",  top: 0, left: 0, right: 0, width: '60%', margin: "auto", padding: "2rem"}}}}  title={cardDetails.mission_name}>
                     <StyledThumbnail src={cardDetails.links.mission_patch_small!=null?cardDetails.links.mission_patch_small:SpaceXLogo} />
                     <StyledBody>
-                        {cardDetails.rocket.rocket_name}{today<cardDetails.launch_date_utc?<Tag closeable={false} kind={KIND.orange}>Upcoming</Tag>:(cardDetails.launch_success?<Tag closeable={false} kind={KIND.positive}>Success</Tag>:<Tag closeable={false} kind={KIND.negative}>Failed</Tag>)}
+                        <p>{cardDetails.rocket.rocket_name}</p>{today<cardDetails.launch_date_utc?<Tag closeable={false} kind={KIND.orange}>Upcoming</Tag>:(cardDetails.launch_success?<Tag closeable={false} kind={KIND.positive}>Success</Tag>:<Tag closeable={false} kind={KIND.negative}>Failed</Tag>)}
                         <br />
-                        {items.description!=null?items.description:"No data available"}
+                        <span>
+                        {cardDetails.links.article_link!=null?<a href={cardDetails.links.article_link} target="_blank" rel="noreferrer">
+                                <img className={css({ width: "5%", margin: "0rem 0.05rem 0px 0.4rem"
+                                            })} src={WebsiteLogo} alt="Website logo" />
+                            </a>:""}  
+                            {cardDetails.links.wikipedia!=null?<a href={cardDetails.links.wikipedia} target="_blank" rel="noreferrer">
+                                <img className={css({ width: "2.7%", margin: "0rem 0.4rem 0px 0.4rem"
+                                            })} src={WikiLogo} alt="Wikipedia logo" />
+                            </a>:""} 
+                            {cardDetails.links.video_link!=null?<a href={cardDetails.links.video_link} target="_blank" rel="noreferrer">
+                                <img className={css({ width: "2.7%",  margin: "0rem 0.4rem 0px 0.4rem"
+                                            })} src={YTLogo} alt="Youtube logo" />
+                            </a>:""} 
+                            {items.twitter!=null?<a href={items.twitter} target="_blank" rel="noreferrer">
+                                <img className={css({ width: "2.7%", margin: "0rem 0.4rem 0px 0.4rem"
+                                            })} src={TwitterLogo} alt="Twitter Logo" />
+                            </a>:""} 
+                        </span>
+                        {items.description!=null?
+                        <p className={css({
+                            "text-align": "justify",
+                            "text-justify": "inter-word",
+                            padding: "2rem"})}>{cardDetails.links.wikipedia!=null?<span>{items.description.slice(0, 700)}<a href={cardDetails.links.wikipedia} target="_blank" rel="noreferrer">...Read more</a></span>:items.description}</p>:<p>No description available for mission :(</p>}
+                        <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Flight Number</Tag> {cardDetails.flight_number}</div>
+                        <hr />
+                        <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Mission Name</Tag> {items.mission_name}</div>
+                        <hr />
+                        <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Launch date</Tag> {cardDetails.launch_date_utc}</div>
+                        <hr />
+                        <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Rocket Name</Tag> {cardDetails.rocket.rocket_name}</div>
+                        <hr />
+                        <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Manufacturer</Tag> {cardDetails.launch_date_utc}</div>
+                        <hr />
+                        <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Launch site</Tag> {cardDetails.launch_site.site_name}</div>
+                        <hr />
+                        <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Orbit</Tag> {cardDetails.rocket.second_stage.payloads[0].orbit}</div>
+                        <hr />
                     </StyledBody>
                     <StyledAction>
                         <Button
                         overrides={{
-                            BaseButton: { style: { background: "black", color:"white", width: "2%", padding:"0.1rem", position: "absolute", top: 0, right: 0, margin: "0.5rem" , ":hover": { color: "black"}} }
+                            BaseButton: { style: { borderRadius: "100%", border: "0.15rem solid white", background: "black", color:"white", width: "3%", padding:"0rem", position: "absolute", top: 0, right: 0, margin: "0.75rem" , ":hover": { color: "black", background: "white", transform: "scale(1.1, 1.1)"}} }
                         }}
                         
                        onClick={ToggleRowClick}>
-                       X   
+                     X 
                         </Button>
                     </StyledAction>
                 </Card>

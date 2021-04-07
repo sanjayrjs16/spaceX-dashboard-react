@@ -19,7 +19,7 @@ import useApiCall from '../../hooks/useApiCall';
   }) );
 
   let items = useApiCall('https://api.spacexdata.com/','v3/launches', '?limit=12&offset=12&sort=launch_year&order=desc');
-  
+
     return (
             <table className={css({
            position: "relative",
@@ -29,7 +29,7 @@ import useApiCall from '../../hooks/useApiCall';
             
           })}>
                 <Thead>
-                
+                  <tr>
                     <td>No.</td>
                     <td>Launched (UTC)</td>
                     <td>Location</td>
@@ -37,7 +37,7 @@ import useApiCall from '../../hooks/useApiCall';
                     <td>Orbit</td>  
                     <td>Launch Status</td>
                     <td>Rocket</td>
-                 
+                  </tr>
                 </Thead>
                 <tbody>
                     <TableRow details={items} />
