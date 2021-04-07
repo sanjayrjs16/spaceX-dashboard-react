@@ -44,7 +44,7 @@ const InfoCard: React.FC<CardItems> = ({cardDetails, ToggleRowClick}) => {
             <tr>
                 <td>
                 <Card overrides={{Root: {style: {position: "absolute",  top: 0, left: 0, right: 0, width: '60%', margin: "auto", padding: "2rem"}}}}  title={cardDetails.mission_name}>
-                    <StyledThumbnail src={cardDetails.links.mission_patch_small!=null?cardDetails.links.mission_patch_small:SpaceXLogo} />
+                    <StyledThumbnail src={cardDetails.links.mission_patch_small!=null?cardDetails.links.mission_patch_small:WebsiteLogo} />
                     <StyledBody>
                         <p>{cardDetails.rocket.rocket_name}</p>{today<cardDetails.launch_date_utc?<Tag closeable={false} kind={KIND.orange}>Upcoming</Tag>:(cardDetails.launch_success?<Tag closeable={false} kind={KIND.positive}>Success</Tag>:<Tag closeable={false} kind={KIND.negative}>Failed</Tag>)}
                         <br />
