@@ -10,34 +10,26 @@ import useApiCall from '../../hooks/useApiCall';
 
  const  TableContainer: React.FC = () => {
    const [css] = useStyletron();
-  //   let [items, setItems]: any[] = useState([]);
-  //   let boom = useApiCall("boom");
- 
-  // useEffect(() => {
-  //   axios.get('https://api.spacexdata.com/v3/launches?limit=12&sort=launch_year&order=desc')
-  //   .then((res) => {
-  //     setItems(res.data);
-  //     console.log(res.data);
-  //   })
+
   const Thead = styled("thead", () => ({
         background: "grey",
-        padding: "3rem",
+        padding: "2rem",
         margin: "2rem",
         border: "2rem solid black"
   }) );
-  // }, []);
-  let items = useApiCall('https://api.spacexdata.com/','v3/launches', '?limit=12&sort=launch_year&order=desc');
+
+  let items = useApiCall('https://api.spacexdata.com/','v3/launches', '?limit=12&offset=12&sort=launch_year&order=desc');
+  
     return (
             <table className={css({
            position: "relative",
            width: "100%",
-           tbody: {
-             background: "red"
-           }
+          border: "0rem solid",
+          
             
           })}>
                 <Thead>
-                  <tr>
+                
                     <td>No.</td>
                     <td>Launched (UTC)</td>
                     <td>Location</td>
@@ -45,7 +37,7 @@ import useApiCall from '../../hooks/useApiCall';
                     <td>Orbit</td>  
                     <td>Launch Status</td>
                     <td>Rocket</td>
-                  </tr>
+                 
                 </Thead>
                 <tbody>
                     <TableRow details={items} />

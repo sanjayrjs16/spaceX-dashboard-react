@@ -7,14 +7,16 @@ export default function Navbar() {
     return (
      <nav className={css({
          width: '100%',
+         margin: "auto"
 
      })}>
          <img className={css({
-             alignItems: "center",
+            margin: "auto",
          width: '70%',
          height: '5rem'
          
      })} src={SpaceXLogo} alt="SpaceX-Logo"/>
+     <h1>Dashboard</h1>
          <hr />
      </nav>
     )
