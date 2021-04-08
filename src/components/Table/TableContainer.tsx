@@ -24,7 +24,7 @@ import useApiCall from '../../hooks/useApiCall';
             <table className={css({
            position: "relative",
            width: "100%",
-          border: "0rem solid",
+         
           
             
           })}>

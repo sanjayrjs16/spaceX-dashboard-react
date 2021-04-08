@@ -64,7 +64,7 @@ const TableRow: React.FC<TableItems> = ({details}) => {
                             <Td>{item.rocket.rocket_name}</Td>
                         </tr>);
                 })
-            : <tr><td><StyledSpinnerNext /></td></tr>}
+            : <tr><td><StyledSpinnerNext />Please wait...</td></tr>}
             {showCard.show?<InfoCard cardDetails={details[showCard.rowIdentifier]} ToggleRowClick={ToggleRowClick} />:null}
         </>
     )
