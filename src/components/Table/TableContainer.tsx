@@ -9,10 +9,11 @@ import axios from 'axios';
 
 import useApiCall from '../../hooks/useApiCall';
 
+
  const  TableContainer: React.FC = () => {
    const [css] = useStyletron();
    const [tableItems, setTableItems] = useState([])
-   let {docs, totalPages, page, hasPrevPage, hasNextPage} = useApiCall('https://api.spacexdata.com/v4','/launches/query', '');
+   let { status, data, error, isFetching, isPreviousData, items } = useApiCall('https://api.spacexdata.com/v4','/launches/query', '', 'launches', 1);
   
 
    const Thead = styled("thead", () => ({
@@ -26,29 +27,41 @@ import useApiCall from '../../hooks/useApiCall';
   }) );
 
   
-  console.log("Inside Container component", totalPages, page, hasNextPage, hasPrevPage);
+  //console.log("Inside Container component", totalPages, page, hasNextPage, hasPrevPage);
     return (
-            <table className={css({
-              position: "relative",
-              width: "100%",
-            })}>
-            <Thead>
-              <tr> 
-                <th>No.</th>
-                <th>Launched (UTC)</th>
-                <th>Location</th>
-                <th>Mission</th>
-                <th>Launch Status</th>
-                <th>Rocket</th>
-              </tr>
-            </Thead>
+    <>
+        <table className={css({
+                              position: "relative",
+                              width: "100%",
+                             })}>
+                <Thead>
+                  <tr> 
+                    <th>No.</th>
+                    <th>Launched (UTC)</th>
+                    <th>Location</th>
+                    <th>Mission</th>
+                    <th>Launch Status</th>
+                    <th>Rocket</th>
+                  </tr>
+                </Thead>
             <tbody>
-             
-             {docs!=undefined?<TableRow items={docs} />:<tr><td><StyledSpinnerNext />Please wait...</td></tr>}
+                  {status === 'loading' ? (
+                    <tr><td><StyledSpinnerNext />Please wait...</td></tr>
+                  ) : status === 'error' ? (
+                    <tr><td>An Error occured</td></tr>
+                  ) : (
+                  
+                    <TableRow items={data.docs} />
+                  )}
+             {/* {data!=undefined?<TableRow items={data} />:<tr><td><StyledSpinnerNext />Please wait...</td></tr>} */}
             </tbody>
-            </table>
-          
-
+      </table>
+       {status==='success'?
+        [...Array(data.totalPages)].map((item, index) => {
+         return <button>{index + 1}</button>
+        })
+       :""}   
+    </>
     )
 }
 

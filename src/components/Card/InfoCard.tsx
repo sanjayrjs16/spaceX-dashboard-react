@@ -35,7 +35,7 @@ interface CardItems  {
 
 const InfoCard: React.FC<CardItems> = ({cardDetails, ToggleRowClick}) => {
     const [css] = useStyletron();
-    let items = useApiCall('https://api.spacexdata.com/','v3/missions', `/${cardDetails.mission_id}`);
+    let {items} = useApiCall('https://api.spacexdata.com/','v3/missions', `/${cardDetails.mission_id}`, 'missions', 1);
     console.log("The mission details in Info Card", items);
     let today = new Date();
     return (

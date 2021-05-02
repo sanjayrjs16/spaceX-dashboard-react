@@ -36,21 +36,7 @@ const TableRow: React.FC<TableItems> = ({items}) => {
             })
         
     }
-    const callApi = async (resource: any) => {
-        axios({url: `https://api.spacexdata.com/v4`+resource, 
-            method: "get",
-            data: {
-              "query": {},
-              "options": {}
-            }
-          })
-          .then((res) => {
-            setLaunchPads(res.data);
-            console.log("Inside callApi, got the data as ", res.data);
-          })
-        return await launchPad;
-        }
-       
+  
 
     
     const Td = styled("td", () => ({
@@ -63,7 +49,7 @@ const TableRow: React.FC<TableItems> = ({items}) => {
  
     return (
         <>
-        
+        {console.log("Inside TableRow, got items as", items)}
         {items.length>0?
                 items.map((item, index) => {
                     return (
