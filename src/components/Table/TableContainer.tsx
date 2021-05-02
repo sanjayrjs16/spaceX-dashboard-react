@@ -2,6 +2,7 @@ import React from 'react'
 import TableRow from './TableRow';
 
 import { useStyletron, styled } from "styletron-react";
+import {StyledSpinnerNext} from 'baseui/spinner';
 
 import {useState, useEffect} from 'react';
 import axios from 'axios';
@@ -10,38 +11,41 @@ import useApiCall from '../../hooks/useApiCall';
 
  const  TableContainer: React.FC = () => {
    const [css] = useStyletron();
+   const [tableItems, setTableItems] = useState([])
+   let {docs, totalPages, page, hasPrevPage, hasNextPage} = useApiCall('https://api.spacexdata.com/v4','/launches/query', '');
+  
 
-  const Thead = styled("thead", () => ({
-        background: "grey",
+   const Thead = styled("thead", () => ({
+        background: "black",
+        color: "white",
         padding: "2rem",
         margin: "2rem",
-        border: "2rem solid black"
+        border: "2rem solid black",
+        "text-align": "centre"
+      
   }) );
 
-  let items = useApiCall('https://api.spacexdata.com/','v3/launches', '?limit=12&offset=12&sort=launch_year&order=desc');
-
+  
+  console.log("Inside Container component", totalPages, page, hasNextPage, hasPrevPage);
     return (
             <table className={css({
-           position: "relative",
-           width: "100%",
-         
-          
-            
-          })}>
-                <Thead>
-                  <tr>
-                    <td>No.</td>
-                    <td>Launched (UTC)</td>
-                    <td>Location</td>
-                    <td>Mission</td>
-                    <td>Orbit</td>  
-                    <td>Launch Status</td>
-                    <td>Rocket</td>
-                  </tr>
-                </Thead>
-                <tbody>
-                    <TableRow details={items} />
-                </tbody>
+              position: "relative",
+              width: "100%",
+            })}>
+            <Thead>
+              <tr> 
+                <th>No.</th>
+                <th>Launched (UTC)</th>
+                <th>Location</th>
+                <th>Mission</th>
+                <th>Launch Status</th>
+                <th>Rocket</th>
+              </tr>
+            </Thead>
+            <tbody>
+             
+             {docs!=undefined?<TableRow items={docs} />:<tr><td><StyledSpinnerNext />Please wait...</td></tr>}
+            </tbody>
             </table>
           
 

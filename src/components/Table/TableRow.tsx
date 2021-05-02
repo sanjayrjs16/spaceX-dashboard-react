@@ -4,26 +4,31 @@ import InfoCard from '../Card/InfoCard';
 
 import { useStyletron,  styled  } from "styletron-react";
 import {StyledSpinnerNext} from 'baseui/spinner';
+import useApiCall from '../../hooks/useApiCall';
+
+import axios from 'axios';
 
 interface TableItems  {
-    details: {
+    items: {
         flight_number: any,
-        launch_date_utc: any,
-        launch_site:  any,
-        mission_name: any,
+        date_local: any,
+        launchpad:  any,
+        name: any,
         mission_id: any,
         rocket: any,
-        launch_success: boolean
-        rocket_name: any,
+        success: boolean
+      
         links: any,
-        mission_patch_small: any
+       
+       
     }[]
 }
 
-const TableRow: React.FC<TableItems> = ({details}) => {
-    const [showCard, setShowCard] = useState({show: false, rowIdentifier: 0})
+const TableRow: React.FC<TableItems> = ({items}) => {
+    const [showCard, setShowCard] = useState({show: false, rowIdentifier: 0});
+    const [launchPad, setLaunchPads] = useState();
     const [css] = useStyletron();
-    let today = new Date();
+   
     const ToggleRowClick = (rowIdentifier: number) => {
        
             setShowCard((prevShowCard) => {
@@ -31,19 +36,38 @@ const TableRow: React.FC<TableItems> = ({details}) => {
             })
         
     }
+    const callApi = async (resource: any) => {
+        axios({url: `https://api.spacexdata.com/v4`+resource, 
+            method: "get",
+            data: {
+              "query": {},
+              "options": {}
+            }
+          })
+          .then((res) => {
+            setLaunchPads(res.data);
+            console.log("Inside callApi, got the data as ", res.data);
+          })
+        return await launchPad;
+        }
+       
+
+    
     const Td = styled("td", () => ({
         background: "white",
         padding: "0.7rem",
         margin: "1.40rem",
         border: "0"
   }) );
+  
+ 
     return (
         <>
         
-        {details.length>0?
-                details.map((item, index) => {
+        {items.length>0?
+                items.map((item, index) => {
                     return (
-                        <tr key={item.launch_date_utc}  className={css({
+                        <tr key={item.date_local}  className={css({
                            
                             padding: "2rem",
                             margin: "3rem",
@@ -56,16 +80,16 @@ const TableRow: React.FC<TableItems> = ({details}) => {
                             
                           })} onClick={() => {ToggleRowClick(index);console.log(showCard)}}>
                             <Td>{item.flight_number}</Td>
-                            <Td>{item.launch_date_utc}</Td>
-                            <Td>{item.launch_site.site_name}</Td>
-                            <Td>{item.mission_name}</Td>
-                            <Td>{item.rocket.second_stage.payloads[0].orbit}</Td>
-                            <Td>{today<item.launch_date_utc?`upcoming`:(item.launch_success?`Success`:`Failed`)}</Td>
-                            <Td>{item.rocket.rocket_name}</Td>
+                            <Td>{new Date(item.date_local).toString()}</Td>
+                            <Td>{item.launchpad}</Td>
+                            <Td>{item.name}</Td>
+                            <Td>{item.success!= null?(item.success?"Success":"Failed"):"Upcoming"}</Td>
+                            <Td>{item.rocket}</Td>
                         </tr>);
                 })
             : <tr><td><StyledSpinnerNext />Please wait...</td></tr>}
-            {showCard.show?<InfoCard cardDetails={details[showCard.rowIdentifier]} ToggleRowClick={ToggleRowClick} />:null}
+            {showCard.show?<InfoCard cardDetails={items[showCard.rowIdentifier]} ToggleRowClick={ToggleRowClick} />:null}
+
         </>
     )
 }
