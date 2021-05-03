@@ -3,6 +3,7 @@ import TableRow from './TableRow';
 
 import { useStyletron, styled } from "styletron-react";
 import {StyledSpinnerNext} from 'baseui/spinner';
+import { Pagination, SIZE } from "baseui/pagination";
 // import { ButtonGroup, MODE } from "baseui/button-group";
 // import { Button } from "baseui/button";
 
@@ -72,8 +73,17 @@ import PaginationButton from '../Pagination/PaginationButton';
       {showCard.show && status ==="success"?<InfoCard cardDetails={selectedRowData} ToggleRowClick={ToggleRowClick} showCard={showCard.show}/>:null}
       {/* This is the pagination button */}
        {status==='success'?
-    
-      <PaginationButton currentPage={currentPage} totalPages={data.totalPages} setCurrentPage={setCurrentPage}  />
+     <Pagination
+     numPages={data.totalPages}
+     size={SIZE.compact}
+     currentPage={currentPage}
+     onPageChange={({ nextPage }) => {
+       setCurrentPage(
+         Math.min(Math.max(nextPage, 1), 20)
+       );
+     }}
+   />
+      // <PaginationButton currentPage={currentPage} totalPages={data.totalPages} setCurrentPage={setCurrentPage}  />
        :""} 
        
     </>
