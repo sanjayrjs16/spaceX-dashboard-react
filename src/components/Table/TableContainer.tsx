@@ -11,15 +11,25 @@ import {useState} from 'react';
 
 import useApiCall from '../../hooks/useApiCall';
 
+import InfoCard from '../Card/InfoCard'; 
 import PaginationButton from '../Pagination/PaginationButton';
 
 
  const  TableContainer: React.FC = () => {
    const [css] = useStyletron();
    const [currentPage, setCurrentPage] = useState(1)
-    
+   const [showCard, setShowCard] = useState({show: false, rowIdentifier: 0});
+   const [selectedRowData, setSelectedRowData] = useState({});
+
   let { status, data, error, isFetching, isPreviousData, items } = useApiCall('https://api.spacexdata.com/v4','/launches/query', '','POST','launches', currentPage);
   
+  const ToggleRowClick = (rowIdentifier: number) => {
+       
+    setShowCard((prevShowCard) => {
+        return {rowIdentifier, show: !prevShowCard.show }
+    })
+
+}
 
    const TR = styled("tr", () => ({
         background: "black",
@@ -40,11 +50,12 @@ import PaginationButton from '../Pagination/PaginationButton';
             <thead>
               <TR> 
                 <th>No.</th>
-                <th>Launched (UTC)</th>
-                <th>Location</th>
-                <th>Mission</th>
-                <th>Launch Status</th>
+                <th>Mission name</th>
                 <th>Rocket</th>
+                <th>Launch Status</th>
+                <th>Launched (UTC)</th>
+                <th>Launch pad</th>
+                <th>Location</th>
               </TR>
             </thead>
             <tbody>
@@ -53,11 +64,12 @@ import PaginationButton from '../Pagination/PaginationButton';
                   ) : status === 'error' ? (
                     <tr><td>An Error occured</td></tr>
                   ) : data.docs.map((item: any, index: number) => {
-                    return  <TableRow item={item} index={index}/>
+                    return  <TableRow key={index} item={item} index={index}  showCard={showCard} ToggleRowClick={ToggleRowClick} selectedRowData={selectedRowData} setSelectedRowData={setSelectedRowData} />
                   })}
      
             </tbody>
       </table>
+      {showCard.show && status ==="success"?<InfoCard cardDetails={selectedRowData} ToggleRowClick={ToggleRowClick} showCard={showCard.show}/>:null}
       {/* This is the pagination button */}
        {status==='success'?
     

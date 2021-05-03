@@ -21,6 +21,6 @@ export default function useApiCall(baseUrl: string, resource: string, query: str
    () => makeApiCall(page),
     { keepPreviousData: true, staleTime: 5000 }
   );
-  console.log("inside useApiCall, ", status, data)
+  // console.log("inside useApiCall, ", status, data)
     return { status, data, error, isFetching, isPreviousData, items };
 }
