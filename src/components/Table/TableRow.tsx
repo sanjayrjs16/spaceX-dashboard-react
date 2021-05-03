@@ -21,7 +21,7 @@ interface TableItems  {
         mission_id: any,
         rocket: any,
         success: boolean
-      
+        payloads: any,
         links: any,
        
        
@@ -38,8 +38,8 @@ const TableRow: React.FC<TableItems> = ({item, index, showCard, ToggleRowClick, 
     const [launchPad, setLaunchPads] = useState();
     const [css] = useStyletron();
    
-    let { status: statusLaunch , data: launchData, error: launchError, isFetching: launchFetching } = useApiCall('https://api.spacexdata.com/v4','/launchpads/', item.launchpad,'GET', 'launchPads', '');
-    let { status: stausRocket , data: rocketData, error: rocketError, isFetching: rocketFetching} = useApiCall('https://api.spacexdata.com/v4','/rockets/', item.rocket,'GET', 'rockets', '');
+    let { status: statusLaunch , data: launchData, error: launchError, isFetching: launchFetching } = useApiCall('https://api.spacexdata.com/v4','/launchpads/', item.launchpad,'GET', 'launchPads');
+    let { status: stausRocket , data: rocketData, error: rocketError, isFetching: rocketFetching} = useApiCall('https://api.spacexdata.com/v4','/rockets/', item.rocket,'GET', 'rockets');
   
     // const ToggleRowClick = (rowIdentifier: number) => {
        
@@ -84,6 +84,7 @@ const TableRow: React.FC<TableItems> = ({item, index, showCard, ToggleRowClick, 
                             <Td>{new Date(item.date_local).toString()}</Td>
                             <Td>{statusLaunch==="success"?launchData.name:<StyledSpinnerNext />}</Td>
                             <Td>{statusLaunch==="success"?`${launchData.locality}, ${launchData.region}`:<StyledSpinnerNext />}</Td>
+                            <Td>{item.payloads[0].orbit}</Td>
                         </tr>);
                 )
             

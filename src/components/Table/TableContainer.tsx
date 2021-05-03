@@ -22,7 +22,7 @@ import PaginationButton from '../Pagination/PaginationButton';
    const [showCard, setShowCard] = useState({show: false, rowIdentifier: 0});
    const [selectedRowData, setSelectedRowData] = useState({});
 
-  let { status, data, error, isFetching, isPreviousData, items } = useApiCall('https://api.spacexdata.com/v4','/launches/query', '','POST','launches', currentPage);
+  let { status, data, error, isFetching, isPreviousData, items } = useApiCall('https://api.spacexdata.com/v4','/launches/query', '','POST','launches', currentPage, ["payloads"]);
   
   const ToggleRowClick = (rowIdentifier: number) => {
        
@@ -54,9 +54,10 @@ import PaginationButton from '../Pagination/PaginationButton';
                 <th>Mission name</th>
                 <th>Rocket</th>
                 <th>Launch Status</th>
-                <th>Launched (UTC)</th>
+                <th>Launch Date</th>
                 <th>Launch pad</th>
                 <th>Location</th>
+                <th>Payloads</th>
               </TR>
             </thead>
             <tbody>

@@ -19,6 +19,8 @@ import {
 
   import { Button, SHAPE } from "baseui/button";
   import { Tag, KIND } from "baseui/tag";
+
+  import { Accordion, Panel } from "baseui/accordion";
   
 interface CardItems  {
     cardDetails: any,
@@ -28,24 +30,24 @@ interface CardItems  {
 
 const InfoCard: React.FC<CardItems> = ({cardDetails, ToggleRowClick, showCard}) => {
     const [css] = useStyletron();
-   // let {items} = useApiCall('https://api.spacexdata.com/','v3/missions', `/${cardDetails.mission_id}`,'POST','missions', 1);
-    console.log("The mission details in Info Card", cardDetails);
+    let {items} = useApiCall('https://api.spacexdata.com/','v4/launches/query', ``,'POST','launches',1, ["payloads"]);
+    console.log("The mission details in Info Card", items);
   
     return (
         <>
              <Drawer
-      isOpen={showCard}
-      autoFocus
-      onClose={() => ToggleRowClick()}
-      size={SIZE.full}
-      anchor={ANCHOR.top}
-      showBackdrop={false}
-    >
-                <Card   title={cardDetails.name}>
+                    isOpen={showCard}
+                    autoFocus
+                    onClose={() => ToggleRowClick()}
+                    size={SIZE.full}
+                    anchor={ANCHOR.top}
+                    showBackdrop={false}
+                >
+                <Card   title={`Mission - ${cardDetails.name}`}>
                     <StyledThumbnail src={cardDetails.links.patch.small!=null?cardDetails.links.patch.small:WebsiteLogo} />
                     <StyledBody>
                    
-                        <p>{cardDetails.rocketData.name}</p>
+                        <p>🚀<Tag closeable={false}>{`${cardDetails.rocketData.name}`}</Tag> </p>
 
                         {cardDetails.success!= null?(cardDetails.success?<Tag closeable={false} kind={KIND.positive}>Success</Tag>:<Tag closeable={false} kind={KIND.negative}>Failed</Tag>):<Tag closeable={false} kind={KIND.orange}>Upcoming</Tag>}<br />
                         
@@ -69,17 +71,20 @@ const InfoCard: React.FC<CardItems> = ({cardDetails, ToggleRowClick, showCard}) 
                         
                         <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Flight Number</Tag> {cardDetails.flight_number}</div>
                         <hr />
-                        <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Mission Name</Tag> {cardDetails.name}</div>
-                        <hr />
                         <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Launch date</Tag> {new Date(cardDetails.date_local).toString()}</div>
                         <hr />
-                        <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Rocket Name</Tag> {cardDetails.rocketData.name}</div>
+                        <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Launch site</Tag>{`${cardDetails.launchData.full_name}, ${cardDetails.launchData.region}`}</div>
                         <hr />
-                        <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Manufacturer</Tag> {cardDetails.date_local}</div>
-                        <hr />
-                        <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Launch site</Tag> {cardDetails.launchpad}</div>
-                        <hr />
-                        <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Orbit</Tag> {cardDetails.rocket}</div>
+                        {/* <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Payloads</Tag> {cardDetails.rocket}</div> */}
+                        <Accordion onChange={({ expanded }) => console.log(expanded)}>
+                            <Panel title="Payload details">
+                                {cardDetails.payloads.length>0?cardDetails.payloads.map((item: any, index: number) => {
+                                    return <Tag key={index} closeable={false}>{index}</Tag>
+                                }):"No Payloads"}
+                            
+                            </Panel>
+      
+                        </Accordion>
                         <hr />
                     </StyledBody>
                     

@@ -3,14 +3,15 @@ import {useState} from 'react';
 
 import { useQuery } from 'react-query';
 
-export default function useApiCall(baseUrl: string, resource: string, query: string, method: any,  key: any, page: any){
+export default function useApiCall(baseUrl: string, resource: string, queryParams: string, method: any,  key: string, page?: number, query?: any){
     let [items, setItems]: any[] = useState([]);
     const makeApiCall = async (page: any) => {
-                 let data = await  axios({url: baseUrl+resource+query, 
+                 let data = await  axios({url: baseUrl+resource+queryParams, 
                     method,
                     data: {
                       "query": {},
-                      "options": { page}
+                      "options": { page,
+                        "populate": query}
                     }
                   })
                   setItems(await data.data)
