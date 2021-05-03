@@ -25,7 +25,7 @@ const  TableContainer: React.FC<TableContainerItems> = ({theme}) => {
   const [selectedRowData, setSelectedRowData] = useState({});
   const [query, setQuery] = useState({});
 
-  let { status, data, error, isFetching, isPreviousData, items } = useApiCall('https://api.spacexdata.com/v4','/launches/query', '','POST','launches', {page: currentPage, populate: ["payloads", "rocket", "launchpad"]},query);
+  let { status, data, error, isFetching, isPreviousData, items } = useApiCall('https://api.spacexdata.com/v4','/launches/query', '','POST','launches', {page: currentPage, populate: ["payloads", "rocket", "launchpad", "crew"]},query);
   
   const ToggleRowClick = (rowIdentifier: number) => {
        
