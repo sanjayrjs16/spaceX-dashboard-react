@@ -6,7 +6,7 @@ import useApiCall from '../../hooks/useApiCall';
 import WikiLogo from '../../resources/Wikipedia-W-logo.svg';
 import YTLogo from '../../resources/YouTube_logo.svg';
 import WebsiteLogo from '../../resources/SpaceX-logo-mini.png';
-import TwitterLogo from '../../resources/Twitter-logo.png';
+
 
 import {
     Card,
@@ -22,6 +22,11 @@ import {
 
   import { Accordion, Panel } from "baseui/accordion";
   
+  import {
+    StatefulTooltip,
+    TRIGGER_TYPE
+  } from "baseui/tooltip";
+  import {Block} from 'baseui/block';
 interface CardItems  {
     cardDetails: any,
     ToggleRowClick: any,
@@ -39,15 +44,15 @@ const InfoCard: React.FC<CardItems> = ({cardDetails, ToggleRowClick, showCard}) 
                     isOpen={showCard}
                     autoFocus
                     onClose={() => ToggleRowClick()}
-                    size={SIZE.full}
-                    anchor={ANCHOR.top}
+                    size={SIZE.auto}
+                    anchor={ANCHOR.bottom}
                     showBackdrop={false}
                 >
                 <Card   title={`Mission - ${cardDetails.name}`}>
                     <StyledThumbnail src={cardDetails.links.patch.small!=null?cardDetails.links.patch.small:WebsiteLogo} />
                     <StyledBody>
                    
-                        <p>🚀<Tag closeable={false}>{`${cardDetails.rocketData.name}`}</Tag> </p>
+                        <p>🚀<Tag closeable={false}>{`${cardDetails.rocket.name}`}</Tag> </p>
 
                         {cardDetails.success!= null?(cardDetails.success?<Tag closeable={false} kind={KIND.positive}>Success</Tag>:<Tag closeable={false} kind={KIND.negative}>Failed</Tag>):<Tag closeable={false} kind={KIND.orange}>Upcoming</Tag>}<br />
                         
@@ -73,17 +78,37 @@ const InfoCard: React.FC<CardItems> = ({cardDetails, ToggleRowClick, showCard}) 
                         <hr />
                         <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Launch date</Tag> {new Date(cardDetails.date_local).toString()}</div>
                         <hr />
-                        <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Launch site</Tag>{`${cardDetails.launchData.full_name}, ${cardDetails.launchData.region}`}</div>
+                        <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Launch site</Tag>{`${cardDetails.launchpad.full_name}, ${cardDetails.launchpad.region}`}</div>
                         <hr />
                         {/* <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Payloads</Tag> {cardDetails.rocket}</div> */}
                         <Accordion onChange={({ expanded }) => console.log(expanded)}>
                             <Panel title="Payload details">
                                 {cardDetails.payloads.length>0?cardDetails.payloads.map((item: any, index: number) => {
-                                    return <Tag key={index} closeable={false}>{index}</Tag>
-                                }):"No Payloads"}
+                                    return <StatefulTooltip
+                                                        key={index}
+                                                        content={() => (
+                                                            <Block padding={"20px"}>
+                                                                <Tag closeable={false}>Payload</Tag>{item.name}
+                                                            
+                                                          </Block>
+                                                        )}
+                                                        triggerType={TRIGGER_TYPE.click}
+                                                        returnFocus
+                                                        autoFocus
+                                                        >
+                                                        <Tag closeable={false}>{item.name}</Tag>
+                                            </StatefulTooltip>
+                                }):<Tag closeable={false}>No Payloads</Tag>}
                             
                             </Panel>
-      
+                            <Panel title="Images">
+                            <div className={css({display: "flex", "flex-direction": "row"})}>
+                        {cardDetails.links.flickr.original.length>0?cardDetails.links.flickr.original.map((link: any, index: number) => {
+                            return <img className={css({ width: "10%", height: "20%"})} src={link} alt={"Launch image"} />
+                                   
+                        }):"No images present"}
+                         </div>
+                            </Panel>
                         </Accordion>
                         <hr />
                     </StyledBody>

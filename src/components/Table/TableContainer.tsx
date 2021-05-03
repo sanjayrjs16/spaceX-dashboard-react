@@ -15,14 +15,16 @@ import useApiCall from '../../hooks/useApiCall';
 import InfoCard from '../Card/InfoCard'; 
 import PaginationButton from '../Pagination/PaginationButton';
 
-
- const  TableContainer: React.FC = () => {
+interface TableContainerItems  {
+  theme: boolean
+}
+ const  TableContainer: React.FC<TableContainerItems> = ({theme}) => {
    const [css] = useStyletron();
    const [currentPage, setCurrentPage] = useState(1)
    const [showCard, setShowCard] = useState({show: false, rowIdentifier: 0});
    const [selectedRowData, setSelectedRowData] = useState({});
 
-  let { status, data, error, isFetching, isPreviousData, items } = useApiCall('https://api.spacexdata.com/v4','/launches/query', '','POST','launches', currentPage, ["payloads"]);
+  let { status, data, error, isFetching, isPreviousData, items } = useApiCall('https://api.spacexdata.com/v4','/launches/query', '','POST','launches', currentPage, ["payloads", "rocket", "launchpad"]);
   
   const ToggleRowClick = (rowIdentifier: number) => {
        
@@ -33,19 +35,21 @@ import PaginationButton from '../Pagination/PaginationButton';
 }
 
    const TR = styled("tr", () => ({
-        background: "black",
-        color: "white",
+        background: theme?"white":"black",
+        color: theme?"black":"white",
         border: "2rem solid black",
         "text-align": "centre",
         borderRadius: "5rem",
+        padding: "2rem"
     }) );
 
     return (
     <>
+    {console.log("The data is ", data)}
         <table className={css({
                               position: "relative",
                               width: "100%",
-                              "background-color": "rgba(0,0,0, 0.4)",
+                              background: theme?"rgb(217, 217, 217, 0.6)":"rgb(0, 0, 0, 0.7)",
                                border:"solid 1px rgba(0,0,0, 0.4)"
                              })}>
             <thead>
@@ -66,7 +70,7 @@ import PaginationButton from '../Pagination/PaginationButton';
                   ) : status === 'error' ? (
                     <tr><td>An Error occured</td></tr>
                   ) : data.docs.map((item: any, index: number) => {
-                    return  <TableRow key={index} item={item} index={index}  showCard={showCard} ToggleRowClick={ToggleRowClick} selectedRowData={selectedRowData} setSelectedRowData={setSelectedRowData} />
+                     return  <TableRow key={index} theme={theme} item={item} index={index}  showCard={showCard} ToggleRowClick={ToggleRowClick} selectedRowData={selectedRowData} setSelectedRowData={setSelectedRowData} />
                   })}
      
             </tbody>
@@ -74,16 +78,19 @@ import PaginationButton from '../Pagination/PaginationButton';
       {showCard.show && status ==="success"?<InfoCard cardDetails={selectedRowData} ToggleRowClick={ToggleRowClick} showCard={showCard.show}/>:null}
       {/* This is the pagination button */}
        {status==='success'?
-     <Pagination
-     numPages={data.totalPages}
-     size={SIZE.compact}
-     currentPage={currentPage}
-     onPageChange={({ nextPage }) => {
-       setCurrentPage(
-         Math.min(Math.max(nextPage, 1), 20)
-       );
-     }}
-   />
+       <div className={css({   
+                        width: '100%',
+                        background: theme?"rgb(217, 217, 217, 0.6)":"rgb(0, 0, 0, 0.7)"})}>
+          <Pagination
+                numPages={data.totalPages}
+                size={SIZE.compact}
+                currentPage={currentPage}
+                onPageChange={({ nextPage }) => {
+                  setCurrentPage(
+                    Math.min(Math.max(nextPage, 1), 20)
+                  );
+          }}
+        /></div>
       // <PaginationButton currentPage={currentPage} totalPages={data.totalPages} setCurrentPage={setCurrentPage}  />
        :""} 
        
