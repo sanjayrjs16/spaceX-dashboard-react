@@ -1,16 +1,16 @@
 import axios from 'axios';
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 
 import { useQuery } from 'react-query';
 
-export default function useApiCall(baseUrl: string, resource: string, query: string, key: any, page: any){
+export default function useApiCall(baseUrl: string, resource: string, query: string, method: any,  key: any, page: any){
     let [items, setItems]: any[] = useState([]);
     const makeApiCall = async (page: any) => {
-                 let data = await  axios({url: baseUrl+resource, 
-                    method: "post",
+                 let data = await  axios({url: baseUrl+resource+query, 
+                    method,
                     data: {
                       "query": {},
-                      "options": {}
+                      "options": { page}
                     }
                   })
                   setItems(await data.data)

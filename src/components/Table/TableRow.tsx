@@ -3,13 +3,17 @@ import React, {useState} from 'react'
 import InfoCard from '../Card/InfoCard'; 
 
 import { useStyletron,  styled  } from "styletron-react";
-import {StyledSpinnerNext} from 'baseui/spinner';
-import useApiCall from '../../hooks/useApiCall';
 
-import axios from 'axios';
+ import useApiCall from '../../hooks/useApiCall';
+
+// import axios from 'axios';
+
+import { Tag, KIND } from "baseui/tag";
+import { StyledSpinnerNext } from 'baseui/spinner';
+  
 
 interface TableItems  {
-    items: {
+    item: {
         flight_number: any,
         date_local: any,
         launchpad:  any,
@@ -21,14 +25,18 @@ interface TableItems  {
         links: any,
        
        
-    }[]
+    },
+    index: number
 }
 
-const TableRow: React.FC<TableItems> = ({items}) => {
+const TableRow: React.FC<TableItems> = ({item, index}) => {
     const [showCard, setShowCard] = useState({show: false, rowIdentifier: 0});
     const [launchPad, setLaunchPads] = useState();
     const [css] = useStyletron();
    
+    let { status: statusLaunch , data: launchData, error: launchError, isFetching: launchFetching } = useApiCall('https://api.spacexdata.com/v4','/launchpads/', item.launchpad,'GET', 'launchPads', '');
+    let { status: stausRocket , data: rocketData, error: rocketError, isFetching: rocketFetching} = useApiCall('https://api.spacexdata.com/v4','/rockets/', item.rocket,'GET', 'rockets', '');
+  
     const ToggleRowClick = (rowIdentifier: number) => {
        
             setShowCard((prevShowCard) => {
@@ -40,41 +48,40 @@ const TableRow: React.FC<TableItems> = ({items}) => {
 
     
     const Td = styled("td", () => ({
-        background: "white",
-        padding: "0.7rem",
-        margin: "1.40rem",
-        border: "0"
+       
+       
+        border: "0",
+        padding: "0.2rem"
+
   }) );
   
  
     return (
         <>
-        {console.log("Inside TableRow, got items as", items)}
-        {items.length>0?
-                items.map((item, index) => {
-                    return (
-                        <tr key={item.date_local}  className={css({
-                           
-                            padding: "2rem",
-                            margin: "3rem",
-                            width: "100%",
-                            border: "none",
-                            ":hover": {
-                               transform: "scale(1.01,1.01)",
-                                color: "red"
-                              }
-                            
-                          })} onClick={() => {ToggleRowClick(index);console.log(showCard)}}>
+       {console.log(rocketData, launchData)}
+        
+                        <tr key={item.flight_number}  className={css({
+                                                                        width: "100%",
+                                                                        border: "none",
+                                                                        color: "white",
+                                                                        ":hover": {
+                                                                            transform: "scale(1.05,1.05)",
+                                                                            color: "rgb(255, 255, 128)",
+                                                                            "background-color": "rgba(230, 230, 255, 0.4)",
+                                                                            padding: "3rem",
+                                                                            cursor: "pointer"
+                                                                        }
+                        })} onClick={() => {ToggleRowClick(index);console.log(showCard)}}>
                             <Td>{item.flight_number}</Td>
                             <Td>{new Date(item.date_local).toString()}</Td>
-                            <Td>{item.launchpad}</Td>
+                            {statusLaunch==="success"?<Td>{launchData.name}</Td>:<StyledSpinnerNext />}
                             <Td>{item.name}</Td>
-                            <Td>{item.success!= null?(item.success?"Success":"Failed"):"Upcoming"}</Td>
-                            <Td>{item.rocket}</Td>
+                            <Td>{item.success!= null?(item.success?<Tag closeable={false} kind={KIND.positive}>Success</Tag>:<Tag closeable={false} kind={KIND.negative}>Failed</Tag>):<Tag closeable={false} kind={KIND.orange}>Upcoming</Tag>}</Td>
+                            {stausRocket==="success"?<Td>{rocketData.name}</Td>:<StyledSpinnerNext />}
                         </tr>);
-                })
-            : <tr><td><StyledSpinnerNext />Please wait...</td></tr>}
-            {showCard.show?<InfoCard cardDetails={items[showCard.rowIdentifier]} ToggleRowClick={ToggleRowClick} />:null}
+                )
+            
+            {showCard.show?<InfoCard cardDetails={item} ToggleRowClick={ToggleRowClick} />:null}
 
         </>
     )

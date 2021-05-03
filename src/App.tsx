@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 
 import TableContainer from './components/Table/TableContainer';
 import Navbar from './components/Header/Navbar';
@@ -6,10 +5,8 @@ import Navbar from './components/Header/Navbar';
 
 import {Client as Styletron} from 'styletron-engine-atomic';
 import {Provider as StyletronProvider} from 'styletron-react';
-import {LightTheme, BaseProvider, styled, DarkTheme} from 'baseui';
+import { BaseProvider, styled, DarkTheme} from 'baseui';
 import {
-  useQuery,
-  useQueryClient,
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
@@ -36,9 +33,7 @@ export default function App () {
         <BaseProvider theme={DarkTheme}>
           <Centered>
             <div className="App">
-                {/* {items.map((item) => {
-                    return <div>{item.name}</div>
-                })} */}
+            
                 <Navbar />
                 <TableContainer />
               </div>

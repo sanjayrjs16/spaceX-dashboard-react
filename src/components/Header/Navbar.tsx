@@ -1,6 +1,6 @@
 import React from 'react';
 import SpaceXLogo from '../../resources/SpaceX-Logo.png';
-import { useStyletron, styled } from "styletron-react";
+import { useStyletron } from "styletron-react";
 
 export default function Navbar() {
     const [css] = useStyletron();
@@ -8,22 +8,22 @@ export default function Navbar() {
         <>
             <nav className={css({
                                     width: '100%',
-                                    margin: "auto",
+                                    margin: "0 0 2% 0",
                                     display: "flex",
                                     justifyContent: "center",
                                     color: "white",
                                 })}>
             
                 <img className={css({   
-                                        width: '40%',
+                                        width: '50%',
                                         height: '3rem',
-                                        background: "black",
-                                        padding: "2rem",
-                                        borderRadius: "0rem 0rem 1.1rem 1.1rem"
+                                        background: "rgb(217, 217, 217, 0.7)",
+                                        padding: "0rem 0rem 3rem 5rem",
+                                        borderRadius: "0rem 0rem 5rem 5rem"
                                         })} src={SpaceXLogo} alt="SpaceX-Logo"/>
         
             </nav>
-        <hr />
+        
         </>
     )
 }

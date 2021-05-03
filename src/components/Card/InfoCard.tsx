@@ -3,7 +3,6 @@ import React from 'react'
 import { useStyletron } from "styletron-react";
 import useApiCall from '../../hooks/useApiCall';
 
-import SpaceXLogo from '../../resources/SpaceX-Logo.png';
 import WikiLogo from '../../resources/Wikipedia-W-logo.svg';
 import YTLogo from '../../resources/YouTube_logo.svg';
 import WebsiteLogo from '../../resources/SpaceX-logo-mini.png';
@@ -35,7 +34,7 @@ interface CardItems  {
 
 const InfoCard: React.FC<CardItems> = ({cardDetails, ToggleRowClick}) => {
     const [css] = useStyletron();
-    let {items} = useApiCall('https://api.spacexdata.com/','v3/missions', `/${cardDetails.mission_id}`, 'missions', 1);
+    let {items} = useApiCall('https://api.spacexdata.com/','v3/missions', `/${cardDetails.mission_id}`,'POST','missions', 1);
     console.log("The mission details in Info Card", items);
     let today = new Date();
     return (
