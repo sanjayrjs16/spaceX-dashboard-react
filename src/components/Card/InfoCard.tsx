@@ -24,19 +24,22 @@ import {
   
   import {
     StatefulTooltip,
-    TRIGGER_TYPE
+    TRIGGER_TYPE,
+    PLACEMENT
   } from "baseui/tooltip";
   import {Block} from 'baseui/block';
+  import { Notification } from "baseui/notification";
 interface CardItems  {
+    theme: any,
     cardDetails: any,
     ToggleRowClick: any,
     showCard: any
 };
 
-const InfoCard: React.FC<CardItems> = ({cardDetails, ToggleRowClick, showCard}) => {
+const InfoCard: React.FC<CardItems> = ({theme, cardDetails, ToggleRowClick, showCard}) => {
     const [css] = useStyletron();
-    let {items} = useApiCall('https://api.spacexdata.com/','v4/launches/query', ``,'POST','launches',1, ["payloads"]);
-    console.log("The mission details in Info Card", items);
+    // let {items} = useApiCall('https://api.spacexdata.com/','v4/launches/query', ``,'POST','launches',1, ["payloads"]);
+    // console.log("The mission details in Info Card", items);
   
     return (
         <>
@@ -58,11 +61,11 @@ const InfoCard: React.FC<CardItems> = ({cardDetails, ToggleRowClick, showCard}) 
                         
                         <span>
                          
-                            {cardDetails.links.wikipedia!=null?<a href={cardDetails.links.wikipedia} target="_blank" rel="noreferrer">
-                                <img className={css({ width: "2.7%", margin: "0rem 0.4rem 0px 0.4rem"
+                            {cardDetails.links.wikipedia!=null?<a href={cardDetails.links.wikipedia} target="_blank" rel="noreferrer" title="Wikipedia article">
+                                <img className={css({ width: "2.7%", margin: "0rem 0.4rem 0px 0.4rem", background: "white", borderRadius: "50%", padding:"0.3rem 0.1rem 0.3rem 0.1rem"
                                             })} src={WikiLogo} alt="Wikipedia logo" />
                             </a>:""} 
-                            {cardDetails.links.webcast!=null?<a href={cardDetails.links.webcast} target="_blank" rel="noreferrer">
+                            {cardDetails.links.webcast!=null?<a href={cardDetails.links.webcast} target="_blank" rel="noreferrer" title="Youtube video">
                                 <img className={css({ width: "2.7%",  margin: "0rem 0.4rem 0px 0.4rem"
                                             })} src={YTLogo} alt="Youtube logo" />
                             </a>:""} 
@@ -84,16 +87,25 @@ const InfoCard: React.FC<CardItems> = ({cardDetails, ToggleRowClick, showCard}) 
                         <Accordion onChange={({ expanded }) => console.log(expanded)}>
                             <Panel title="Payload details">
                                 {cardDetails.payloads.length>0?cardDetails.payloads.map((item: any, index: number) => {
-                                    return <StatefulTooltip
+                                    return        <StatefulTooltip
+                                                    
                                                         key={index}
                                                         content={() => (
-                                                            <Block padding={"20px"}>
-                                                                <Tag closeable={false}>Payload</Tag>{item.name}
-                                                            
-                                                          </Block>
+                                                            <Block padding={"20px"}overrides={{
+                                                                Block: {
+                                                                  style: {display: 'flex', flexDirection: "column"},
+                                                                },
+                                                              }}>
+                                                                <p  className={css({display: "flex", justifyContent: "flex-start"})}><Tag variant="solid" closeable={false}>Name</Tag><p>{item.name}</p></p>
+                                                                <p  className={css({display: "flex", justifyContent: "flex-start"})}><Tag variant="solid" closeable={false}>Type</Tag><p>{item.type}</p></p>
+                                                                <p  className={css({display: "flex", justifyContent: "flex-start"})}><Tag variant="solid" closeable={false}>Lifespan</Tag><p>{item.lifespan_years?`${item.lifespan_years} year(s)`:`No data present`}</p></p>
+                                                                <p  className={css({display: "flex", justifyContent: "flex-start"})}><Tag variant="solid" closeable={false}>Mass(kg)</Tag><p>{item.mass_kg?item.mass_kg:`No data present`}</p></p>
+                                                                <p  className={css({display: "flex", justifyContent: "flex-start"})}><Tag variant="solid" closeable={false}>Customers</Tag><p>{item.customers.length>0?item.customers:`No data present`}</p></p>
+                                                            </Block>
                                                         )}
                                                         triggerType={TRIGGER_TYPE.click}
-                                                        returnFocus
+                                                        showArrow
+                                                        placement={PLACEMENT.top}
                                                         autoFocus
                                                         >
                                                         <Tag closeable={false}>{item.name}</Tag>
@@ -104,7 +116,20 @@ const InfoCard: React.FC<CardItems> = ({cardDetails, ToggleRowClick, showCard}) 
                             <Panel title="Images">
                             <div className={css({display: "flex", "flex-direction": "row"})}>
                         {cardDetails.links.flickr.original.length>0?cardDetails.links.flickr.original.map((link: any, index: number) => {
-                            return <img className={css({ width: "10%", height: "20%"})} src={link} alt={"Launch image"} />
+                            return  <StatefulTooltip   
+                                                key={index}
+                                                content={() => (
+                                                   
+                                                        <img className={css({ width: "20%", height: "1%"})} src={link} alt={"Launch image"} />
+                                                    
+                                                )}
+                                                triggerType={TRIGGER_TYPE.click}
+                                                showArrow
+                                                placement={PLACEMENT.bottom}
+                                                
+                            >
+                            <img className={css({ width: "10%", height: "20%"})} src={link} alt={"Launch image"} />
+                </StatefulTooltip>
                                    
                         }):"No images present"}
                          </div>

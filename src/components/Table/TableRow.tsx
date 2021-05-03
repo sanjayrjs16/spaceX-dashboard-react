@@ -10,7 +10,7 @@ import { useStyletron,  styled  } from "styletron-react";
 
 import { Tag, KIND } from "baseui/tag";
 import { StyledSpinnerNext } from 'baseui/spinner';
-import { isTemplateMiddle } from 'typescript';
+
   
 
 interface TableItems  {
@@ -57,7 +57,7 @@ const TableRow: React.FC<TableItems> = ({theme, item, index, showCard, ToggleRow
        
        
         border: "0",
-        padding: "0.2rem"
+        padding: "0.6rem"
 
   }) );
   

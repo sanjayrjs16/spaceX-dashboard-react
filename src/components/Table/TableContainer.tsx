@@ -18,13 +18,14 @@ import PaginationButton from '../Pagination/PaginationButton';
 interface TableContainerItems  {
   theme: boolean
 }
- const  TableContainer: React.FC<TableContainerItems> = ({theme}) => {
-   const [css] = useStyletron();
-   const [currentPage, setCurrentPage] = useState(1)
-   const [showCard, setShowCard] = useState({show: false, rowIdentifier: 0});
-   const [selectedRowData, setSelectedRowData] = useState({});
+const  TableContainer: React.FC<TableContainerItems> = ({theme}) => {
+  const [css] = useStyletron();
+  const [currentPage, setCurrentPage] = useState(1)
+  const [showCard, setShowCard] = useState({show: false, rowIdentifier: 0});
+  const [selectedRowData, setSelectedRowData] = useState({});
+  const [query, setQuery] = useState({});
 
-  let { status, data, error, isFetching, isPreviousData, items } = useApiCall('https://api.spacexdata.com/v4','/launches/query', '','POST','launches', currentPage, ["payloads", "rocket", "launchpad"]);
+  let { status, data, error, isFetching, isPreviousData, items } = useApiCall('https://api.spacexdata.com/v4','/launches/query', '','POST','launches', {page: currentPage, populate: ["payloads", "rocket", "launchpad"]},query);
   
   const ToggleRowClick = (rowIdentifier: number) => {
        
@@ -32,7 +33,7 @@ interface TableContainerItems  {
         return {rowIdentifier, show: !prevShowCard.show }
     })
 
-}
+  }
 
    const TR = styled("tr", () => ({
         background: theme?"white":"black",
@@ -45,7 +46,7 @@ interface TableContainerItems  {
 
     return (
     <>
-    {console.log("The data is ", data)}
+
         <table className={css({
                               position: "relative",
                               width: "100%",
@@ -61,7 +62,7 @@ interface TableContainerItems  {
                 <th>Launch Date</th>
                 <th>Launch pad</th>
                 <th>Location</th>
-                <th>Payloads</th>
+                <th>Orbit</th>
               </TR>
             </thead>
             <tbody>
@@ -75,7 +76,7 @@ interface TableContainerItems  {
      
             </tbody>
       </table>
-      {showCard.show && status ==="success"?<InfoCard cardDetails={selectedRowData} ToggleRowClick={ToggleRowClick} showCard={showCard.show}/>:null}
+      {showCard.show && status ==="success"?<InfoCard theme={theme}cardDetails={selectedRowData} ToggleRowClick={ToggleRowClick} showCard={showCard.show}/>:null}
       {/* This is the pagination button */}
        {status==='success'?
        <div className={css({   
