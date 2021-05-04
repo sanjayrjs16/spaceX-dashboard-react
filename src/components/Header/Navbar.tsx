@@ -1,16 +1,30 @@
-import React from 'react';
-import SpaceXLogo from '../../resources/SpaceX-Logo.png';
+//React related
+import React, {useEffect} from 'react';
 import { useStyletron } from "styletron-react";
 
+//Redux related
+
+
+//Styling related
 import {Button, SHAPE, KIND} from 'baseui/button';
+
+//Images and resources
+import SpaceXLogo from '../../resources/SpaceX-Logo.png';
+import darkThemeBG from '../../resources/planet-earth.jpg';
+import lightThemeBG from '../../resources/light-theme-bg.png'
+
 
 interface NavBarItems  {
     theme: boolean,
-    setTheme: any
+    setAppTheme: any
 }
  
- const Navbar:React.FC<NavBarItems> = ({theme, setTheme}) => {
+ const Navbar:React.FC<NavBarItems> = ({theme, setAppTheme}) => {
     const [css] = useStyletron();
+    useEffect(() => {
+        console.log("Runnung useEffect in APpp", document.body.style)
+        theme?document.body.style.backgroundImage = ` url(${lightThemeBG})`:document.body.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${darkThemeBG})`;
+      }, [theme])
     return (
         <>
             <nav className={css({   "z-index": -10,
@@ -34,7 +48,7 @@ interface NavBarItems  {
 
                 <div className={css({ position: "absolute", top: "5%", right: "5%"})}>
                     <Button shape={SHAPE.circle} kind={KIND.primary} onClick={() =>
-                                        setTheme(!theme)
+                                        setAppTheme(theme)
                     }>{theme?"🌙":"🌞"}</Button>
                 </div>
         
@@ -43,4 +57,5 @@ interface NavBarItems  {
         </>
     )
 }
-export default Navbar;
+
+export default (Navbar);

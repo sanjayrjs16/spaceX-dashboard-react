@@ -1,59 +1,35 @@
-import React, {useState, useEffect} from 'react';
-import TableContainer from './components/Launch/Table/TableContainer';
-import Navbar from './components/Header/Navbar';
+//React components hooks
+import React from 'react';
+import AppContainer from './components/Containers/AppContainer';
 
 
-import {Client as Styletron} from 'styletron-engine-atomic';
-import {Provider as StyletronProvider, useStyletron} from 'styletron-react';
-import { BaseProvider, styled, DarkTheme, LightTheme} from 'baseui';
+//Redux related
+import store from './redux/store/store';
+import {Provider} from 'react-redux';
 
-import darkThemeBG from './resources/planet-earth.jpg';
-import lightThemeBG from './resources/light-theme-bg.png'
 
+
+//React query related
 import {
   QueryClient,
   QueryClientProvider,
 } from 'react-query';
 
+
 const queryClient = new QueryClient();
 
-
-
-const engine = new Styletron();
-
-const Centered = styled('div', {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  height: '100%',
-  width: '100%',
-  marginTop: "10%"
-});
-
-export default function App () {
-  const [css] = useStyletron();
-  const [theme, setTheme] = useState(true);
-  useEffect(() => {
-    console.log("Runnung useEffect in APpp", document.body.style)
-    theme?document.body.style.backgroundImage = ` url(${lightThemeBG})`:document.body.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${darkThemeBG})`;
-  }, [theme])
+const App= () =>  {
+ 
   return (
-    <QueryClientProvider client={queryClient}>
-      <StyletronProvider value={engine}>
-        <BaseProvider theme={theme?LightTheme:DarkTheme}>
-          <Centered>
-                <Navbar theme={theme} setTheme={setTheme} />
-                <div className="App">
-                  <TableContainer theme={theme}/>
-              </div>
-          </Centered>
-        </BaseProvider>
-      </StyletronProvider>
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+          <AppContainer />
+      </QueryClientProvider>
+    </Provider>
   );
 }
 
-
+export default App;
 
 
 

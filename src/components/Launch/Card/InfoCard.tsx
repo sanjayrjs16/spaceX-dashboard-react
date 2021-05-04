@@ -150,12 +150,7 @@ const InfoCard: React.FC<CardItems> = ({theme, cardDetails, ToggleRowClick, show
                                     {cardDetails.links.flickr.original.length>0?cardDetails.links.flickr.original.map((link: any, index: number) => {
                             
                                     return  <div key={index} title={"Click to view"}className={css({ ":hover":{cursor: "pointer", transform:" scale(1.05, 1.05)"}})}onClick={() => {setExpandImage((prevValue) => {return {status: !prevValue.status, link: [link], index}})}}>
-                                                {/* <Card
-                                                    overrides={{Root: {style: {width: '26rem', maxHeight: "10rem"}}}}
-                                                    headerImage={
-                                                    `${link}`
-                                                    }>
-                                                </Card>  */}
+                                               
                                                 <img src={link} alt={"Launch image"} className={css({ maxHeight: "18rem", width: "25rem"})} />
                                                 
                                             </div>
