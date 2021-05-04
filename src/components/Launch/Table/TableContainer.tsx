@@ -10,10 +10,10 @@ import { Pagination, SIZE } from "baseui/pagination";
 import {useState} from 'react';
 // import axios from 'axios';
 
-import useApiCall from '../../hooks/useApiCall';
+import useApiCall from '../../../hooks/useApiCall';
 
 import InfoCard from '../Card/InfoCard'; 
-import PaginationButton from '../Pagination/PaginationButton';
+import PaginationButton from '../../Pagination/PaginationButton';
 
 interface TableContainerItems  {
   theme: boolean
@@ -51,7 +51,7 @@ const  TableContainer: React.FC<TableContainerItems> = ({theme}) => {
                               position: "relative",
                               width: "100%",
                               background: theme?"rgb(217, 217, 217, 0.6)":"rgb(0, 0, 0, 0.7)",
-                               border:"solid 1px rgba(0,0,0, 0.4)"
+                               border:theme?"solid 1px rgb(217, 217, 217, 0.4)":"solid 1px rgba(0,0,0, 0.4)"
                              })}>
             <thead>
               <TR> 

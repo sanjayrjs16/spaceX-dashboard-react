@@ -1,11 +1,11 @@
 import React, {useState} from 'react'
 
 import { useStyletron } from "styletron-react";
-import useApiCall from '../../hooks/useApiCall';
 
-import WikiLogo from '../../resources/Wikipedia-W-logo.svg';
-import YTLogo from '../../resources/YouTube_logo.svg';
-import WebsiteLogo from '../../resources/SpaceX-logo-mini.png';
+
+import WikiLogo from '../../../resources/Wikipedia-W-logo.svg';
+import YTLogo from '../../../resources/YouTube_logo.svg';
+import WebsiteLogo from '../../../resources/SpaceX-logo-mini.png';
 
 
 import {
@@ -34,7 +34,8 @@ import {
     
     ArrowLeft,
   } from 'baseui/icon';
-  import { Notification } from "baseui/notification";
+import { ImageCarousel } from './ImageCarousel';
+
 interface CardItems  {
     theme: any,
     cardDetails: any,
@@ -110,12 +111,13 @@ const InfoCard: React.FC<CardItems> = ({theme, cardDetails, ToggleRowClick, show
                                                                 <div  className={css({display: "flex", justifyContent: "flex-start"})}><Tag variant="solid" closeable={false}>Customers</Tag><p>{item.customers.length>0?item.customers:`No data present`}</p></div>
                                                             </Block>
                                                         )}
-                                                        triggerType={TRIGGER_TYPE.click}
-                                                        showArrow
                                                         placement={PLACEMENT.top}
+                                                        showArrow
+                                                        returnFocus
                                                         autoFocus
+                                                        
                                                         >
-                                                        <Tag closeable={false}>{item.name}</Tag>
+                                                        <Button>{item.name}</Button>
                                             </StatefulTooltip>
                                 }):<Tag closeable={false}>No Payloads</Tag>}
                             
@@ -131,9 +133,9 @@ const InfoCard: React.FC<CardItems> = ({theme, cardDetails, ToggleRowClick, show
                                                                 title={`${person.name}`}>
                                                             <StyledBody>
                                                                 <hr />
-                                                                <a href={person.wikipedia} target="_blank" rel="noreferrer" title="Wikipedia article">
+                                                                <a href={person.wikipedia} target="_blank" rel="noreferrer" title="Wikipedia page">
                                                                         <img className={css({ width: "10%", margin: "0rem 0.4rem 0px 0.4rem", background: "white", borderRadius: "50%", padding:"0.3rem 0.1rem 0.3rem 0.1rem"
-                                                                                    })} src={WikiLogo} alt="Wikipedia logo" />
+                                                                                    })} src={WikiLogo} alt="Wikipedia logo" title={`${person.name} Wiki page`}/>
                                                                 </a>
                                                                 <p>Agency: <Tag closeable={false} kind={"accent"}>{person.agency}</Tag></p>
                                                                 <p>Status: <Tag closeable={false} kind={person.status!=="active"?"warning":"positive"}>{person.status}</Tag></p>
@@ -144,49 +146,22 @@ const InfoCard: React.FC<CardItems> = ({theme, cardDetails, ToggleRowClick, show
                                 </div>
                             </Panel>
                             <Panel title="Images">
-                            <div className={css({display: "grid",  "grid-template-columns": "auto auto auto auto ", "grid-template-rows": "18rem 18rem 18rem 18rem", "align-content": "space-evenly"})}>
-                        {cardDetails.links.flickr.original.length>0?cardDetails.links.flickr.original.map((link: any, index: number) => {
+                                <div className={css({display: "grid",  "grid-template-columns": "auto auto auto auto ", "grid-template-rows": "18rem 18rem 18rem 18rem", "align-content": "space-evenly"})}>
+                                    {cardDetails.links.flickr.original.length>0?cardDetails.links.flickr.original.map((link: any, index: number) => {
                             
-                            return  <div key={index} onClick={() => {setExpandImage((prevValue) => {return {status: !prevValue.status, link: [link], index}})}}>
-                                        <Card
-                                            overrides={{Root: {style: {width: '26rem'}}}}
-                                            headerImage={
-                                            `${link}`
-                                            }>
-                                        </Card> 
-                                         
-                                   </div>
-                                   
-                                   
-                        }):"No images present"}
-                             </div>
-                                        <Drawer
-                                            isOpen={expandImage.status}
-                                            
-                                            onClose={(e: any) => {setExpandImage((prevValue) => { return {...prevValue, status: !prevValue.status}}); }}
-                                            size={SIZE.auto}
-                                            anchor={ANCHOR.right}
-                                            showBackdrop={false}>
-                                               
-                                               <div className={css({display: "flex", "flex-direction": "column", "align-items": "center","justify-content": "center", padding: "0"})}>
-                                                   
-                                                    <div className={css({display: "flex", "flex-direction": "row", "align-items": "center"})}>
-                                                        <Button  onClick={() => {setExpandImage((prevValue) => { return {...prevValue, link: [cardDetails.links.flickr.original[cardDetails.links.flickr.original.indexOf(expandImage.link[0])>0?cardDetails.links.flickr.original.indexOf(expandImage.link[0]) - 1:cardDetails.links.flickr.original.length-1]], index: cardDetails.links.flickr.original.indexOf(expandImage.link[0])>0?cardDetails.links.flickr.original.indexOf(expandImage.link[0]) - 1:cardDetails.links.flickr.original.length-1 }
-                                                                                                            }
-                                                        )}}><ArrowLeft title="Previous image"  size={36} /></Button>
-                                                        
-                                                    <img src={expandImage.link[0]} alt={"Mission image"} className={css({"object-fit": "contain", width: "100%", height: "45rem"})}/>
-                                                    <Button  onClick={() => {setExpandImage((prevValue) => { return {...prevValue, link: [cardDetails.links.flickr.original[cardDetails.links.flickr.original.indexOf(expandImage.link[0])<cardDetails.links.flickr.original.length-1?cardDetails.links.flickr.original.indexOf(expandImage.link[0]) + 1:0]], index: cardDetails.links.flickr.original.indexOf(expandImage.link[0])<cardDetails.links.flickr.original.length-1?cardDetails.links.flickr.original.indexOf(expandImage.link[0]) + 1:0}
-                                                    
-                                                                                                            }
-                                                        )}}><ArrowRight  title="Next image" size={36} /></Button>
-                                                    </div>
-                                                    <div>
-                                                        <Tag closeable={false} kind={"accent"}>{`${expandImage.index + 1} out of ${cardDetails.links.flickr.original.length}`}</Tag>
-                                                    </div>
-                                               </div>
-                                           
-                                            </Drawer> 
+                                    return  <div key={index} title={"Click to view"}className={css({ ":hover":{cursor: "pointer", transform:" scale(1.05, 1.05)"}})}onClick={() => {setExpandImage((prevValue) => {return {status: !prevValue.status, link: [link], index}})}}>
+                                                {/* <Card
+                                                    overrides={{Root: {style: {width: '26rem', maxHeight: "10rem"}}}}
+                                                    headerImage={
+                                                    `${link}`
+                                                    }>
+                                                </Card>  */}
+                                                <img src={link} alt={"Launch image"} className={css({ maxHeight: "18rem", width: "25rem"})} />
+                                                
+                                            </div>
+                                    }):"No images available"}
+                                </div>
+                                     <ImageCarousel expandImage={expandImage} setExpandImage={setExpandImage} cardDetails={cardDetails} />
                          
                             </Panel>
                         </Accordion>

@@ -4,7 +4,7 @@ import InfoCard from '../Card/InfoCard';
 
 import { useStyletron,  styled  } from "styletron-react";
 
- import useApiCall from '../../hooks/useApiCall';
+ import useApiCall from '../../../hooks/useApiCall';
 
 // import axios from 'axios';
 
@@ -72,7 +72,7 @@ const TableRow: React.FC<TableItems> = ({theme, item, index, showCard, ToggleRow
                                                 textAlign: "center",
                                                 ":hover": {
                                                     transform: "scale(1.05,1.05)",
-                                                    color: "rgb(255, 255, 128)",
+                                                    color: theme?"darkblue":"rgb(255, 255, 128)",
                                                     "background-color": "rgba(230, 230, 255, 0.4)",
                                                     padding: "3rem",
                                                     cursor: "pointer"

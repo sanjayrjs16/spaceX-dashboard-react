@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import TableContainer from './components/Table/TableContainer';
+import TableContainer from './components/Launch/Table/TableContainer';
 import Navbar from './components/Header/Navbar';
 
 
@@ -43,10 +43,8 @@ export default function App () {
         <BaseProvider theme={theme?LightTheme:DarkTheme}>
           <Centered>
                 <Navbar theme={theme} setTheme={setTheme} />
-            <div className="App">
-            
-               
-                <TableContainer theme={theme}/>
+                <div className="App">
+                  <TableContainer theme={theme}/>
               </div>
           </Centered>
         </BaseProvider>
