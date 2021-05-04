@@ -58,7 +58,7 @@ const  TableContainer: React.FC<TableContainerItems> = ({theme}) => {
                 <th>No.</th>
                 <th>Mission name</th>
                 <th>Rocket</th>
-                <th>Launch Status</th>
+                <th>Launch Status<button>V</button></th>
                 <th>Launch Date</th>
                 <th>Launch pad</th>
                 <th>Location</th>

@@ -20,7 +20,7 @@ export const ImageCarousel: React.FC<ImageCarouselItems> =({expandImage, setExpa
             <Drawer isOpen={expandImage.status}
                     onClose={(e: any) => {setExpandImage((prevValue: any) => { return {...prevValue, status: !prevValue.status}}); }}
                     size={SIZE.full}
-                    anchor={ANCHOR.right}
+                    anchor={ANCHOR.top}
                     showBackdrop={false}>
                                                
                 <div className={css({display: "flex", "flex-direction": "column", "align-items": "center","justify-content": "center", padding: "0"})}>

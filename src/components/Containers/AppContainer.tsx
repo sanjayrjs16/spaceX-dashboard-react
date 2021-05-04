@@ -16,11 +16,12 @@ const engine = new Styletron();
 
 const Centered = styled('div', {
   display: 'flex',
+  flexDirection: "column",
   justifyContent: 'center',
   alignItems: 'center',
   height: '100%',
-  width: '100%',
-  marginTop: "10%"
+  width: '90%',
+  margin: "8% auto 2% auto"
 });
 
 interface AppContainerItems {
@@ -32,12 +33,12 @@ interface AppContainerItems {
         <>
            <StyletronProvider value={engine}>
             <BaseProvider theme={theme?LightTheme:DarkTheme}>
-                <Centered>
+               
                     <Navbar theme={theme} setAppTheme={setAppTheme}/>
-                    <div className="App">
+                    <Centered>
                         <LaunchContainer />
-                    </div>
-                </Centered>
+                    </Centered>
+                
             </BaseProvider>
         </StyletronProvider>
         </>

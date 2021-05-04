@@ -1,17 +1,11 @@
+//React related
 import React, {useState} from 'react'
 
-import InfoCard from '../Card/InfoCard'; 
 
+//Styling related
 import { useStyletron,  styled  } from "styletron-react";
-
- import useApiCall from '../../../hooks/useApiCall';
-
-// import axios from 'axios';
-
 import { Tag, KIND } from "baseui/tag";
-import { StyledSpinnerNext } from 'baseui/spinner';
 
-  
 
 interface TableItems  {
     theme: boolean,
@@ -54,14 +48,11 @@ const TableRow: React.FC<TableItems> = ({theme, item, index, showCard, ToggleRow
 
     
     const Td = styled("td", () => ({
-       
-       
         border: "0",
         padding: "0.6rem"
 
   }) );
-  
- 
+
     return (
         <>
 

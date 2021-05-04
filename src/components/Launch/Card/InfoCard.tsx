@@ -35,6 +35,7 @@ import {
     ArrowLeft,
   } from 'baseui/icon';
 import { ImageCarousel } from './ImageCarousel';
+import { Heading } from '../../Header/Heading';
 
 interface CardItems  {
     theme: any,
@@ -55,19 +56,21 @@ const InfoCard: React.FC<CardItems> = ({theme, cardDetails, ToggleRowClick, show
                     isOpen={showCard}
                     autoFocus
                     onClose={() => ToggleRowClick()}
-                    size={SIZE.auto}
+                    size={SIZE.full}
                     anchor={ANCHOR.bottom}
                     showBackdrop={false}
                 >
-                <Card   title={`Mission - ${cardDetails.name}`}>
-                    <StyledThumbnail src={cardDetails.links.patch.small!=null?cardDetails.links.patch.small:WebsiteLogo} />
+                <Card overrides={{
+                                    Root: { style: { margin: "auto", display: "flex", flexDirection: "column" } }
+                 }} >
+                  
                     <StyledBody>
-                   
-                        <p>🚀<Tag closeable={false}>{`${cardDetails.rocket.name}`}</Tag> </p>
-
-                        {cardDetails.success!= null?(cardDetails.success?<Tag closeable={false} kind={KIND.positive}>Success</Tag>:<Tag closeable={false} kind={KIND.negative}>Failed</Tag>):<Tag closeable={false} kind={KIND.orange}>Upcoming</Tag>}<br />
+                        <Heading theme={theme} value={ `Mission - ${cardDetails.name}`} />
+                        <img className={css({display: "block", margin: "0 auto", width: "12rem"})}src={cardDetails.links.patch.small!=null?cardDetails.links.patch.small:WebsiteLogo} alt={"Mission patch image"} />
+                        <p className={css({textAlign: "center"})}><Tag closeable={false}>{`🚀 ${cardDetails.rocket.name}`}</Tag></p>
+                        <p className={css({textAlign: "center"})}>{cardDetails.success!= null?(cardDetails.success?<Tag closeable={false} kind={KIND.positive}>Success</Tag>:<Tag closeable={false} kind={KIND.negative}>Failed</Tag>):<Tag closeable={false} kind={KIND.orange}>Upcoming</Tag>}</p><br />
                         
-                        <span>
+                        <span >
                          
                             {cardDetails.links.wikipedia!=null?<a href={cardDetails.links.wikipedia} target="_blank" rel="noreferrer" title="Wikipedia article">
                                 <img className={css({ width: "2.7%", margin: "0rem 0.4rem 0px 0.4rem", background: "white", borderRadius: "50%", padding:"0.3rem 0.1rem 0.3rem 0.1rem"
@@ -92,8 +95,8 @@ const InfoCard: React.FC<CardItems> = ({theme, cardDetails, ToggleRowClick, show
                         <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Launch site</Tag>{`${cardDetails.launchpad.full_name}, ${cardDetails.launchpad.region}`}</div>
                         <hr />
                         {/* <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Payloads</Tag> {cardDetails.rocket}</div> */}
-                        <Accordion onChange={({ expanded }) => console.log(expanded)}>
-                            <Panel title="Payload details">
+                        <Accordion  onChange={({ expanded }) => {console.log("Clicked accordion", expanded); }}>
+                            <Panel  title="Payload details">
                                 {cardDetails.payloads.length>0?cardDetails.payloads.map((item: any, index: number) => {
                                     return        <StatefulTooltip
                                                     
@@ -160,7 +163,6 @@ const InfoCard: React.FC<CardItems> = ({theme, cardDetails, ToggleRowClick, show
                          
                             </Panel>
                         </Accordion>
-                        <hr />
                     </StyledBody>
                     
                 </Card>
