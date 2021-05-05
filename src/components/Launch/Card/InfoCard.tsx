@@ -13,19 +13,18 @@ import { useStyletron } from "styletron-react";
 import {
     Card,
     StyledBody,
-    StyledAction,
-    StyledThumbnail,
   } from "baseui/card";
 import {  Drawer, SIZE, ANCHOR  } from "baseui/drawer";
-import { Button, SHAPE } from "baseui/button";
+import { Button} from "baseui/button";
 import { Tag, KIND } from "baseui/tag";
 import { Accordion, Panel } from "baseui/accordion";
 import {
     StatefulTooltip,
-    TRIGGER_TYPE,
     PLACEMENT
   } from "baseui/tooltip";
-  import {Block} from 'baseui/block';
+import {Block} from 'baseui/block';
+import { StyledLink } from "baseui/link";
+import {  H4,Label1, Paragraph1} from 'baseui/typography';
 
 
 interface CardItems  {
@@ -57,11 +56,11 @@ const InfoCard: React.FC<CardItems> = ({theme, cardDetails, ToggleRowClick, show
                   
                     <StyledBody>
                         <Heading size={3} value={ `Mission - ${cardDetails.name}`} />
-                        <img className={css({display: "block", margin: "0 auto", width: "12rem"})}src={cardDetails.links.patch.small!=null?cardDetails.links.patch.small:WebsiteLogo} alt={"Mission patch image"} />
+                        <img className={css({display: "block", margin: "0 auto", width: "12rem"})}src={cardDetails.links.patch.small!=null?cardDetails.links.patch.small:WebsiteLogo} alt={"Mission patch"} />
                         <p className={css({textAlign: "center"})}><Tag closeable={false}>{`🚀 ${cardDetails.rocket.name}`}</Tag></p>
                         <p className={css({textAlign: "center"})}>{cardDetails.success!= null?(cardDetails.success?<Tag closeable={false} kind={KIND.positive}>Success</Tag>:<Tag closeable={false} kind={KIND.negative}>Failed</Tag>):<Tag closeable={false} kind={KIND.orange}>Upcoming</Tag>}</p><br />
                         
-                        <span >
+                        <div className={css({textAlign: "center"})}>
                          
                             {cardDetails.links.wikipedia!=null?<a href={cardDetails.links.wikipedia} target="_blank" rel="noreferrer" title="Wikipedia article">
                                 <img className={css({ width: "2.7%", margin: "0rem 0.4rem 0px 0.4rem", background: "white", borderRadius: "50%", padding:"0.3rem 0.1rem 0.3rem 0.1rem"
@@ -72,18 +71,27 @@ const InfoCard: React.FC<CardItems> = ({theme, cardDetails, ToggleRowClick, show
                                             })} src={YTLogo} alt="Youtube logo" />
                             </a>:""} 
                             
-                        </span>
+                        </div>
+                        <hr />
                         {cardDetails.details!=null?
-                        <p className={css({
+                        (<><H4 className={css({textAlign: "center"})}>Description</H4>
+                        <Paragraph1 className={css({
+                            textAlign: "center",
                             "text-align": "justify",
                             "text-justify": "inter-word",
-                            padding: "2rem"})}>{cardDetails.links.wikipedia!=null?<span>{cardDetails.details.slice(0, 700)}<a href={cardDetails.links.wikipedia} target="_blank" rel="noreferrer">...Read more</a></span>:cardDetails.details}</p>:<p>No description available for mission :(</p>}
+                            padding: "2rem"})}>{cardDetails.links.wikipedia!=null?<span>{cardDetails.details.slice(0, 700)} <StyledLink  target="_blank" rel="noreferrer" title="Description" href={cardDetails.links.wikipedia}>
+                              Read more...
+                          </StyledLink></span>:cardDetails.details}</Paragraph1 ></>):(cardDetails.failures.length>0?<Paragraph1 className={css({
+                            "text-align": "center",
+                            })}>{cardDetails.failures[0].reason}</Paragraph1>:<Paragraph1 className={css({
+                                "text-align": "center",
+                                })}>No description available for mission :(</Paragraph1>)}
                         
-                        <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Flight Number</Tag> {cardDetails.flight_number}</div>
+                        <div className={css({display: "flex", alignContent: "center", justifyContent: "space-between", width: "50%", margin: "auto"})}><Tag closeable={false}>Flight Number</Tag> <Label1 >{cardDetails.flight_number}</Label1></div>
                         <hr />
-                        <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Launch date</Tag> {new Date(cardDetails.date_local).toString()}</div>
+                        <div className={css({display: "flex", alignContent: "center", justifyContent: "space-between", width: "50%", margin: "auto"})}><Tag closeable={false}>Launch date</Tag> <Label1>{new Date(cardDetails.date_local).toString()}</Label1></div>
                         <hr />
-                        <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Launch site</Tag>{`${cardDetails.launchpad.full_name}, ${cardDetails.launchpad.region}`}</div>
+                        <div className={css({display: "flex", alignContent: "center", justifyContent: "space-between", width: "50%", margin: "auto"})}><Tag closeable={false}>Launch site</Tag><Label1>{`${cardDetails.launchpad.full_name}, ${cardDetails.launchpad.region}`}</Label1></div>
                         <hr />
                         {/* <div className={css({display: "flex", justifyContent: "space-between"})}><Tag closeable={false}>Payloads</Tag> {cardDetails.rocket}</div> */}
                         <Accordion  onChange={({ expanded }) => {console.log("Clicked accordion", expanded); }}>
@@ -145,7 +153,7 @@ const InfoCard: React.FC<CardItems> = ({theme, cardDetails, ToggleRowClick, show
                             
                                     return  <div key={index} title={"Click to view"}className={css({ ":hover":{cursor: "pointer", transform:" scale(1.05, 1.05)"}})}onClick={() => {setExpandImage((prevValue) => {return {status: !prevValue.status, link: [link], index}})}}>
                                                
-                                                <img src={link} alt={"Launch image"} className={css({ maxHeight: "18rem", width: "25rem"})} />
+                                                <img src={link} alt={"Launch pics"} className={css({ maxHeight: "18rem", width: "25rem"})} />
                                                 
                                             </div>
                                     }):"No images available"}

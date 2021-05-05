@@ -5,7 +5,7 @@ import { useStyletron } from "styletron-react";
 import {  Drawer, SIZE, ANCHOR  } from "baseui/drawer";
 import { ArrowRight, ArrowLeft,} from 'baseui/icon';
 import { Button, SHAPE } from "baseui/button";
-import { Tag, KIND } from "baseui/tag";
+import { Tag } from "baseui/tag";
 
 interface ImageCarouselItems {
     expandImage: any,
@@ -30,7 +30,7 @@ export const ImageCarousel: React.FC<ImageCarouselItems> =({expandImage, setExpa
                                                                             }
                         )}}><ArrowLeft title="Previous image"  size={36} /></Button>
                        <hr /> 
-                    <img src={expandImage.link[0]} alt={"Mission image"} className={css({"object-fit": "contain", width: "100%", height: "45rem"})}/>
+                    <img src={expandImage.link[0]} alt={"Mission Patch"} className={css({"object-fit": "contain", width: "100%", height: "45rem"})}/>
                     <hr /> 
                     <Button shape={SHAPE.circle} onClick={() => {setExpandImage((prevValue: any) => { return {...prevValue, link: [cardDetails.links.flickr.original[cardDetails.links.flickr.original.indexOf(expandImage.link[0])<cardDetails.links.flickr.original.length-1?cardDetails.links.flickr.original.indexOf(expandImage.link[0]) + 1:0]], index: cardDetails.links.flickr.original.indexOf(expandImage.link[0])<cardDetails.links.flickr.original.length-1?cardDetails.links.flickr.original.indexOf(expandImage.link[0]) + 1:0}
                     

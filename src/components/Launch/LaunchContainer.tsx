@@ -5,34 +5,40 @@ import  Heading  from '../Header/Heading';
 
 //Redux related
 import { connect } from 'react-redux';
-import { setAppTheme } from '../../redux/actions/AppActionCreator';
+import { setLaunchesQuery } from '../../redux/actions/Launches/LaunchesActionCreator';
 
 //Styling related
-import { useStyletron  } from "styletron-react";
+
 
 //This is for containing everything related to launches
 interface LaunchContainerItems {
-  theme: boolean  
+  theme: boolean,
+  query: any,
+  setLauncQuery?: any
+  
 }
- const LaunchContainer:React.FC<LaunchContainerItems> = ({theme}) => {
-    const [css] = useStyletron();
+ const LaunchContainer:React.FC<LaunchContainerItems> = ({theme, query, setLauncQuery}) => {
+   
     return (
         <>
+            
             <Heading  size={2} value={"Launches"} />
-            <TableContainer theme={theme}/>
+            <TableContainer theme={theme} query={query} setLaunchesQuery={setLauncQuery}/>
            
         </>
     )
 }
 const mapStateToProps = (state: any) => {
     return {
-        theme: state.app.theme
+        theme: state.app.theme,
+        query: state.launch.query
     }
 }
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-        setAppTheme: (theme: any) => dispatch(setAppTheme(theme))
+       
+        setLauncQuery: (query: any) => dispatch(setLaunchesQuery(query))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(LaunchContainer);

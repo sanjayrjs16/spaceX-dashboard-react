@@ -1,0 +1,1 @@
+export const SET_QUERY_LAUNCHES = "SET_QUERY_LAUNCHES";

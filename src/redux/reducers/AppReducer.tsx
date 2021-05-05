@@ -5,6 +5,7 @@ const initialState = {
     launchData: {}
 }
 const AppReducer = (state: any = initialState, action: any) => {
+    console.log("Firing reducer");
    switch(action.type){
        case SET_APP_THEME:{
          return {...state, theme: !action.payload}

@@ -9,7 +9,7 @@ import { setAppTheme } from '../../redux/actions/AppActionCreator';
 
 //Styling related
 import {Client as Styletron} from 'styletron-engine-atomic';
-import {Provider as StyletronProvider, useStyletron} from 'styletron-react';
+import {Provider as StyletronProvider} from 'styletron-react';
 import { BaseProvider, styled, DarkTheme, LightTheme} from 'baseui';
 
 const engine = new Styletron();
