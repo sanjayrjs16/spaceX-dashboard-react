@@ -1,19 +1,21 @@
-import React from 'react'
+//React and components related
+import React, {useState, useEffect} from 'react'
 import TableRow from './TableRow';
+import InfoCard from '../Card/InfoCard'; 
+import PaginationButton from '../../Pagination/PaginationButton';
 
+//custom hook
+import useApiCall from '../../../hooks/useApiCall';
+
+//Styling related
 import { useStyletron, styled } from "styletron-react";
 import {StyledSpinnerNext} from 'baseui/spinner';
 import { Pagination, SIZE } from "baseui/pagination";
-// import { ButtonGroup, MODE } from "baseui/button-group";
-// import { Button } from "baseui/button";
 
-import {useState} from 'react';
-// import axios from 'axios';
+//React query related
+import {focusManager} from 'react-query';
 
-import useApiCall from '../../../hooks/useApiCall';
 
-import InfoCard from '../Card/InfoCard'; 
-import PaginationButton from '../../Pagination/PaginationButton';
 
 interface TableContainerItems  {
   theme: boolean
@@ -25,7 +27,9 @@ const  TableContainer: React.FC<TableContainerItems> = ({theme}) => {
   const [selectedRowData, setSelectedRowData] = useState({});
   const [query, setQuery] = useState({});
 
-  let { status, data, error, isFetching, isPreviousData, items } = useApiCall('https://api.spacexdata.com/v4','/launches/query', '','POST','launches', {page: currentPage, populate: ["payloads", "rocket", "launchpad", "crew"]},query);
+ 
+
+  let { status, data, error, isFetching, isPreviousData, } = useApiCall('https://api.spacexdata.com/v4','/launches/query', '','POST','launches', {page: currentPage, populate: ["payloads", "rocket", "launchpad", "crew"]},query);
   
   const ToggleRowClick = (rowIdentifier: number) => {
        
@@ -58,7 +62,7 @@ const  TableContainer: React.FC<TableContainerItems> = ({theme}) => {
                 <th>No.</th>
                 <th>Mission name</th>
                 <th>Rocket</th>
-                <th>Launch Status<button>V</button></th>
+                <th>Launch Status<button onClick={() => {setQuery({"upcoming":true});  focusManager.setFocused(true); }}>V</button></th>
                 <th>Launch Date</th>
                 <th>Launch pad</th>
                 <th>Location</th>

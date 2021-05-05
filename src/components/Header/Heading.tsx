@@ -1,26 +1,49 @@
 //React  related
 import React from 'react'
 
+//Redux related
+import {connect} from 'react-redux';
+
 //Styling related
 import { useStyletron  } from "styletron-react";
 
 interface HeadingItems {
     theme: boolean,
     value: string,
+    size: number
 }
-export const Heading:React.FC<HeadingItems> = ({theme, value}) => {
+const Heading:React.FC<HeadingItems> = ({theme, size, value}) => {
     
     const darkNormalColour = "rgba(210, 210, 210, 0.5)";
     const lightNormalColour = "rgba(10, 10, 10, 0.5)";
     const darkStretchColour = "rgba(255, 255, 255, 0.9)";
     const lightStretchColour = "rgba(0, 0, 0, 0.9)";
 
+    let fontSize ;
+    switch(size){
+        case 1:{
+            fontSize =2.5;
+            break;
+        }
+        case 2: {
+            fontSize=2;
+            break;
+        }
+        case 3: {
+            fontSize=1.5;
+            break;
+        }
+        default: {
+            fontSize = 2.5;
+            break;
+        }
+    }
     let hoverStyle = {
         color: theme?"black":"white",
-        fontSize: "2.8rem",
-        margin: "0 auto 1.7rem auto",
+        fontSize: `${fontSize+0.3}rem`,
+        margin: "0 auto 1.62rem auto",
         transform: "scale(1.01, 1.01)",
-        width: "35%",
+        width: "40%",
         borderTop: theme?`.1rem double ${lightNormalColour}`:`.1rem double ${darkNormalColour}`,
         borderBottom: theme?`.1rem double ${lightNormalColour}`:`.1rem double ${darkNormalColour}`,
         borderRight: theme?`0.5rem solid ${lightStretchColour}`:`0.5rem solid ${darkStretchColour}`,
@@ -34,8 +57,8 @@ export const Heading:React.FC<HeadingItems> = ({theme, value}) => {
                             margin: "0 auto 2rem auto",
                             padding: 0,
                             "text-align": "center",
-                            fontSize: "2.5rem",
-                           borderRight: theme?`3rem solid ${lightNormalColour}`:`3rem solid ${darkNormalColour}`,
+                            fontSize: `${fontSize}rem`,
+                            borderRight: theme?`3rem solid ${lightNormalColour}`:`3rem solid ${darkNormalColour}`,
                             borderLeft:  theme?`3rem solid ${lightNormalColour}`:`3rem solid ${darkNormalColour}`,
                             borderRadius: ".2rem .2rem .2rem .2rem",
                             "transition-duration": "0.25s",
@@ -44,7 +67,14 @@ export const Heading:React.FC<HeadingItems> = ({theme, value}) => {
     const [css] = useStyletron();
     return (
         <>
+        
              <h1 className={css(NormalStyle)}>{value}</h1>
         </>
     )
 }
+const mapStateToProps = (state:any) => {
+    return {
+        theme: state.app.theme,
+    }
+}
+export default connect(mapStateToProps)(Heading);

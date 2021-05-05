@@ -4,7 +4,7 @@ import {useState} from 'react';
 import { useQuery } from 'react-query';
 
 export default function useApiCall(baseUrl: string, resource: string, queryParams: string, method: any,  key: string, options?: any, query?: any){
-    let [items, setItems]: any[] = useState([]);
+    
     const makeApiCall = async (page: any) => {
                  let data = await  axios({url: baseUrl+resource+queryParams, 
                     method,
@@ -13,7 +13,7 @@ export default function useApiCall(baseUrl: string, resource: string, queryParam
                       "options": {...options}
                     }
                   })
-                  setItems(await data.data)
+                 
                   return await data.data
   }
   const { status, data, error, isFetching, isPreviousData } = useQuery(
@@ -22,5 +22,5 @@ export default function useApiCall(baseUrl: string, resource: string, queryParam
     { keepPreviousData: true, staleTime: 5000 }
   );
   // console.log("inside useApiCall, ", status, data)
-    return { status, data, error, isFetching, isPreviousData, items };
+    return { status, data, error, isFetching, isPreviousData,};
 }

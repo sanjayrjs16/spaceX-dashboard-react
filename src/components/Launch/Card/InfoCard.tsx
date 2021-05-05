@@ -1,6 +1,7 @@
+//React related
 import React, {useState} from 'react'
-
-import { useStyletron } from "styletron-react";
+import { ImageCarousel } from './ImageCarousel';
+import  Heading  from '../../Header/Heading';
 
 
 import WikiLogo from '../../../resources/Wikipedia-W-logo.svg';
@@ -8,34 +9,24 @@ import YTLogo from '../../../resources/YouTube_logo.svg';
 import WebsiteLogo from '../../../resources/SpaceX-logo-mini.png';
 
 
+import { useStyletron } from "styletron-react";
 import {
     Card,
     StyledBody,
     StyledAction,
     StyledThumbnail,
   } from "baseui/card";
-
-  import {  Drawer, SIZE, ANCHOR  } from "baseui/drawer";
-
-  import { Button, SHAPE } from "baseui/button";
-  import { Tag, KIND } from "baseui/tag";
-
-  import { Accordion, Panel } from "baseui/accordion";
-  
-  import {
+import {  Drawer, SIZE, ANCHOR  } from "baseui/drawer";
+import { Button, SHAPE } from "baseui/button";
+import { Tag, KIND } from "baseui/tag";
+import { Accordion, Panel } from "baseui/accordion";
+import {
     StatefulTooltip,
     TRIGGER_TYPE,
     PLACEMENT
   } from "baseui/tooltip";
   import {Block} from 'baseui/block';
-  import {
-    
-    ArrowRight,
-    
-    ArrowLeft,
-  } from 'baseui/icon';
-import { ImageCarousel } from './ImageCarousel';
-import { Heading } from '../../Header/Heading';
+
 
 interface CardItems  {
     theme: any,
@@ -65,7 +56,7 @@ const InfoCard: React.FC<CardItems> = ({theme, cardDetails, ToggleRowClick, show
                  }} >
                   
                     <StyledBody>
-                        <Heading theme={theme} value={ `Mission - ${cardDetails.name}`} />
+                        <Heading size={3} value={ `Mission - ${cardDetails.name}`} />
                         <img className={css({display: "block", margin: "0 auto", width: "12rem"})}src={cardDetails.links.patch.small!=null?cardDetails.links.patch.small:WebsiteLogo} alt={"Mission patch image"} />
                         <p className={css({textAlign: "center"})}><Tag closeable={false}>{`🚀 ${cardDetails.rocket.name}`}</Tag></p>
                         <p className={css({textAlign: "center"})}>{cardDetails.success!= null?(cardDetails.success?<Tag closeable={false} kind={KIND.positive}>Success</Tag>:<Tag closeable={false} kind={KIND.negative}>Failed</Tag>):<Tag closeable={false} kind={KIND.orange}>Upcoming</Tag>}</p><br />

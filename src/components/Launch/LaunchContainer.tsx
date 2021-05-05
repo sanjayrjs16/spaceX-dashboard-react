@@ -1,7 +1,7 @@
 //React related
 import React from 'react';
 import TableContainer from './Table/TableContainer';
-import { Heading } from '../Header/Heading';
+import  Heading  from '../Header/Heading';
 
 //Redux related
 import { connect } from 'react-redux';
@@ -18,7 +18,7 @@ interface LaunchContainerItems {
     const [css] = useStyletron();
     return (
         <>
-            <Heading theme={theme} value={"Launches"} />
+            <Heading  size={2} value={"Launches"} />
             <TableContainer theme={theme}/>
            
         </>

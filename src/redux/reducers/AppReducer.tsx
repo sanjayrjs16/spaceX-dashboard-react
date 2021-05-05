@@ -1,7 +1,8 @@
 import {SET_APP_THEME} from '../actions/AppActionTypes';
 const initialState = {
     theme: true,
-    isLoading: false
+    isLoading: false,
+    launchData: {}
 }
 const AppReducer = (state: any = initialState, action: any) => {
    switch(action.type){
