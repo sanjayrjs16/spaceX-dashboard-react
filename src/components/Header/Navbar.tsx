@@ -40,10 +40,10 @@ interface NavBarItems  {
                                 })}>
             
                 <img className={css({   
-                                        width: '40%',
-                                        height: '3rem',
+                                        width: '30%',
+                                        height: '2.5rem',
                                         background: theme?"rgb(217, 217, 217, 0.4)":"rgb(0, 0, 0,0.7)",
-                                        padding: "0rem 0rem 3rem 5rem",
+                                        padding: "0rem 0rem 1rem 5rem",
                                         borderRadius: "0rem 0rem 5rem 5rem",
                                         border: theme?".1rem solid rgb(0, 0, 0)":".1rem solid rgb(217, 217, 217)",
                                         })} src={SpaceXLogo} alt="SpaceX-Logo"/>

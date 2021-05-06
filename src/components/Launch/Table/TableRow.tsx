@@ -49,7 +49,7 @@ const TableRow: React.FC<TableItems> = ({theme, item, index, showCard, ToggleRow
     
     const Td = styled("td", () => ({
         border: "0",
-        padding: "0.6rem"
+        padding: "0.4rem"
 
   }) );
 

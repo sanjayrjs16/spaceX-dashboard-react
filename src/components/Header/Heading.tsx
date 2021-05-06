@@ -54,7 +54,7 @@ const Heading:React.FC<HeadingItems> = ({theme, size, value}) => {
     let NormalStyle= {
                             color: theme?"rgba(0, 0, 0, 0.8)":"rgba(255, 255, 255, 0.8)",
                             width: "50%", 
-                            margin: "0 auto 2rem auto",
+                            margin: "0 auto 1.8rem auto",
                             padding: 0,
                             "text-align": "center",
                             fontSize: `${fontSize}rem`,

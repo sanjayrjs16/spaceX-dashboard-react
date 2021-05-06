@@ -59,5 +59,6 @@
     "@types/styletron-engine-atomic": "^1.1.0",
     "@types/styletron-react": "^5.0.2",
     "eslint-plugin-baseui": "^9.111.2"
-  }
+  },
+  "proxy": "https://api.allorigins.win/get?"
 }

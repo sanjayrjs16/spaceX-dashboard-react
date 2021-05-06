@@ -11,6 +11,8 @@ import { setAppTheme } from '../../redux/actions/AppActionCreator';
 import {Client as Styletron} from 'styletron-engine-atomic';
 import {Provider as StyletronProvider} from 'styletron-react';
 import { BaseProvider, styled, DarkTheme, LightTheme} from 'baseui';
+import {  H4,Label2, Paragraph1} from 'baseui/typography';
+import { useStyletron } from "styletron-react";
 
 const engine = new Styletron();
 
@@ -21,7 +23,8 @@ const Centered = styled('div', {
   alignItems: 'center',
   height: '100%',
   width: '90%',
-  margin: "8% auto 2% auto"
+  margin: "7% auto 1% auto",
+  
 });
 
 interface AppContainerItems {
@@ -29,6 +32,7 @@ interface AppContainerItems {
     setAppTheme: any
   } 
  const AppContainer:React.FC<AppContainerItems> = ({theme, setAppTheme}) => {
+    const [css] = useStyletron();
     return (
         <>
            <StyletronProvider value={engine}>
@@ -37,6 +41,7 @@ interface AppContainerItems {
                     <Navbar theme={theme} setAppTheme={setAppTheme}/>
                     <Centered>
                         <LaunchContainer />
+                        <Label2 className={css({color: theme?"black":"white"})}>Made by Sanjay</Label2>
                     </Centered>
                 
             </BaseProvider>

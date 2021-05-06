@@ -1,17 +1,20 @@
 import axios from 'axios';
 
+import axiosConfig from '../axios/axiosConfig';
+
 import { useQuery } from 'react-query';
 
 export default function useApiCall(baseUrl: string, resource: string, queryParams: string, method: any,  key: string, options?: any, query?: any){
     
     const makeApiCall = async (page: any) => {
-      console.log("Feching now");           
-      let data = await  axios({url: baseUrl+resource+queryParams, 
+      
+          
+      let data = await  axiosConfig({url: baseUrl+resource+queryParams, 
                     method,
                     data: {
                       "query": {...query},
                       "options": {...options}
-                    }
+                    },
                   })
                  
                   return await data.data
