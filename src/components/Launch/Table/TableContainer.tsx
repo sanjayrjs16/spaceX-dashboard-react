@@ -22,7 +22,7 @@ import { Tag, KIND } from "baseui/tag";
 
 interface TableContainerItems  {
   theme: boolean,
-  query: any,
+  query: any,//For the lauch status table filter
   setLaunchesQuery: any
 }
 const  TableContainer: React.FC<TableContainerItems> = ({theme, query, setLaunchesQuery}) => {
@@ -40,7 +40,12 @@ const  TableContainer: React.FC<TableContainerItems> = ({theme, query, setLaunch
   useEffect(() => {
     console.log("Query changed", )
     refetch();
-  }, [query])
+  }, [query, refetch])
+  
+  useEffect(() => {
+    console.log("Current page changed changed", )
+    refetch();
+  }, [currentPage, refetch])
   
   const setLaunchFilter = (event:any) => { 
     setStatueFilter({filter: event.option.filter, tagType: event.option.tagType})

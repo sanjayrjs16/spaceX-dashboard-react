@@ -33,7 +33,7 @@ export const StatsContainer:React.FC<statsContainerItems> = ({theme, latestData,
     }
     return (
         <>
-            {statusUpcoming === 'loading' || (isFetchingUpcoming) || statusLatest==='loading' || (isFetchingLatest)? (
+            {/* {statusUpcoming === 'loading' || (isFetchingUpcoming) || statusLatest==='loading' || (isFetchingLatest)? (
                 <StyledSpinnerNext  overrides={{Root: {style: { width: '100%', margin: "auto", padding: "2rem"}}}} />):statusUpcoming === 'error' ? "An error occured":
                 (
                 <div className={css({display: "flex", "justify-content": "space-around", backgroundColor: theme?"white":"black", width: "100%", marginBottom: "0.2rem"})}>
@@ -58,7 +58,7 @@ export const StatsContainer:React.FC<statsContainerItems> = ({theme, latestData,
                         </Button>
                     {showCard.show && statusUpcoming ==="success"?<InfoCard theme={theme} cardDetails={showCard.cardDetailes} ToggleRowClick={ShowCard} showCard={showCard.show}/>:null}
      
-                </div>)}
+                </div>)} */}
      
     </>)
 }

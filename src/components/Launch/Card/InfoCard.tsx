@@ -49,6 +49,13 @@ const InfoCard: React.FC<CardItems> = ({theme, cardDetails, ToggleRowClick, show
                     size={SIZE.full}
                     anchor={ANCHOR.bottom}
                     showBackdrop={false}
+                    overrides={{
+                        Root: {
+                          style: ({ $theme }) => ({
+                            "z-index": 10
+                          })
+                        }
+                      }}
                 >
                 <Card overrides={{
                                     Root: { style: { margin: "auto", display: "flex", flexDirection: "column" } }
@@ -97,10 +104,9 @@ const InfoCard: React.FC<CardItems> = ({theme, cardDetails, ToggleRowClick, show
                         <Accordion  onChange={({ expanded }) => {console.log("Clicked accordion", expanded); }}>
                             <Panel  title="Payload details">
                                 {cardDetails.payloads.length>0?cardDetails.payloads.map((item: any, index: number) => {
-                                    return        <StatefulTooltip
-                                                    
-                                                        key={index}
-                                                        content={() => (
+                                    return     (    <StatefulTooltip accessibilityType={'tooltip'}
+                                                                        content={() => (
+                                                        
                                                             <Block padding={"20px"}overrides={{
                                                                 Block: {
                                                                   style: {display: 'flex', flexDirection: "column"},
@@ -112,15 +118,10 @@ const InfoCard: React.FC<CardItems> = ({theme, cardDetails, ToggleRowClick, show
                                                                 <div  className={css({display: "flex", justifyContent: "flex-start"})}><Tag variant="solid" closeable={false}>Mass(kg)</Tag><p>{item.mass_kg?item.mass_kg:`No data present`}</p></div>
                                                                 <div  className={css({display: "flex", justifyContent: "flex-start"})}><Tag variant="solid" closeable={false}>Customers</Tag><p>{item.customers.length>0?item.customers:`No data present`}</p></div>
                                                             </Block>
-                                                        )}
-                                                        placement={PLACEMENT.top}
-                                                        showArrow
-                                                        returnFocus
-                                                        autoFocus
-                                                        
-                                                        >
-                                                        <Button>{item.name}</Button>
-                                            </StatefulTooltip>
+                                    )}showArrow
+                                    returnFocus
+                                    autoFocus>kndkf</StatefulTooltip>)
+                                                      
                                 }):<Tag closeable={false}>No Payloads</Tag>}
                             
                             </Panel>
@@ -151,14 +152,14 @@ const InfoCard: React.FC<CardItems> = ({theme, cardDetails, ToggleRowClick, show
                                 <div className={css({display: "grid",  "grid-template-columns": "auto auto auto auto ", "grid-template-rows": "18rem 18rem 18rem 18rem", "align-content": "space-evenly"})}>
                                     {cardDetails.links.flickr.original.length>0?cardDetails.links.flickr.original.map((link: any, index: number) => {
                             
-                                    return  <div key={index} title={"Click to view"}className={css({ ":hover":{cursor: "pointer", transform:" scale(1.05, 1.05)"}})}onClick={() => {setExpandImage((prevValue) => {return {status: !prevValue.status, link: [link], index}})}}>
+                                    return  <div key={index} title={"Click to view"}className={css({ ":hover":{cursor: "pointer", transform:" scale(1.05, 1.05)"}})} onClick={() => {console.log("The image has been clicked!", expandImage);setExpandImage((prevValue) => {return {...prevValue, status: !prevValue.status, link: [link], index}})}}>
                                                
                                                 <img src={link} alt={"Launch pics"} className={css({ maxHeight: "18rem", width: "25rem"})} />
                                                 
                                             </div>
                                     }):"No images available"}
                                 </div>
-                                     <ImageCarousel expandImage={expandImage} setExpandImage={setExpandImage} cardDetails={cardDetails} />
+                                 {expandImage.status?<ImageCarousel theme={theme} expandImage={expandImage} setExpandImage={setExpandImage} cardDetails={cardDetails} />:""}
                          
                             </Panel>
                         </Accordion>
