@@ -20,7 +20,8 @@ import { Tag, KIND } from "baseui/tag";
 import { Accordion, Panel } from "baseui/accordion";
 import {
     StatefulTooltip,
-    PLACEMENT
+    PLACEMENT,
+    TRIGGER_TYPE
   } from "baseui/tooltip";
 import {Block} from 'baseui/block';
 import { StyledLink } from "baseui/link";
@@ -105,9 +106,8 @@ const InfoCard: React.FC<CardItems> = ({theme, cardDetails, ToggleRowClick, show
                             <Panel  title="Payload details">
                                 {cardDetails.payloads.length>0?cardDetails.payloads.map((item: any, index: number) => {
                                     return     (    <StatefulTooltip accessibilityType={'tooltip'}
-                                                                        content={() => (
-                                                        
-                                                            <Block padding={"20px"}overrides={{
+                                                                        content={() =>  { console.log("Tooltip activated!!");
+                                                                            return (<Block padding={"20px"} overrides={{
                                                                 Block: {
                                                                   style: {display: 'flex', flexDirection: "column"},
                                                                 },
@@ -117,10 +117,19 @@ const InfoCard: React.FC<CardItems> = ({theme, cardDetails, ToggleRowClick, show
                                                                 <div  className={css({display: "flex", justifyContent: "flex-start"})}><Tag variant="solid" closeable={false}>Lifespan</Tag><p>{item.lifespan_years?`${item.lifespan_years} year(s)`:`No data present`}</p></div>
                                                                 <div  className={css({display: "flex", justifyContent: "flex-start"})}><Tag variant="solid" closeable={false}>Mass(kg)</Tag><p>{item.mass_kg?item.mass_kg:`No data present`}</p></div>
                                                                 <div  className={css({display: "flex", justifyContent: "flex-start"})}><Tag variant="solid" closeable={false}>Customers</Tag><p>{item.customers.length>0?item.customers:`No data present`}</p></div>
-                                                            </Block>
-                                    )}showArrow
+                                                            </Block>)}
+                                    }showArrow
                                     returnFocus
-                                    autoFocus>kndkf</StatefulTooltip>)
+                                    autoFocus
+                                    
+                                    placement={PLACEMENT.top}
+                                    overrides={{
+                                        Body: {
+                                          style: {
+                                              "z-index": 30 ,
+                                          }
+                                        }
+                                      }}><Button >{item.name}</Button></StatefulTooltip>)
                                                       
                                 }):<Tag closeable={false}>No Payloads</Tag>}
                             
