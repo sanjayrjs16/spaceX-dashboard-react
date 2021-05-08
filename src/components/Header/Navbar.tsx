@@ -27,7 +27,7 @@ interface NavBarItems  {
       }, [theme])
     return (
         <>
-            <nav className={css({   "z-index": -10,
+            <nav className={css({   "z-index": 1,
                                     position: "fixed",
                                     width: '100%',
                                     top: 0,
@@ -51,7 +51,7 @@ interface NavBarItems  {
                 <div className={css({ position: "absolute", top: "5%", right: "5%"})}>
                     <Button shape={SHAPE.circle} kind={KIND.primary} onClick={() =>
                                         setAppTheme(theme)
-                    }>{theme?"🌙":"🌞"}</Button>
+                    }  >{theme?"🌙":"🌞"}</Button>
                 </div>
         
             </nav>

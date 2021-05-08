@@ -30,7 +30,7 @@ import {  H4,Label1, Paragraph1} from 'baseui/typography';
 interface CardItems  {
     theme: any,
     cardDetails: any,
-    ToggleRowClick: any,
+    ToggleRowClick?: any,
     showCard: any
 };
 

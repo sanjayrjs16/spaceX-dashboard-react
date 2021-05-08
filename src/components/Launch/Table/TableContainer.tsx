@@ -42,18 +42,37 @@ const  TableContainer: React.FC<TableContainerItems> = ({theme, query, setLaunch
     refetch();
   }, [query])
   
-  // useEffect(() => {
-  //   console.log("status changed", )
-    
-  // }, [status, isFetching])
+  const setLaunchFilter = (event:any) => { 
+    setStatueFilter({filter: event.option.filter, tagType: event.option.tagType})
+    switch(event.option.filter){
+    case "All":{
+      setLaunchesQuery({});
+      setCurrentPage(1);
+      break;
+    }
+    case "Success":{
+      setLaunchesQuery({"success": true});
+      setCurrentPage(1);
+      break;
+    }
+    case "Failed":{
+      setLaunchesQuery({"success": false});
+      setCurrentPage(1);
+      break;
+    }
+    case "Upcoming":{
+      setLaunchesQuery({"upcoming": true});
+      setCurrentPage(1);
+      break;
+    }
 
+}
+}
   const ToggleRowClick = (rowIdentifier: number) => {
-       
     setShowCard((prevShowCard) => {
         return {rowIdentifier, show: !prevShowCard.show }
     })
-
-  }
+}
 
    const TR = styled("tr", () => ({
         background: theme?"white":"black",
@@ -92,38 +111,12 @@ const  TableContainer: React.FC<TableContainerItems> = ({theme, query, setLaunch
                                                   searchable={false}
                                                   labelKey="filter"
                                                   valueKey="filter"
-                                                  onChange={(event:any) => { 
-                                                    setStatueFilter({filter: event.option.filter, tagType: event.option.tagType})
-                                                    switch(event.option.filter){
-                                                    case "All":{
-                                                      setLaunchesQuery({});
-                                                      setCurrentPage(1);
-                                                      break;
-                                                    }
-                                                    case "Success":{
-                                                      setLaunchesQuery({"success": true});
-                                                      setCurrentPage(1);
-                                                      break;
-                                                    }
-                                                    case "Failed":{
-                                                      setLaunchesQuery({"success": false});
-                                                      setCurrentPage(1);
-                                                      break;
-                                                    }
-                                                    case "Upcoming":{
-                                                      setLaunchesQuery({"upcoming": true});
-                                                      setCurrentPage(1);
-                                                      break;
-                                                    }
-        
-                                    }
-                                            }}
-   
-                          /></th>
-            <th>Launch Date</th>
-            <th>Launch pad</th>
-            <th>Location</th>
-            <th>Orbit</th>
+                                                  onChange={setLaunchFilter}/>
+                </th>
+                <th>Launch Date</th>
+                <th>Launch pad</th>
+                <th>Location</th>
+                <th>Orbit</th>
               </TR>
             </thead>
             <tbody>

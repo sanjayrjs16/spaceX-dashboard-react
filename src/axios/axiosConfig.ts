@@ -7,7 +7,7 @@ const instance = axios.create({
     });
     
     instance.defaults.headers.post['Content-Type'] = 'application/json';
-    instance.defaults.headers.get['Access-Control-Allow-Origin'] = '*';   
+    // instance.defaults.headers.post['Access-Control-Allow-Origin'] = '*';   
 
     instance.interceptors.request.use(request => {
         console.log("The request", request);
