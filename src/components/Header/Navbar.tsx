@@ -22,7 +22,7 @@ interface NavBarItems  {
  const Navbar:React.FC<NavBarItems> = ({theme, setAppTheme}) => {
     const [css] = useStyletron();
     useEffect(() => {
-        console.log("Runnung useEffect in APpp", document.body.style)
+        //console.log("Runnung useEffect in APpp", document.body.style)
         theme?document.body.style.backgroundImage = ` url(${lightThemeBG})`:document.body.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${darkThemeBG})`;
       }, [theme])
     return (

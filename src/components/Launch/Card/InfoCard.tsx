@@ -2,7 +2,7 @@
 import React, {useState} from 'react'
 import { ImageCarousel } from './ImageCarousel';
 import  Heading  from '../../Header/Heading';
-
+import { CrewCard } from '../../Crew/CrewCard';
 
 import WikiLogo from '../../../resources/Wikipedia-W-logo.svg';
 import YTLogo from '../../../resources/YouTube_logo.svg';
@@ -137,23 +137,7 @@ const InfoCard: React.FC<CardItems> = ({theme, cardDetails, ToggleRowClick, show
                             <Panel title="Crew members">
                                 <div className={css({display: "flex", "flex-direction": "row"})}>
                                         {cardDetails.crew.length>0?cardDetails.crew.map((person: any, index: number) => {
-                                                return  <Card   key={index}
-                                                                overrides={{Root: {style: {width: '20rem'}}}}
-                                                                headerImage={
-                                                                `${person.image}`
-                                                                }
-                                                                title={`${person.name}`}>
-                                                            <StyledBody>
-                                                                <hr />
-                                                                <a href={person.wikipedia} target="_blank" rel="noreferrer" title="Wikipedia page">
-                                                                        <img className={css({ width: "10%", margin: "0rem 0.4rem 0px 0.4rem", background: "white", borderRadius: "50%", padding:"0.3rem 0.1rem 0.3rem 0.1rem"
-                                                                                    })} src={WikiLogo} alt="Wikipedia logo" title={`${person.name} Wiki page`}/>
-                                                                </a>
-                                                                <p>Agency: <Tag closeable={false} kind={"accent"}>{person.agency}</Tag></p>
-                                                                <p>Status: <Tag closeable={false} kind={person.status!=="active"?"warning":"positive"}>{person.status}</Tag></p>
-                                                            </StyledBody>
-                                            
-                                                        </Card>         
+                                                return  <CrewCard uniqueKey={index} person={{...person, launches: [{"name": cardDetails.name}]}} showButton={false} />        
                                         }):"No data available"}
                                 </div>
                             </Panel>

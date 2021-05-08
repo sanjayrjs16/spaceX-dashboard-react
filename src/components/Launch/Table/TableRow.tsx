@@ -68,7 +68,7 @@ const TableRow: React.FC<TableItems> = ({theme, item, index, showCard, ToggleRow
                                                     padding: "3rem",
                                                     cursor: "pointer"
                                                 }
-                        })} onClick={() => {ToggleRowClick(index); setSelectedRowData({...item}); console.log(showCard)}}>
+                        })} onClick={() => {ToggleRowClick(index); setSelectedRowData({...item}); }} title={"Click to View Card"}>
                             <Td>{item.flight_number}</Td>
                             <Td>{item.name}</Td>
                             <Td>{item.rocket.name}</Td>
