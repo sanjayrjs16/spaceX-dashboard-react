@@ -32,7 +32,7 @@ export const AboutCompany:React.FC<AboutCompanyItems> = ({theme}) => {
         flexDirection: "column", 
         justifyContent: "center", 
         textAlign: "justify", 
-        height: "30rem",
+        height: "45rem",
         backgroundImage : `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${earth})`,
        " background-attachment": "fixed",
         "background-repeat": "no-repeat",
@@ -51,7 +51,7 @@ export const AboutCompany:React.FC<AboutCompanyItems> = ({theme}) => {
                         <hr />
                         <Display4 alignSelf={"center"} color={"white"}marginBottom="scale500">Summary</Display4>
                         <h4>{data.summary}</h4>
-                        <div className={css({display: "flex", "justifyContent": "space-between"})}>
+                        <div className={css({display: "flex", "justifyContent": "space-between", marginBottom: "5rem"})}>
                             <h3><Tag closeable={false} kind={KIND.orange} variant={VARIANT.solid}>H.Q</Tag>{`${data.headquarters.address}, ${data.headquarters.city}, ${data.headquarters.state}`}</h3>
                             <h3> <Tag closeable={false} kind={KIND.blue} variant={VARIANT.solid}>Founded</Tag>{data.founded}</h3>
                             <h3><Tag closeable={false} kind={KIND.green} variant={VARIANT.solid}>Valuation</Tag> {`${data.valuation/1000000000} billion💲`}</h3>
@@ -60,7 +60,7 @@ export const AboutCompany:React.FC<AboutCompanyItems> = ({theme}) => {
                             <h3><Tag closeable={false} kind={KIND.brown} variant={VARIANT.solid}>Launch sites</Tag>{data.launch_sites}</h3>
                         </div>
                         <Display4 alignSelf={"center"} color={"white"}marginBottom="scale500">Key people</Display4>
-                        <div className={css({display: "flex", "justifyContent": "space-between"})}>
+                        <div className={css({display: "flex", "justifyContent": "space-between" , marginBottom: "5rem"})}>
                             <h3><Tag closeable={false}  kind={KIND.green} variant={VARIANT.solid}>Founder</Tag> {data.founder}</h3>
                             <h3><Tag closeable={false} kind={KIND.red} variant={VARIANT.solid}>C.E.O</Tag> {data.ceo}</h3>
                             <h3><Tag closeable={false} kind={KIND.blue} variant={VARIANT.solid}>C.O.O</Tag>{data.coo}</h3>

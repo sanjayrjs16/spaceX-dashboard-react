@@ -23,7 +23,7 @@ const CrewContainer:React.FC<CrewContainerItems> = ({theme}) => {
     // console.log("Here's crew data", data);
     return (
         <>
-            <Heading size={1} value="Crew" />
+            <Heading size={1} value="Crew (aka The Dragon riders)" />
             <div className={css({display: "flex", justifyContent:"space-around", flexWrap: "wrap"})}>
                 {status==="loading" || (isFetching) ? <StyledSpinnerNext  overrides={{Root: {style: { width: '100%', margin: "auto", padding: "2rem"}}}} />:(status==="error"?"Error occured":
                 

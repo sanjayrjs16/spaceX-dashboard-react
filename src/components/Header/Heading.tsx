@@ -48,10 +48,7 @@ const Heading:React.FC<HeadingItems> = ({theme, size, value}) => {
     }
     let hoverStyle = {
         color: theme?"black":"white",
-        margin: "0 auto 1.62rem auto",
-       
         width: "40%",
-       
         borderRight: theme?`0.5rem solid ${lightStretchColour}`:`0.5rem solid ${darkStretchColour}`,
         borderLeft:  theme?`0.5rem solid ${lightStretchColour}`:`0.5rem solid ${darkStretchColour}`,
         borderRadius: 0
@@ -74,7 +71,7 @@ const Heading:React.FC<HeadingItems> = ({theme, size, value}) => {
     return (
         <>
         
-             <h1 className={css(NormalStyle)}>{value}</h1>
+             <header title={value} className={css(NormalStyle)}>{value}</header>
         </>
     )
 }

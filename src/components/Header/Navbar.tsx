@@ -19,6 +19,8 @@ import { Tag, SIZE as TAG_SIZE } from 'baseui/tag';
 import darkThemeBG from '../../resources/planet-earth.jpg';
 import lightThemeBG from '../../resources/light-theme-bg.png'
 import Heading from './Heading';
+import { Footer } from '../Footer/Footer';
+import { H2 } from 'baseui/typography';
 
 
 const MenuItem = styled('div', { width: "100%", 
@@ -41,7 +43,7 @@ interface NavBarItems  {
  const Navbar:React.FC<NavBarItems> = ({theme, setAppTheme, showMenu, setToggleMenu}) => {
     const [css] = useStyletron();
     const [hideMenu, setHideMenu] = useState(false);
-    const [activeKey, setActiveKey] = React.useState<React.Key>(0);
+   
     useEffect(() => {
         //console.log("Runnung useEffect in APpp", document.body.style)
         theme?document.body.style.backgroundImage = ` url(${lightThemeBG})`:document.body.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${darkThemeBG})`;
@@ -68,13 +70,13 @@ interface NavBarItems  {
       }
     return (
         <>
-            <nav className={css({   "z-index": 1,
-                                    position: "fixed",
+            <nav className={css({   "z-index": 3,
+                                    position: "sticky",
                                     width: '100%',
                                     top: 0,
                                     margin: "0 0 0 0",
-                                    display: hideMenu?"none":"flex",
-                                    opacity: hideMenu?0:1,
+                                    display: "flex",
+                                    backgroundColor: hideMenu?(theme?"rgba(0, 0, 0, 0.5)":"rgba(215, 215, 215, 0.5)"):"",
                                     justifyContent: "center",
                                     alignContent:"space-between",
                                     color: "white",
@@ -89,17 +91,19 @@ interface NavBarItems  {
                 
                               
                     <h1 className={css({textDecoration: "none", 
-                                        color: theme?"black":"white",
-                                        fontSize: "150%",
-                                        width: '30%',
+                                        color: (theme?"black":"white"),
+                                        fontSize: hideMenu?"1.5rem":"2rem",
+                                        width: hideMenu?'10%':"50%",
                                         height: '2%',
-                                        margin: 0,
-                                        background: theme?"rgb(217, 217, 217, 0.4)":"rgb(0, 0, 0,0.7)",
+                                        
+                                        margin: hideMenu?"auto 38% auto 0%":0,
+                                        transition: "margin 0.5s , width 0.2s",
+                                        backgroundColor: hideMenu?(theme?"rgb(217, 217, 217, 0.9)":"rgb(0, 0, 0,0.9)"):theme?"rgb(217, 217, 217, 0.4)":"rgb(0, 0, 0,0.4)",
                                         padding: "1rem",
                                         textAlign: "center",
                                         borderRadius: "0rem 0rem 5rem 5rem",
                                         border: theme?".1rem solid rgb(0, 0, 0)":".1rem solid rgb(217, 217, 217)",
-                                        })} ><Link to="/" >The SpaceX dashboard</Link></h1>
+                                        })} ><Link className={css({textDecoration: "none", color: "inherit" })}to="/" >{"The SpaceX dashboard"}</Link></h1>
        
               
                 <div title={"Change theme"} className={css({ position: "absolute", top: "15%", right: "2%"})}>
