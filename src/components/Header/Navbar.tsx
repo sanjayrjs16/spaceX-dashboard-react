@@ -13,6 +13,7 @@ import {Button, SHAPE, KIND, SIZE as BTNSIZE} from 'baseui/button';
 import {Menu} from 'baseui/icon';
 import { Drawer, SIZE, ANCHOR } from "baseui/drawer";
 
+
 //Images and resources
 import SpaceXLogo from '../../resources/SpaceX-Logo.png';
 import darkThemeBG from '../../resources/planet-earth.jpg';
@@ -36,6 +37,7 @@ interface NavBarItems  {
  const Navbar:React.FC<NavBarItems> = ({theme, setAppTheme, showMenu, setToggleMenu}) => {
     const [css] = useStyletron();
     const [hideMenu, setHideMenu] = useState(false);
+    const [activeKey, setActiveKey] = React.useState<React.Key>(0);
     useEffect(() => {
         //console.log("Runnung useEffect in APpp", document.body.style)
         theme?document.body.style.backgroundImage = ` url(${lightThemeBG})`:document.body.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${darkThemeBG})`;
@@ -113,6 +115,7 @@ interface NavBarItems  {
                                        
                                         <Heading size={4} value="Menu" />
                                         
+                                        
                                         <MenuItem>
                                             <Link to="/launches" onClick={() => {setToggleMenu(showMenu)}}> 
                                                 <Button size={BTNSIZE.large} shape={SHAPE.pill} kind={KIND.secondary}>
@@ -134,7 +137,7 @@ interface NavBarItems  {
                                             <Link to="/history" onClick={() => {setToggleMenu(showMenu)}}>
                                                 <Button size={BTNSIZE.large} shape={SHAPE.pill} kind={KIND.secondary}>
                                                     <span className={css({ fontSize: "2rem"})} role="img" aria-label="history">🏆</span>
-                                                   Historic milestones
+                                                   Milestones
                                                 </Button>
                                             </Link>
                                         </MenuItem>
