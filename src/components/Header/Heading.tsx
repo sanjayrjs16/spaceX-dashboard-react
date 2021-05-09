@@ -48,12 +48,10 @@ const Heading:React.FC<HeadingItems> = ({theme, size, value}) => {
     }
     let hoverStyle = {
         color: theme?"black":"white",
-        fontSize: `${fontSize+0.3}rem`,
         margin: "0 auto 1.62rem auto",
-        transform: "scale(1.01, 1.01)",
+       
         width: "40%",
-        borderTop: theme?`.1rem double ${lightNormalColour}`:`.1rem double ${darkNormalColour}`,
-        borderBottom: theme?`.1rem double ${lightNormalColour}`:`.1rem double ${darkNormalColour}`,
+       
         borderRight: theme?`0.5rem solid ${lightStretchColour}`:`0.5rem solid ${darkStretchColour}`,
         borderLeft:  theme?`0.5rem solid ${lightStretchColour}`:`0.5rem solid ${darkStretchColour}`,
         borderRadius: 0

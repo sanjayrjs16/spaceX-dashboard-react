@@ -4,11 +4,10 @@ import Heading from '../Header/Heading';
 
 //Styling related//Styling related
 import { StyledSpinnerNext } from 'baseui/spinner';
-import { useStyletron, styled } from "styletron-react";
+import {  styled } from "styletron-react";
 import {
     Display1,
     Display2,
-    
     Display4,
   } from 'baseui/typography';
   //custom hook
