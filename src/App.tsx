@@ -1,42 +1,35 @@
-import logo from './logo.svg';
-
-import TableContainer from './components/Table/TableContainer';
-import Navbar from './components/Header/Navbar';
-
-import {Client as Styletron} from 'styletron-engine-atomic';
-import {Provider as StyletronProvider} from 'styletron-react';
-import {LightTheme, BaseProvider, styled, DarkTheme} from 'baseui';
+//React components hooks
+import React from 'react';
+import AppContainer from './components/Containers/AppContainer';
 
 
-const engine = new Styletron();
+//Redux related
+import store from './redux/store/store';
+import {Provider} from 'react-redux';
 
-const Centered = styled('div', {
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  height: '100%',
-  width: '100%',
-});
 
-export default function App () {
+
+//React query related
+import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query';
+
+
+const queryClient = new QueryClient();
+
+const App= () =>  {
+ 
   return (
-    <StyletronProvider value={engine}>
-      <BaseProvider theme={DarkTheme}>
-        <Centered>
-          <div className="App">
-            {/* {items.map((item) => {
-                return <div>{item.name}</div>
-            })} */}
-            <Navbar />
-            <TableContainer />
-          </div>
-        </Centered>
-      </BaseProvider>
-    </StyletronProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+          <AppContainer />
+      </QueryClientProvider>
+    </Provider>
   );
 }
 
-
+export default App;
 
 
 
