@@ -3,6 +3,8 @@ import React from 'react'
 import Navbar from '../Header/Navbar'
 import LaunchContainer from '../Launch/LaunchContainer';
 import  CrewContainer  from '../Crew/CrewContainer';
+import { HistoryPath } from '../History/HistoryPath';
+import { AboutCompany } from '../About/AboutCompany';
 
 //Redux related
 import {connect} from 'react-redux';
@@ -19,15 +21,10 @@ import {
 import {Client as Styletron} from 'styletron-engine-atomic';
 import {Provider as StyletronProvider} from 'styletron-react';
 import { BaseProvider, styled, DarkTheme, LightTheme} from 'baseui';
-import {  Label2 } from 'baseui/typography';
-import { useStyletron } from "styletron-react";
-import { HistoryPath } from '../History/HistoryPath';
-import { StyledLink } from 'baseui/link';
-import { AboutCompany } from '../About/AboutCompany';
-import { KIND, Tag, VARIANT } from 'baseui/tag';
-
+import { Footer } from '../Footer/Footer';
 
 const engine = new Styletron();
+
 
 const Centered = styled('div', {
   display: 'flex',
@@ -37,25 +34,25 @@ const Centered = styled('div', {
   height: '100%',
   width: '90%',
   margin: "7% auto 1% auto",
+  backgroundColor: "rgba(215, 215, 215, 0.01)"
   
 });
-
 interface AppContainerItems {
-    theme: any,
-    setAppTheme: any,
-    showMenu: any,
-    setToggleMenu: any
-  } 
- const AppContainer:React.FC<AppContainerItems> = ({theme, setAppTheme, showMenu, setToggleMenu}) => {
-    const [css] = useStyletron();
+  theme: any,
+  setAppTheme: any,
+  showMenu: any,
+  setToggleMenu: any
+} 
+const AppContainer:React.FC<AppContainerItems> = ({theme, setAppTheme, showMenu, setToggleMenu}) => {
+  
     return (
         <>
            <StyletronProvider value={engine}>
             <BaseProvider theme={theme?LightTheme:DarkTheme}>
                
-                    <Centered>
                         <Router>
                         <Navbar theme={theme} setAppTheme={setAppTheme} showMenu={showMenu} setToggleMenu={setToggleMenu}/>
+                    <Centered>
                          
                           <Switch>
                             <Route exact path="/">
@@ -71,12 +68,9 @@ interface AppContainerItems {
                                 <HistoryPath theme={theme}/>
                             </Route>
                           </Switch> 
-                        </Router>
                     </Centered>
-                    <div className={css({margin: "auto", textAlign: "center", color: "red", padding: "2rem"})}>
-                        <StyledLink target="_blank" title="Sanjay's GitHub profile" href={"https://github.com/sanjayrjs16"}> Made by 👨‍💻 </StyledLink>
-                        with <StyledLink target="_blank" title="r/SpaceX v4 API GitHub docs" href={"https://github.com/r-spacex/SpaceX-API/tree/master/docs/v4"}>r/SpaceX </StyledLink>🔥
-                    </div>
+                        </Router>
+                    <Footer theme={theme} />
             </BaseProvider>
         </StyletronProvider>
         </>

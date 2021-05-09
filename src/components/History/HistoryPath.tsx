@@ -27,12 +27,12 @@ export const HistoryPath:React.FC<HistoryItems> = ({theme}) => {
         event.preventDefault();
         if(event.keyCode ===37 || event.keyCode === 40){
             setCurrentEvent((prevValue: any) => prevValue>=1?prevValue - 1: prevValue); 
-            window.scrollBy(0, currentEvent*10);
+            window.scrollBy(0, 120);
         }
         else if(event.keyCode ===38 || event.keyCode === 39){
 
             setCurrentEvent((prevValue: any) => prevValue<=(data.length-2)?prevValue + 1: prevValue); 
-            window.scrollBy(0, -1*currentEvent*10); 
+            window.scrollBy(0, -1*120); 
             
             
             
@@ -42,10 +42,10 @@ export const HistoryPath:React.FC<HistoryItems> = ({theme}) => {
         }
     }
     useEffect(() => {
-        console.log("Adding event listner")
+        //console.log("Adding event listner")
         window.addEventListener("keydown", handelKeyPress);
         return () => {
-            console.log("removing event listner");
+           // console.log("removing event listner");
             
             window.removeEventListener("keydown", handelKeyPress);
         }
@@ -58,12 +58,14 @@ export const HistoryPath:React.FC<HistoryItems> = ({theme}) => {
         <>
         <Heading size={2} value="🎉 Historic milestones 🎉" />
         <h2 title={"Motivational caption"}className={css({color: theme?"black":"white"})}>Started from the bottom, now we're here !</h2>
-        <div className={css({width: "100%" , display: "flex", flexDirection: "column"})}>
+        <div className={css({width: "100%" , display: "flex", flexDirection: "row"})}>
             {status==="loading" || (isFetching)?<StyledSpinnerNext />:(status==="error"?"An error occured":(
                 <>
-                <div className={css({  position: "sticky", top: 0, "z-index": 10, margin: "auto", backgroundColor: "rgba(0, 0, 0, 0.9)"})} title={"Click or use arrow keys to move"}>
-                    <Button disabled={currentEvent>=(data.length-1)?true:false} onClick={() => {setCurrentEvent((prevValue: any) => prevValue<=(data.length-2)?prevValue + 1: prevValue); window.scrollBy(0, -1*currentEvent*10);}}><ArrowUp />{"See recent milestone"}</Button>
-                    <Button disabled={ currentEvent<=0?true:false} onClick={() =>{setCurrentEvent((prevValue: any) => prevValue>=1?prevValue - 1: prevValue); window.scrollBy(0, currentEvent*11);}}><ArrowDown />{"See past milestone"}</Button>
+                <div className={css({ display: "flex", flexDirection: "column", position: "fixed", top: "40%", right:"10%",  "z-index": 10, backgroundColor:"white"})} title={"Click or use arrow keys to move"}>
+                    <Button onClick={() =>{setCurrentEvent(data.length-1); window.scrollTo({top: 0, behavior: "smooth"});}}>Latest milestone</Button>
+                    <Button disabled={currentEvent>=(data.length-1)?true:false} onClick={() => {setCurrentEvent((prevValue: any) => prevValue<=(data.length-2)?prevValue + 1: prevValue); window.scrollBy(0, -1*120);}}><ArrowUp />{"Go up"}</Button>
+                    <Button disabled={ currentEvent<=0?true:false} onClick={() =>{setCurrentEvent((prevValue: any) => prevValue>=1?prevValue - 1: prevValue); window.scrollBy(0, 120);}}><ArrowDown />{"Go down"}</Button>
+                    <Button onClick={() =>{setCurrentEvent(0); window.scrollTo({top: 1500, behavior: "smooth"});}}>Oldest milestone</Button>
                 </div>
                   <ProgressSteps
                         current={currentEvent}
@@ -77,11 +79,12 @@ export const HistoryPath:React.FC<HistoryItems> = ({theme}) => {
                             style: {
                                backgroundColor: currentEvent===index?(theme?"rgba(215, 215, 215, 0.7)":"rgba(0, 0, 0, 0.8)"):"rgba(115, 115, 115, 0.3)",
                                 width: "100%",
+                                "z-index": currentEvent===index?1:0, padding: "1rem",textAlign: "justify", textJustify:"inter-word", 
                                 
                             }
                         }}}  >       
                                     <Label3><span className={css({ fontSize: "1rem"})} role="img" aria-label="history">📅 </span>{new Date(eventDetails.event_date_utc).toString()}</Label3>
-                                    <Paragraph3  ><span className={css({ fontSize: "2rem"})} role="img" aria-label="history">🎉 </span> {eventDetails.details}</Paragraph3>
+                                    <Paragraph3  ><span className={css({ fontSize: "2rem", })} role="img" aria-label="history">🎉 </span> {eventDetails.details}</Paragraph3>
                                 <StyledLink href={eventDetails.links.article} target="_blank"> Read more..</StyledLink>
                                
                                     </NumberedStep>

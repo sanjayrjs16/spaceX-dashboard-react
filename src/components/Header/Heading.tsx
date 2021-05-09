@@ -71,7 +71,7 @@ const Heading:React.FC<HeadingItems> = ({theme, size, value}) => {
     return (
         <>
         
-             <h1 title={value} className={css(NormalStyle)}>{value}</h1>
+             <header title={value} className={css(NormalStyle)}>{value}</header>
         </>
     )
 }
