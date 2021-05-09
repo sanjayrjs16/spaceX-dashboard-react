@@ -42,7 +42,7 @@ const Heading:React.FC<HeadingItems> = ({theme, size, value}) => {
             break;
         }
         default: {
-            fontSize = 2.5;
+            fontSize = 0.25;
             break;
         }
     }

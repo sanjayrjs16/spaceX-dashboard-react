@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import Heading from '../Header/Heading';
 
 //Styling related
 import {
@@ -10,13 +11,15 @@ import { Label3, Paragraph2} from 'baseui/typography';
 import { useStyletron, styled } from "styletron-react";
 import { Button } from 'baseui/button';
 import { ArrowUp, ArrowDown } from "baseui/icon";
+import { StyledLink } from 'baseui/link';
 
 //custom hook
 import useApiCall from '../../hooks/useApiCall';
-import Heading from '../Header/Heading';
-import { StyledLink } from 'baseui/link';
 
-export const HistoryPath = () => {
+interface HistoryItems {
+    theme: any
+}
+export const HistoryPath:React.FC<HistoryItems> = ({theme}) => {
     const [css] = useStyletron();
     let { status, data, isFetching, isPreviousData, refetch} = useApiCall('https://api.spacexdata.com/v4','/history', '','GET','history', );
     const [currentEvent, setCurrentEvent] = useState(0)
@@ -47,7 +50,7 @@ export const HistoryPath = () => {
     });
     return (
         <>
-        <Heading size={2} value="History milestones" />
+        <Heading size={2} value="🎉 Historic milestones 🎉" />
         <div className={css({width: "100%" , display: "flex", flexDirection: "column"})}>
             {status==="loading" || (isFetching)?<StyledSpinnerNext />:(status==="error"?"An error occured":(
                 <>
@@ -61,9 +64,9 @@ export const HistoryPath = () => {
                 >
                     {data.slice().reverse().map((eventDetails: any, index: number) =>{
                        
-                        return (<Step title={eventDetails.title} overrides={{Root: {
+                        return (<Step key={index}title={eventDetails.title} overrides={{Root: {
                             style: {
-                                backgroundColor: currentEvent===index?"white":"grey",
+                                backgroundColor: currentEvent===index?(theme?"rgba(215, 215, 215, 0.9)":"rgba(0, 0, 0, 0.8)"):"rgba(115, 115, 115, 0.5)",
                                 width: "100%",
                                 padding: "0 0.4rem 0 0.4rem"
                             }

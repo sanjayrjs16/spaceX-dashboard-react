@@ -13,16 +13,18 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from 'react-router-dom';
 
 //Styling related
 import {Client as Styletron} from 'styletron-engine-atomic';
 import {Provider as StyletronProvider} from 'styletron-react';
 import { BaseProvider, styled, DarkTheme, LightTheme} from 'baseui';
-import {  H4,Label2, Paragraph1} from 'baseui/typography';
+import {  Label2 } from 'baseui/typography';
 import { useStyletron } from "styletron-react";
 import { HistoryPath } from '../History/HistoryPath';
+import { StyledLink } from 'baseui/link';
+import { AboutCompany } from '../About/AboutCompany';
+import { KIND, Tag, VARIANT } from 'baseui/tag';
 
 
 const engine = new Styletron();
@@ -56,6 +58,9 @@ interface AppContainerItems {
                         <Navbar theme={theme} setAppTheme={setAppTheme} showMenu={showMenu} setToggleMenu={setToggleMenu}/>
                          
                           <Switch>
+                            <Route exact path="/">
+                              <AboutCompany theme={theme}/>
+                            </Route>
                             <Route path="/launches">
                               <LaunchContainer />
                             </Route>
@@ -63,11 +68,11 @@ interface AppContainerItems {
                               <CrewContainer />
                             </Route>
                             <Route path="/history">
-                                <HistoryPath />
+                                <HistoryPath theme={theme}/>
                             </Route>
                           </Switch> 
                         </Router>
-                        <Label2 className={css({color: theme?"black":"white"})}>Made by Sanjay</Label2>
+                        <Tag closeable={false} variant={VARIANT.solid}>Made by<StyledLink target="_blank" title="Sanjay's GitHub profile" href={"https://github.com/sanjayrjs16"}> 👨‍💻</StyledLink></Tag><Tag closeable={false} kind={KIND.orange}variant={VARIANT.solid}>with<StyledLink target="_blank" title="r/SpaceX v4 API GitHub docs" href={"https://github.com/r-spacex/SpaceX-API/tree/master/docs/v4"}>r/SpaceX </StyledLink>🔥</Tag>
                     </Centered>
                 
             </BaseProvider>

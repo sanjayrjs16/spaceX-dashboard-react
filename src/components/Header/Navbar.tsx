@@ -12,10 +12,10 @@ import { useStyletron, styled } from "styletron-react";
 import {Button, SHAPE, KIND, SIZE as BTNSIZE} from 'baseui/button';
 import {Menu} from 'baseui/icon';
 import { Drawer, SIZE, ANCHOR } from "baseui/drawer";
+import { Tag, SIZE as TAG_SIZE } from 'baseui/tag';
 
 
 //Images and resources
-import SpaceXLogo from '../../resources/SpaceX-Logo.png';
 import darkThemeBG from '../../resources/planet-earth.jpg';
 import lightThemeBG from '../../resources/light-theme-bg.png'
 import Heading from './Heading';
@@ -23,7 +23,11 @@ import Heading from './Heading';
 
 const MenuItem = styled('div', { width: "100%", 
             textAlign: "center", 
-            marginBottom: "2rem"
+            marginBottom: "2rem",
+            ":hover": {
+                backgroundColor: "rgba(115, 115, 115, 0.4)",
+                transform: "scale(1.06, 1.06)"
+            }
     
   });
 
@@ -74,24 +78,27 @@ interface NavBarItems  {
                                     justifyContent: "center",
                                     alignContent:"space-between",
                                     color: "white",
-                                    padding: "0.2rem",
+                                    padding: 0,
                                    
                                 })}>
-                <div title={"Change theme"} className={css({ position: "absolute", top: "5%", left: "5%", display: showMenu?"none":"inline"})}>
-                    <Button shape={SHAPE.circle} kind={KIND.secondary} onClick={() => {setToggleMenu(showMenu)}}>
+                <div title={"Change theme"} className={css({ position: "absolute", top: "10%", left: "2%", display: showMenu?"none":"inline"})}>
+                    <Button shape={SHAPE.circle} kind={KIND.primary} onClick={() => {setToggleMenu(showMenu)}}>
                         <Menu />
                     </Button>
                 </div>                     
-                <img className={css({   
+                <h1 className={css({     color: theme?"black":"white",
+                                        fontSize: "150%",
                                         width: '30%',
-                                        height: '2.5rem',
+                                        height: '2%',
+                                        margin: 0,
                                         background: theme?"rgb(217, 217, 217, 0.4)":"rgb(0, 0, 0,0.7)",
-                                        padding: "0rem 0rem 1rem 5rem",
+                                        padding: "1rem",
+                                        textAlign: "center",
                                         borderRadius: "0rem 0rem 5rem 5rem",
                                         border: theme?".1rem solid rgb(0, 0, 0)":".1rem solid rgb(217, 217, 217)",
-                                        })} src={SpaceXLogo} alt="SpaceX-Logo"/>
+                                        })} >The SpaceX dashboard</h1>
 
-                <div title={"Change theme"} className={css({ position: "absolute", top: "5%", right: "5%"})}>
+                <div title={"Change theme"} className={css({ position: "absolute", top: "15%", right: "2%"})}>
                     <Button shape={SHAPE.circle} kind={KIND.primary} onClick={() =>
                                         setAppTheme(theme)}>
                             {theme?"🌙":"🌞"}
@@ -115,30 +122,41 @@ interface NavBarItems  {
                                        
                                         <Heading size={4} value="Menu" />
                                         
-                                        
-                                        <MenuItem>
-                                            <Link to="/launches" onClick={() => {setToggleMenu(showMenu)}}> 
-                                                <Button size={BTNSIZE.large} shape={SHAPE.pill} kind={KIND.secondary}>
-                                                <span className={css({ fontSize: "2rem"})} role="img" aria-label="launches">🎯</span> Launches
+                                        <MenuItem title={"Home"} onClick={() => {setToggleMenu(showMenu)}}>
+                                            <Link to="/" > 
+                                                <Button size={BTNSIZE.large} shape={SHAPE.circle} kind={KIND.secondary}>
+                                                <span className={css({ fontSize: "2rem"})} role="img" aria-label="launches">🌏</span> 
                                                 </Button>
+                                                <Tag closeable={false} size={TAG_SIZE.large}>Home</Tag>
                                             </Link>
                                         </MenuItem>
 
-                                        <MenuItem title={"Crew members"}>
-                                            <Link to="/crew" onClick={() => {setToggleMenu(showMenu)}}>
-                                                <Button size={BTNSIZE.large} shape={SHAPE.pill} kind={KIND.secondary}>
+                                        <MenuItem title={"Launch missions"} onClick={() => {setToggleMenu(showMenu)}}>
+                                            <Link to="/launches" > 
+                                                <Button size={BTNSIZE.large} shape={SHAPE.circle} kind={KIND.secondary}>
+                                                <span className={css({ fontSize: "2rem"})} role="img" aria-label="launches">🚀</span> 
+                                                </Button>
+                                                <Tag closeable={false} size={TAG_SIZE.large}>Launches</Tag>
+                                            </Link>
+                                        </MenuItem>
+
+                                        <MenuItem title={"Crew members"} onClick={() => {setToggleMenu(showMenu)}}>
+                                            <Link to="/crew" >
+                                                <Button size={BTNSIZE.large} shape={SHAPE.circle} kind={KIND.secondary}>
                                                     <span className={css({ fontSize: "2rem"})} role="img" aria-label="astronaught">🧑‍🚀</span>
-                                                    Crew members
                                                 </Button>
+                                                <Tag closeable={false} size={TAG_SIZE.large}>The Crew</Tag>
                                             </Link>
                                         </MenuItem>
 
-                                        <MenuItem title={"History Milestones"}>
-                                            <Link to="/history" onClick={() => {setToggleMenu(showMenu)}}>
-                                                <Button size={BTNSIZE.large} shape={SHAPE.pill} kind={KIND.secondary}>
+                                        <MenuItem title={"History Milestones"} onClick={() => {setToggleMenu(showMenu)}}>
+                                            <Link to="/history" >
+                                           
+                                                <Button size={BTNSIZE.large} shape={SHAPE.circle} kind={KIND.secondary}>
                                                     <span className={css({ fontSize: "2rem"})} role="img" aria-label="history">🏆</span>
-                                                   Milestones
+                                                  
                                                 </Button>
+                                                <Tag closeable={false} size={TAG_SIZE.large}> Milestones</Tag>
                                             </Link>
                                         </MenuItem>
                                     </div>

@@ -5,7 +5,6 @@ import { CountDownTimer } from './CountDownTimer';
 
 //Styling related
 import { useStyletron, styled } from "styletron-react";
-import { Accordion, Panel } from "baseui/accordion";
 import { Card, StyledBody,  StyledThumbnail} from "baseui/card";
 import {StyledSpinnerNext} from 'baseui/spinner';
 import { Tag, KIND } from "baseui/tag";

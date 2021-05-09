@@ -2,8 +2,8 @@ import React, {useState} from 'react'
 import InfoCard from '../Launch/Card/InfoCard'; 
 //Style related
 import { Card, StyledBody} from "baseui/card";
-import {Button, SIZE, KIND as btnKIND } from 'baseui/button';
-import { Tag, KIND } from "baseui/tag";
+import {Button, KIND  } from 'baseui/button';
+import { Tag} from "baseui/tag";
 import { useStyletron } from "styletron-react";
 
 //svgs
@@ -22,7 +22,7 @@ export const CrewCard:React.FC<CrewCardItems> = ({theme, uniqueKey, person, show
     const [css] = useStyletron();
     const [showCard, setShowCard] = useState({show: false, cardDetailes: {}});
     let { status, data, isFetching, isPreviousData} = useApiCall('https://api.spacexdata.com/v4','/launches/query', '','POST','launchesCrew', {populate: ["payloads", "rocket", "launchpad", "crew"]}, {"$or": [...person.launches.map((mission:any) => ({"name" : mission.name}))]});
-    console.log("Here's crew Card data", data);
+   // console.log("Here's crew Card data", data);
     
     const ShowCard = (cardData?: any) => {
         setShowCard((prevShowCard: any) => {
