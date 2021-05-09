@@ -6,7 +6,7 @@ import  CrewContainer  from '../Crew/CrewContainer';
 
 //Redux related
 import {connect} from 'react-redux';
-import { setAppTheme } from '../../redux/actions/AppActionCreator';
+import { setAppTheme, setToggleMenu } from '../../redux/actions/AppActionCreator';
 
 //React router Related
 import {
@@ -22,6 +22,7 @@ import {Provider as StyletronProvider} from 'styletron-react';
 import { BaseProvider, styled, DarkTheme, LightTheme} from 'baseui';
 import {  H4,Label2, Paragraph1} from 'baseui/typography';
 import { useStyletron } from "styletron-react";
+import { HistoryPath } from '../History/HistoryPath';
 
 
 const engine = new Styletron();
@@ -39,26 +40,30 @@ const Centered = styled('div', {
 
 interface AppContainerItems {
     theme: any,
-    setAppTheme: any
+    setAppTheme: any,
+    showMenu: any,
+    setToggleMenu: any
   } 
- const AppContainer:React.FC<AppContainerItems> = ({theme, setAppTheme}) => {
+ const AppContainer:React.FC<AppContainerItems> = ({theme, setAppTheme, showMenu, setToggleMenu}) => {
     const [css] = useStyletron();
     return (
         <>
            <StyletronProvider value={engine}>
             <BaseProvider theme={theme?LightTheme:DarkTheme}>
                
-                    <Navbar theme={theme} setAppTheme={setAppTheme}/>
                     <Centered>
                         <Router>
-                          <Link to="/launches">Launches</Link>
-                          <Link to="/crew">Crew</Link>
+                        <Navbar theme={theme} setAppTheme={setAppTheme} showMenu={showMenu} setToggleMenu={setToggleMenu}/>
+                         
                           <Switch>
                             <Route path="/launches">
                               <LaunchContainer />
                             </Route>
                             <Route path="/crew">
                               <CrewContainer />
+                            </Route>
+                            <Route path="/history">
+                                <HistoryPath />
                             </Route>
                           </Switch> 
                         </Router>
@@ -73,13 +78,15 @@ interface AppContainerItems {
 
 const mapStateToProps = (state: any) => {
     return {
-      theme: state.app.theme
+      theme: state.app.theme,
+      showMenu: state.app.showMenu
     }
   }
   
   const mapDispatchToProps =(dispatch: any) => {
     return {
-        setAppTheme: (theme: any) => { dispatch(setAppTheme(theme))}
+        setAppTheme: (theme: any) => { dispatch(setAppTheme(theme))},
+        setToggleMenu: (showMenu: any) => { dispatch(setToggleMenu(showMenu))}
     }
 }
   export default connect(mapStateToProps, mapDispatchToProps)(AppContainer);

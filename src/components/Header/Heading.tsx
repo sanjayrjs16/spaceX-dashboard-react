@@ -33,6 +33,14 @@ const Heading:React.FC<HeadingItems> = ({theme, size, value}) => {
             fontSize=1.5;
             break;
         }
+        case 4: {
+            fontSize=1;
+            break;
+        }
+        case 5: {
+            fontSize=0.5;
+            break;
+        }
         default: {
             fontSize = 2.5;
             break;
