@@ -122,9 +122,17 @@ interface NavBarItems  {
                                        
                                         <Heading size={4} value="Menu" />
                                         
-                                        
-                                        <MenuItem title={"Launch missions"}>
-                                            <Link to="/launches" onClick={() => {setToggleMenu(showMenu)}}> 
+                                        <MenuItem title={"Home"} onClick={() => {setToggleMenu(showMenu)}}>
+                                            <Link to="/" > 
+                                                <Button size={BTNSIZE.large} shape={SHAPE.circle} kind={KIND.secondary}>
+                                                <span className={css({ fontSize: "2rem"})} role="img" aria-label="launches">🌏</span> 
+                                                </Button>
+                                                <Tag closeable={false} size={TAG_SIZE.large}>Home</Tag>
+                                            </Link>
+                                        </MenuItem>
+
+                                        <MenuItem title={"Launch missions"} onClick={() => {setToggleMenu(showMenu)}}>
+                                            <Link to="/launches" > 
                                                 <Button size={BTNSIZE.large} shape={SHAPE.circle} kind={KIND.secondary}>
                                                 <span className={css({ fontSize: "2rem"})} role="img" aria-label="launches">🚀</span> 
                                                 </Button>
@@ -132,8 +140,8 @@ interface NavBarItems  {
                                             </Link>
                                         </MenuItem>
 
-                                        <MenuItem title={"Crew members"}>
-                                            <Link to="/crew" onClick={() => {setToggleMenu(showMenu)}}>
+                                        <MenuItem title={"Crew members"} onClick={() => {setToggleMenu(showMenu)}}>
+                                            <Link to="/crew" >
                                                 <Button size={BTNSIZE.large} shape={SHAPE.circle} kind={KIND.secondary}>
                                                     <span className={css({ fontSize: "2rem"})} role="img" aria-label="astronaught">🧑‍🚀</span>
                                                 </Button>
@@ -141,8 +149,8 @@ interface NavBarItems  {
                                             </Link>
                                         </MenuItem>
 
-                                        <MenuItem title={"History Milestones"}>
-                                            <Link to="/history" onClick={() => {setToggleMenu(showMenu)}}>
+                                        <MenuItem title={"History Milestones"} onClick={() => {setToggleMenu(showMenu)}}>
+                                            <Link to="/history" >
                                            
                                                 <Button size={BTNSIZE.large} shape={SHAPE.circle} kind={KIND.secondary}>
                                                     <span className={css({ fontSize: "2rem"})} role="img" aria-label="history">🏆</span>

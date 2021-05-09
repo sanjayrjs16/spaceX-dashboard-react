@@ -22,33 +22,33 @@ const Heading:React.FC<HeadingItems> = ({theme, size, value}) => {
     let fontSize ;
     switch(size){
         case 1:{
-            fontSize =250;
+            fontSize =2.5;
             break;
         }
         case 2: {
-            fontSize=200;
+            fontSize=2;
             break;
         }
         case 3: {
-            fontSize=150;
+            fontSize=1.5;
             break;
         }
         case 4: {
-            fontSize=100;
+            fontSize=1;
             break;
         }
         case 5: {
-            fontSize=50;
+            fontSize=0.5;
             break;
         }
         default: {
-            fontSize = 25;
+            fontSize = 0.25;
             break;
         }
     }
     let hoverStyle = {
         color: theme?"black":"white",
-        fontSize: `${fontSize+0.3}%`,
+        fontSize: `${fontSize+0.3}rem`,
         margin: "0 auto 1.62rem auto",
         transform: "scale(1.01, 1.01)",
         width: "40%",
@@ -65,7 +65,7 @@ const Heading:React.FC<HeadingItems> = ({theme, size, value}) => {
                             margin: "0 auto 1.8rem auto",
                             padding: 0,
                             "text-align": "center",
-                            fontSize: `${fontSize}%`,
+                            fontSize: `${fontSize}rem`,
                             borderRight: theme?`3rem solid ${lightNormalColour}`:`3rem solid ${darkNormalColour}`,
                             borderLeft:  theme?`3rem solid ${lightNormalColour}`:`3rem solid ${darkNormalColour}`,
                             borderRadius: ".2rem .2rem .2rem .2rem",

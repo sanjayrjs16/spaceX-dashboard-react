@@ -28,7 +28,7 @@ const CrewContainer:React.FC<CrewContainerItems> = ({theme}) => {
                 {status==="loading" || (isFetching) ? <StyledSpinnerNext  overrides={{Root: {style: { width: '100%', margin: "auto", padding: "2rem"}}}} />:(status==="error"?"Error occured":
                 
                 data.docs.map((person: any, index: number) => {
-                    return (<CrewCard theme={theme} uniqueKey={index + 100} person={person} showButton={true} /> )
+                    return (<CrewCard theme={theme} key={index+100} uniqueKey={index + 100} person={person} showButton={true} /> )
                 })
                 )
                 } 

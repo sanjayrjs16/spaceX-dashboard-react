@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import Heading from '../Header/Heading';
 
 //Styling related
 import {
@@ -10,11 +11,10 @@ import { Label3, Paragraph2} from 'baseui/typography';
 import { useStyletron, styled } from "styletron-react";
 import { Button } from 'baseui/button';
 import { ArrowUp, ArrowDown } from "baseui/icon";
+import { StyledLink } from 'baseui/link';
 
 //custom hook
 import useApiCall from '../../hooks/useApiCall';
-import Heading from '../Header/Heading';
-import { StyledLink } from 'baseui/link';
 
 interface HistoryItems {
     theme: any
@@ -64,7 +64,7 @@ export const HistoryPath:React.FC<HistoryItems> = ({theme}) => {
                 >
                     {data.slice().reverse().map((eventDetails: any, index: number) =>{
                        
-                        return (<Step title={eventDetails.title} overrides={{Root: {
+                        return (<Step key={index}title={eventDetails.title} overrides={{Root: {
                             style: {
                                 backgroundColor: currentEvent===index?(theme?"rgba(215, 215, 215, 0.9)":"rgba(0, 0, 0, 0.8)"):"rgba(115, 115, 115, 0.5)",
                                 width: "100%",
