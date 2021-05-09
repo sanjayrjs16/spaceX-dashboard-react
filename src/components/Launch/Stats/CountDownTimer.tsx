@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 //Styling related
-import {  H4,Label2, Paragraph1} from 'baseui/typography';
+import { Label2} from 'baseui/typography';
 
 interface TimerItems {
     date: Date

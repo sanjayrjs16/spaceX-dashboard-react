@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 
 import { useStyletron } from "styletron-react";
 
-import {  Drawer, SIZE, ANCHOR  } from "baseui/drawer";
 import { ArrowRight, ArrowLeft, Delete} from 'baseui/icon';
 import { Button, SHAPE } from "baseui/button";
 import { Tag } from "baseui/tag";

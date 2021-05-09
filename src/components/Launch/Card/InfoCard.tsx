@@ -21,7 +21,6 @@ import { Accordion, Panel } from "baseui/accordion";
 import {
     StatefulTooltip,
     PLACEMENT,
-    TRIGGER_TYPE
   } from "baseui/tooltip";
 import {Block} from 'baseui/block';
 import { StyledLink } from "baseui/link";

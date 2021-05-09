@@ -10,12 +10,8 @@ import useApiCall from '../../hooks/useApiCall';
 
 //Styling related
 import { StyledSpinnerNext } from 'baseui/spinner';
-import { Card, StyledBody} from "baseui/card";
-import { Tag, KIND } from "baseui/tag";
 import { useStyletron } from "styletron-react";
-import {Button, SIZE, KIND as btnKIND } from 'baseui/button';
-//svgs
-import WikiLogo from '../../resources/Wikipedia-W-logo.svg';
+
 
 
 interface CrewContainerItems {
