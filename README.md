@@ -1,6 +1,11 @@
 # The Space X dashboard 🚀
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). Used react hooks thoroughout.
+TypeScript, Redux and react-router were used. Data Fetching was handled with help of [react-query🔥](https://react-query.tanstack.com/)
+Styling was done with help of [styletron](https://www.styletron.org/) and [baseWeb react UI omponents](https://baseweb.design/)
+
+## I would like to thank the makers of [r/Space-X API](https://github.com/r-spacex/SpaceX-API) 🔥🔥
+
 
 ## Available Scripts
 
