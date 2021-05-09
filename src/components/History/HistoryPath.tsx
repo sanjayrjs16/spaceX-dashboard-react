@@ -4,10 +4,10 @@ import Heading from '../Header/Heading';
 //Styling related
 import {
     ProgressSteps,
-    Step
+    NumberedStep
   } from "baseui/progress-steps";
 import { StyledSpinnerNext } from 'baseui/spinner';
-import { Label3, Paragraph2} from 'baseui/typography';
+import { Label3,Paragraph3} from 'baseui/typography';
 import { useStyletron, styled } from "styletron-react";
 import { Button } from 'baseui/button';
 import { ArrowUp, ArrowDown } from "baseui/icon";
@@ -26,13 +26,15 @@ export const HistoryPath:React.FC<HistoryItems> = ({theme}) => {
     const handelKeyPress = (event:any) => {
         event.preventDefault();
         if(event.keyCode ===37 || event.keyCode === 40){
-          
-            setCurrentEvent((prevValue: any) => prevValue<=(data.length-2)?prevValue + 1: prevValue); 
+            setCurrentEvent((prevValue: any) => prevValue>=1?prevValue - 1: prevValue); 
             window.scrollBy(0, currentEvent*10);
         }
         else if(event.keyCode ===38 || event.keyCode === 39){
-            setCurrentEvent((prevValue: any) => prevValue>=1?prevValue - 1: prevValue); 
+
+            setCurrentEvent((prevValue: any) => prevValue<=(data.length-2)?prevValue + 1: prevValue); 
             window.scrollBy(0, -1*currentEvent*10); 
+            
+            
             
         }
         else{
@@ -48,35 +50,41 @@ export const HistoryPath:React.FC<HistoryItems> = ({theme}) => {
             window.removeEventListener("keydown", handelKeyPress);
         }
     });
+    useEffect(() => {
+        if(data)
+            setCurrentEvent(data.length-1)
+    }, [data])
     return (
         <>
         <Heading size={2} value="🎉 Historic milestones 🎉" />
+        <h2 title={"Motivational caption"}className={css({color: theme?"black":"white"})}>Started from the bottom, now we're here !</h2>
         <div className={css({width: "100%" , display: "flex", flexDirection: "column"})}>
             {status==="loading" || (isFetching)?<StyledSpinnerNext />:(status==="error"?"An error occured":(
                 <>
                 <div className={css({  position: "sticky", top: 0, "z-index": 10, margin: "auto", backgroundColor: "rgba(0, 0, 0, 0.9)"})} title={"Click or use arrow keys to move"}>
-                    <Button disabled={currentEvent<=0?true:false} onClick={() => {setCurrentEvent((prevValue: any) => prevValue>=1?prevValue - 1: prevValue); window.scrollBy(0, -80);}}><ArrowUp />{"Recent"}</Button>
-                    <Button disabled={currentEvent>=(data.length-1)?true:false} onClick={() =>{ setCurrentEvent((prevValue: any) => prevValue<=(data.length-2)?prevValue + 1: prevValue); window.scrollBy(0, 80);}}><ArrowDown />{"Older"}</Button>
+                    <Button disabled={currentEvent>=(data.length-1)?true:false} onClick={() => {setCurrentEvent((prevValue: any) => prevValue<=(data.length-2)?prevValue + 1: prevValue); window.scrollBy(0, -1*currentEvent*10);}}><ArrowUp />{"See recent milestone"}</Button>
+                    <Button disabled={ currentEvent<=0?true:false} onClick={() =>{setCurrentEvent((prevValue: any) => prevValue>=1?prevValue - 1: prevValue); window.scrollBy(0, currentEvent*11);}}><ArrowDown />{"See past milestone"}</Button>
                 </div>
                   <ProgressSteps
-                  current={currentEvent}
-               
+                        current={currentEvent}
+                        overrides={{Root: {
+                            style: {display: "flex", flexDirection: "column-reverse"}
+                        }}}
                 >
                     {data.map((eventDetails: any, index: number) =>{
                        
-                        return (<Step key={index}title={eventDetails.title} overrides={{Root: {
+                        return (<NumberedStep key={index}title={eventDetails.title} overrides={{Root: {
                             style: {
-                                backgroundColor: currentEvent===index?(theme?"rgba(215, 215, 215, 0.9)":"rgba(0, 0, 0, 0.8)"):"rgba(115, 115, 115, 0.5)",
+                               backgroundColor: currentEvent===index?(theme?"rgba(215, 215, 215, 0.7)":"rgba(0, 0, 0, 0.8)"):"rgba(115, 115, 115, 0.3)",
                                 width: "100%",
-                                padding: "0 0.4rem 0 0.4rem"
+                                
                             }
-                        }}}>       <span className={css({ fontSize: "2rem"})} role="img" aria-label="history">🎉 </span> 
+                        }}}  >       
                                     <Label3><span className={css({ fontSize: "1rem"})} role="img" aria-label="history">📅 </span>{new Date(eventDetails.event_date_utc).toString()}</Label3>
-                                    <p  className={css({ "textAlign": "justify",
-                                "textJustify": "inter-word", width: "100%" })}>{eventDetails.details}</p>
+                                    <Paragraph3  ><span className={css({ fontSize: "2rem"})} role="img" aria-label="history">🎉 </span> {eventDetails.details}</Paragraph3>
                                 <StyledLink href={eventDetails.links.article} target="_blank"> Read more..</StyledLink>
-                                <hr />
-                                    </Step>
+                               
+                                    </NumberedStep>
                     )
                     })}
             </ProgressSteps>

@@ -23,7 +23,7 @@ export const AboutRoadster:React.FC<AboutRoadsterItems> = ({theme}) => {
     const RoadsterContainer = styled('div',{    
         width: "100%",
         height: "50rem",
-        backgroundImage : data?`linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${data.flickr_images[0]})`:earth,
+        backgroundImage : data?`linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${data.flickr_images[1]})`:earth,
        " background-attachment": "fixed",
         "background-repeat": "no-repeat",
         "background-size": "cover",
