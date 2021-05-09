@@ -54,7 +54,7 @@ export const HistoryPath:React.FC<HistoryItems> = ({theme}) => {
         <div className={css({width: "100%" , display: "flex", flexDirection: "column"})}>
             {status==="loading" || (isFetching)?<StyledSpinnerNext />:(status==="error"?"An error occured":(
                 <>
-                <div className={css({  position: "sticky", top: 0, "z-index": 10, margin: "auto", backgroundColor: "rgba(0, 0, 0, 0.9)"})}>
+                <div className={css({  position: "sticky", top: 0, "z-index": 10, margin: "auto", backgroundColor: "rgba(0, 0, 0, 0.9)"})} title={"Click or use arrow keys to move"}>
                     <Button disabled={currentEvent<=0?true:false} onClick={() => {setCurrentEvent((prevValue: any) => prevValue>=1?prevValue - 1: prevValue); window.scrollBy(0, -80);}}><ArrowUp />{"Recent"}</Button>
                     <Button disabled={currentEvent>=(data.length-1)?true:false} onClick={() =>{ setCurrentEvent((prevValue: any) => prevValue<=(data.length-2)?prevValue + 1: prevValue); window.scrollBy(0, 80);}}><ArrowDown />{"Older"}</Button>
                 </div>
@@ -62,7 +62,7 @@ export const HistoryPath:React.FC<HistoryItems> = ({theme}) => {
                   current={currentEvent}
                
                 >
-                    {data.slice().reverse().map((eventDetails: any, index: number) =>{
+                    {data.map((eventDetails: any, index: number) =>{
                        
                         return (<Step key={index}title={eventDetails.title} overrides={{Root: {
                             style: {

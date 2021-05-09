@@ -86,7 +86,10 @@ interface NavBarItems  {
                         <Menu />
                     </Button>
                 </div>                     
-                <h1 className={css({     color: theme?"black":"white",
+                
+                              
+                    <h1 className={css({textDecoration: "none", 
+                                        color: theme?"black":"white",
                                         fontSize: "150%",
                                         width: '30%',
                                         height: '2%',
@@ -96,8 +99,9 @@ interface NavBarItems  {
                                         textAlign: "center",
                                         borderRadius: "0rem 0rem 5rem 5rem",
                                         border: theme?".1rem solid rgb(0, 0, 0)":".1rem solid rgb(217, 217, 217)",
-                                        })} >The SpaceX dashboard</h1>
-
+                                        })} ><Link to="/" >The SpaceX dashboard</Link></h1>
+       
+              
                 <div title={"Change theme"} className={css({ position: "absolute", top: "15%", right: "2%"})}>
                     <Button shape={SHAPE.circle} kind={KIND.primary} onClick={() =>
                                         setAppTheme(theme)}>

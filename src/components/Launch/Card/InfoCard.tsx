@@ -21,6 +21,7 @@ import { Accordion, Panel } from "baseui/accordion";
 import {
     StatefulTooltip,
     PLACEMENT,
+    TRIGGER_TYPE
   } from "baseui/tooltip";
 import {Block} from 'baseui/block';
 import { StyledLink } from "baseui/link";
@@ -133,13 +134,6 @@ const InfoCard: React.FC<CardItems> = ({theme, cardDetails, ToggleRowClick, show
                                 }):<Tag closeable={false}>No Payloads</Tag>}
                             
                             </Panel>
-                            <Panel title="Crew members">
-                                <div className={css({display: "flex", "flex-direction": "row"})}>
-                                        {cardDetails.crew.length>0?cardDetails.crew.map((person: any, index: number) => {
-                                                return  <CrewCard uniqueKey={index} person={{...person, launches: [{"name": cardDetails.name}]}} showButton={false} />        
-                                        }):"No data available"}
-                                </div>
-                            </Panel>
                             <Panel title="Images">
                                 <div className={css({display: "grid",  "grid-template-columns": "auto auto auto auto ", "grid-template-rows": "18rem 18rem 18rem 18rem", "align-content": "space-evenly"})}>
                                     {cardDetails.links.flickr.original.length>0?cardDetails.links.flickr.original.map((link: any, index: number) => {
@@ -153,6 +147,13 @@ const InfoCard: React.FC<CardItems> = ({theme, cardDetails, ToggleRowClick, show
                                 </div>
                                  {expandImage.status?<ImageCarousel theme={theme} expandImage={expandImage} setExpandImage={setExpandImage} cardDetails={cardDetails} />:""}
                          
+                            </Panel>
+                            <Panel title="Crew members">
+                                <div className={css({display: "flex", "flex-direction": "row"})}>
+                                        {cardDetails.crew.length>0?cardDetails.crew.map((person: any, index: number) => {
+                                                return  <CrewCard uniqueKey={index} person={{...person, launches: [{"name": cardDetails.name}]}} showButton={false} />        
+                                        }):"No data available"}
+                                </div>
                             </Panel>
                         </Accordion>
                     </StyledBody>

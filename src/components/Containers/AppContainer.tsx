@@ -61,20 +61,22 @@ interface AppContainerItems {
                             <Route exact path="/">
                               <AboutCompany theme={theme}/>
                             </Route>
-                            <Route path="/launches">
+                            <Route exact path="/launches">
                               <LaunchContainer />
                             </Route>
-                            <Route path="/crew">
+                            <Route exact path="/crew">
                               <CrewContainer />
                             </Route>
-                            <Route path="/history">
+                            <Route  exact path="/history">
                                 <HistoryPath theme={theme}/>
                             </Route>
                           </Switch> 
                         </Router>
-                        <Tag closeable={false} variant={VARIANT.solid}>Made by<StyledLink target="_blank" title="Sanjay's GitHub profile" href={"https://github.com/sanjayrjs16"}> 👨‍💻</StyledLink></Tag><Tag closeable={false} kind={KIND.orange}variant={VARIANT.solid}>with<StyledLink target="_blank" title="r/SpaceX v4 API GitHub docs" href={"https://github.com/r-spacex/SpaceX-API/tree/master/docs/v4"}>r/SpaceX </StyledLink>🔥</Tag>
                     </Centered>
-                
+                    <div className={css({margin: "auto", textAlign: "center", color: "red", padding: "2rem"})}>
+                        <StyledLink target="_blank" title="Sanjay's GitHub profile" href={"https://github.com/sanjayrjs16"}> Made by 👨‍💻 </StyledLink>
+                        with <StyledLink target="_blank" title="r/SpaceX v4 API GitHub docs" href={"https://github.com/r-spacex/SpaceX-API/tree/master/docs/v4"}>r/SpaceX </StyledLink>🔥
+                    </div>
             </BaseProvider>
         </StyletronProvider>
         </>
