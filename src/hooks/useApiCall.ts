@@ -36,6 +36,5 @@ export default function useApiCall(baseUrl: string, resource: string, queryParam
    () => makeApiCall(),
     { keepPreviousData: true, staleTime: 5000 }
   );
-  // console.log("inside useApiCall, ", status, data)
     return { status, data, error, isFetching, isPreviousData, refetch};
 }

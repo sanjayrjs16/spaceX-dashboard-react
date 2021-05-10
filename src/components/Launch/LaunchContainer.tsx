@@ -22,10 +22,10 @@ interface LaunchContainerItems {
   setLauncQuery?: any
 }
  const LaunchContainer:React.FC<LaunchContainerItems> = ({theme, query, setLauncQuery}) => {
-    let { status: statusUpcoming, data: dataUpcoming, isFetching: isFetchingUpcoming, isPreviousData: isPreviousDataU } = useApiCall('https://api.spacexdata.com/v4','/launches/next', '','GET','launchesNextPartial');
-    let { status: statusLatest, data: dataLatest, isFetching: isFetchingLatest, isPreviousData: isPreviousDataLatest, } = useApiCall('https://api.spacexdata.com/v4','/launches/latest', '','GET','launchesLatestPartial');
+    let { status: statusUpcoming, data: dataUpcoming, isFetching: isFetchingUpcoming, isPreviousData: isPreviousDataU } = useApiCall('https://api.spacexdata.com/v4','/launches/query', '','POST','launchesNextPartial', {populate: ["payloads", "rocket", "launchpad", "crew"],  "limit":1, sort: {"flight_number":"asc"}}, {"upcoming":true});
+    let { status: statusLatest, data: dataLatest, isFetching: isFetchingLatest, isPreviousData: isPreviousDataLatest, } = useApiCall('https://api.spacexdata.com/v4','/launches/query', '','POST','launchesLatestPartial', {populate: ["payloads", "rocket", "launchpad", "crew"],  "limit":1, sort: {"flight_number":"desc"}}, {"upcoming":false});
     // The above two lines, gets the unpopulated version of latest and next launces, then pass into the stats container to query each populated one(The latest and upcoming are get routes, can't query to populate the data unlinke queries route)
-    //console.log("got the partial data", dataLatest)
+   // console.log("got the partial data", dataLatest);
     const [css] = useStyletron();
     return (
         <>
@@ -35,7 +35,8 @@ interface LaunchContainerItems {
                 <div>
                     {statusUpcoming === 'loading' || (isFetchingUpcoming) || statusLatest==='loading' || (isFetchingLatest)? (
                     <StyledSpinnerNext  overrides={{Root: {style: { width: '100%', margin: "auto", padding: "2rem"}}}} />):statusUpcoming === 'error' ? "An error occured":
-                    <StatsContainer theme={theme}latestData={dataLatest} upcomingData={dataUpcoming} />
+                     <StatsContainer theme={theme}latestData={dataLatest.docs[0]} upcomingData={dataUpcoming.docs[0]} />
+                    
                     }
                 </div>
                <div>

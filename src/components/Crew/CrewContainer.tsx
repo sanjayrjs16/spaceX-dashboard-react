@@ -19,7 +19,7 @@ interface CrewContainerItems {
 }
 const CrewContainer:React.FC<CrewContainerItems> = ({theme}) => {
     const [css] = useStyletron();
-    let { status, data, isFetching, isPreviousData, refetch} = useApiCall('https://api.spacexdata.com/v4','/crew/query', '','POST','crew', { populate: ["launches"]},{});
+    let { status, data, isFetching, isPreviousData, refetch} = useApiCall('https://api.spacexdata.com/v4','/crew/query', '','POST','crew', { populate: [{"path":"launches", "populate": [{"path": "crew"}, {"path": "rocket"}, {"path": "payloads"}, {"path": "launchpad"}]}]},{});
     // console.log("Here's crew data", data);
     return (
         <>

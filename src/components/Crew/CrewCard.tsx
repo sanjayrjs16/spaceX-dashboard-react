@@ -9,8 +9,6 @@ import { useStyletron } from "styletron-react";
 //svgs
 import WikiLogo from '../../resources/Wikipedia-W-logo.svg';
 
-//custom hook
-import useApiCall from '../../hooks/useApiCall';
 
 interface CrewCardItems {
     uniqueKey: any,
@@ -21,7 +19,7 @@ interface CrewCardItems {
 export const CrewCard:React.FC<CrewCardItems> = ({theme, uniqueKey, person, showButton}) => {
     const [css] = useStyletron();
     const [showCard, setShowCard] = useState({show: false, cardDetailes: {}});
-    let { status, data, isFetching, isPreviousData} = useApiCall('https://api.spacexdata.com/v4','/launches/query', '','POST','launchesCrew', {populate: ["payloads", "rocket", "launchpad", "crew"]}, {"$or": [...person.launches.map((mission:any) => ({"name" : mission.name}))]});
+    //let { status, data, isFetching, isPreviousData} = useApiCall('https://api.spacexdata.com/v4','/launches/query', '','POST','launchesCrew', {populate: ["payloads", "rocket", "launchpad", "crew"]}, {"name": person.launches[0].name,"$or": [...person.launches.map((mission:any) => ({"name" : mission.name}))]});
    // console.log("Here's crew Card data", data);
     
     const ShowCard = (cardData?: any) => {
@@ -35,7 +33,7 @@ export const CrewCard:React.FC<CrewCardItems> = ({theme, uniqueKey, person, show
     
     return (
     <>
-        <Card   key={uniqueKey}
+        <Card   
                                     overrides={{Root: {style: {width: '20rem', marginBottom: "2rem"}}}}
                                     headerImage={
                                     `${person.image}`
@@ -49,10 +47,10 @@ export const CrewCard:React.FC<CrewCardItems> = ({theme, uniqueKey, person, show
                                     </a>
                                     <p>Agency: <Tag closeable={false} kind={"accent"}>{person.agency}</Tag></p>
                                     <p>Status: <Tag closeable={false} kind={person.status!=="active"?"warning":"positive"}>{person.status}</Tag></p>
-                                   {showButton?(status==="success"?<span>Missions: {data.docs.map((mission: any, index: number) => (<Button onClick={() => {ShowCard({...mission})}} key={index+10}>{mission.name}</Button>))} </span>:""):null}
+                                   {showButton?<p>Missions: {person.launches.map((mission: any, index: number) => (<Button onClick={() => {ShowCard({...mission})}} key={index}>{mission.name}</Button>))} </p>:null}
                                 </StyledBody>
         </Card>
-        {showCard.show && status ==="success"?<InfoCard theme={theme} cardDetails={showCard.cardDetailes} ToggleRowClick={ShowCard} showCard={showCard.show}/>:null}
+        {showCard.show?<InfoCard theme={theme} cardDetails={showCard.cardDetailes} ToggleRowClick={ShowCard} showCard={showCard.show}/>:null}
      
     </> 
                             
