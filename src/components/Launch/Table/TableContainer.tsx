@@ -38,17 +38,19 @@ const  TableContainer: React.FC<TableContainerItems> = ({theme, query, setLaunch
 
  
 
-  let { status, data, isFetching, isPreviousData, refetch} = useApiCall('https://api.spacexdata.com/v4','/launches/query', '','POST','launches', {page: currentPage, populate: ["payloads", "rocket", "launchpad", "crew"], sort},query);
+  let { status, data, isFetching, isPreviousData,  refetch} = useApiCall('https://api.spacexdata.com/v4','/launches/query', '','POST','launches', {page: currentPage, populate: ["payloads", "rocket", "launchpad", "crew"], sort},query);
   
   useEffect(() => {
     console.log("Query changed", )
-    refetch();
-  }, [query, currentPage, sort, refetch])
+    if(status!="idle"){
+      refetch();}
+  }, [query, sort, refetch])
   
-  // useEffect(() => {
-  //   console.log("Current page changed changed", )
-  //   refetch();
-  // }, [currentPage, refetch])
+  useEffect(() => {
+    console.log("Current page changed changed", )
+    if(status!="idle"){
+      refetch();}
+  }, [currentPage, refetch])
   
   const selectLaunchQuery = (event:any) => { 
     setLaunchFilter({status: {filter: event.option.filter, tagType: event.option.tagType}})

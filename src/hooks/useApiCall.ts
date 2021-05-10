@@ -36,7 +36,5 @@ export default function useApiCall(baseUrl: string, resource: string, queryParam
    () => makeApiCall(),
     { keepPreviousData: true, staleTime: 5000 }
   );
-   if(key==="crew")
-    console.log("inside useApiCall, ", query, options, data)
     return { status, data, error, isFetching, isPreviousData, refetch};
 }
