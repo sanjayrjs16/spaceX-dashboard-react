@@ -23,9 +23,9 @@ export const StatsContainer:React.FC<statsContainerItems> = ({theme, latestData,
     const [css] = useStyletron();
     const [showCard, setShowCard] = useState({show: false, cardDetailes: {}});
     
-    let { status: statusUpcoming, data: dataUpcoming, isFetching: isFetchingUpcoming, isPreviousData: isPreviousDataUpcoming } = useApiCall('https://api.spacexdata.com/v4','/launches/query', '','POST','launchesNext', {populate: ["payloads", "rocket", "launchpad", "crew"]}, {"name": upcomingData.name});
+    //let { status: statusUpcoming, data: dataUpcoming, isFetching: isFetchingUpcoming, isPreviousData: isPreviousDataUpcoming } = useApiCall('https://api.spacexdata.com/v4','/launches/query', '','POST','launchesNext', {populate: ["payloads", "rocket", "launchpad", "crew"]}, {"name": upcomingData.name});
     let { status: statusLatest, data: dataLatest, isFetching: isFetchingLatest, isPreviousData: isPreviousDataLatest, } = useApiCall('https://api.spacexdata.com/v4','/launches/query', '','POST','launchesLatest', {populate: ["payloads", "rocket", "launchpad", "crew"]}, {"name": latestData.name});
-    console.log("Stats, upcoming data", dataUpcoming, "Latest data", dataLatest)
+    //console.log("Stats, upcoming data", dataUpcoming, "Latest data", dataLatest)
   
     const ShowCard = () => {
         setShowCard((prevShowCard: any) => {
@@ -34,17 +34,17 @@ export const StatsContainer:React.FC<statsContainerItems> = ({theme, latestData,
     }
     return (
         <>
-            {statusUpcoming === 'loading' || (isFetchingUpcoming) || statusLatest==='loading' || (isFetchingLatest)? (
-                <StyledSpinnerNext  overrides={{Root: {style: { width: '100%', margin: "auto", padding: "2rem"}}}} />):statusUpcoming === 'error' ? "An error occured":
+            { statusLatest==='loading' || (isFetchingLatest)? (
+                <StyledSpinnerNext  overrides={{Root: {style: { width: '100%', margin: "auto", padding: "2rem"}}}} />):statusLatest === 'error' ? "An error occured":
                 (
                 <div className={css({display: "flex", flexDirection: "column", "justify-content": "space-around", backgroundColor: theme?"rgba(191, 191, 191, 0.6)":"rgba(0, 0, 0, 0.6)", width: "80%", })}>
                     <Chart theme={theme}/>
-                    <Button kind={btnKIND.secondary} onClick={() => setShowCard({show: true, cardDetailes: dataUpcoming.docs[0]})}>
+                    <Button kind={btnKIND.secondary} onClick={() => setShowCard({show: true, cardDetailes: upcomingData})}>
                         <Card   overrides={{Root: {style: {width: '22rem'}}}} title={`Upcoming launch`}>
-                            <StyledThumbnail src={dataUpcoming.docs[0].links.patch.small}/>
+                            <StyledThumbnail src={upcomingData.links.patch.small}/>
                             <StyledBody>
-                                <p>{dataUpcoming.docs[0].name}</p>
-                                <CountDownTimer date={dataUpcoming.docs[0].date_utc} />
+                                <p>{upcomingData.name}</p>
+                                <CountDownTimer date={upcomingData.date_utc} />
                             </StyledBody>
                         </Card>  
                     </Button>
@@ -59,7 +59,7 @@ export const StatsContainer:React.FC<statsContainerItems> = ({theme, latestData,
                         </Card>  
                     </Button>
                   
-                    {showCard.show && statusUpcoming ==="success"?<InfoCard theme={theme} cardDetails={showCard.cardDetailes} ToggleRowClick={ShowCard} showCard={showCard.show}/>:null}
+                    {showCard.show && statusLatest ==="success"?<InfoCard theme={theme} cardDetails={showCard.cardDetailes} ToggleRowClick={ShowCard} showCard={showCard.show}/>:null}
      
                 </div>)}
      

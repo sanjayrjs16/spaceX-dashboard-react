@@ -30,7 +30,7 @@ interface TableContainerItems  {
 const  TableContainer: React.FC<TableContainerItems> = ({theme, query, setLaunchesQuery}) => {
   const [css] = useStyletron();
   const [currentPage, setCurrentPage] = useState(1)
-  const [sort, setSort] = useState({});
+  const [sort, setSort] = useState({ "flight_number":"asc"});
   const [showCard, setShowCard] = useState({show: false, rowIdentifier: 0});
   const [selectedRowData, setSelectedRowData] = useState({});
   const [launchFilter, setLaunchFilter] = useState({status: {filter: "All", tagType: KIND.primary}});
@@ -103,38 +103,40 @@ const  TableContainer: React.FC<TableContainerItems> = ({theme, query, setLaunch
             <thead>
               <TR> 
                 <th>
-                  No.
-                  <div className={css({display: "flex", flexDirection: "row"})}>
+                  Flight No.
+                  <div className={css({display: "flex", justifyContent: "space-around"})} title={"Sort by flight number asc/desc"}>
                     <Button onClick={() => setSort({ "flight_number":"asc"})}
                             size={BTN_SIZE.mini}
                             shape={SHAPE.square}
-                            kind={BTN_KIND.secondary}>
+                            kind={sort.flight_number==="asc"?BTN_KIND.secondary:BTN_KIND.tertiary}>
                         <ArrowUp title={"Sort ascending"}/>
                     </Button>
                     <Button onClick={() => setSort({ "flight_number":"desc"})}
                             size={BTN_SIZE.mini}
                             shape={SHAPE.square}
-                            kind={BTN_KIND.secondary}>
+                            kind={sort.flight_number==="desc"?BTN_KIND.secondary:BTN_KIND.tertiary}>
                         <ArrowDown title={"Sort descending"}/>
                     </Button>
                   </div>
                 </th>
                 <th>Mission name</th>
                 <th>Rocket</th>
-                <th>Launch Status <Select backspaceRemoves={false}
-                                          clearable={false}
-                                          size={SIZESELECT.mini}
-                                          options={[
-                                                  {filter: "All", tagType: KIND.primary},
-                                                  {filter: "Success", tagType: KIND.positive},
-                                                  {filter: "Failed", tagType: KIND.negative},
-                                                  {filter: "Upcoming", tagType: KIND.orange},
-                                                  ]}
-                                          placeholder={<><Tag kind={launchFilter.status.tagType} closeable={false}>{launchFilter.status.filter} </Tag> <Filter /></> }
-                                          searchable={false}
-                                          labelKey="filter"
-                                          valueKey="filter"
-                                          onChange={selectLaunchQuery}/>
+                <th>
+                  Launch Status
+                  <Select backspaceRemoves={false}
+                          clearable={false}
+                          size={SIZESELECT.mini}
+                          options={[
+                                  {filter: "All", tagType: KIND.primary},
+                                  {filter: "Success", tagType: KIND.positive},
+                                  {filter: "Failed", tagType: KIND.negative},
+                                  {filter: "Upcoming", tagType: KIND.orange},
+                                  ]}
+                          placeholder={<><Tag kind={launchFilter.status.tagType} closeable={false}>{launchFilter.status.filter} </Tag> <Filter /></> }
+                          searchable={false}
+                          labelKey="filter"
+                          valueKey="filter"
+                          onChange={selectLaunchQuery}/>
                 </th>
                 <th>Launch Date</th>
                 <th>Launch pad</th>
@@ -147,9 +149,9 @@ const  TableContainer: React.FC<TableContainerItems> = ({theme, query, setLaunch
                     <tr><td><StyledSpinnerNext  overrides={{Root: {style: { width: '100%', margin: "auto", padding: "2rem"}}}} />Please wait...</td></tr>
                   ) : status === 'error' ? (
                     <tr><td>An Error occured</td></tr>
-                  ) : data.docs.map((item: any, index: number) => {
-                     return  <TableRow key={index} theme={theme} item={item} index={index}  showCard={showCard} ToggleRowClick={ToggleRowClick} selectedRowData={selectedRowData} setSelectedRowData={setSelectedRowData} />
-                  })}
+                  ) : (data.docs.length>0?data.docs.map((item: any, index: number) => {
+                    return  <TableRow key={index} theme={theme} item={item} index={index}  showCard={showCard} ToggleRowClick={ToggleRowClick} selectedRowData={selectedRowData} setSelectedRowData={setSelectedRowData} />
+                 }):"There are no launches for the applied filter. ")}
      
             </tbody>
       </table>
