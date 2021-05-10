@@ -47,15 +47,14 @@ const Heading:React.FC<HeadingItems> = ({theme, size, value}) => {
         }
     }
     let hoverStyle = {
-        color: theme?"black":"white",
         width: "40%",
         borderRight: theme?`0.5rem solid ${lightStretchColour}`:`0.5rem solid ${darkStretchColour}`,
         borderLeft:  theme?`0.5rem solid ${lightStretchColour}`:`0.5rem solid ${darkStretchColour}`,
-        borderRadius: 0
+      
     }
 
     let NormalStyle= {
-                            color: theme?"rgba(0, 0, 0, 0.8)":"rgba(255, 255, 255, 0.8)",
+                            color: theme?"black":"white",
                             width: "50%", 
                             margin: "0 auto 1.8rem auto",
                             padding: 0,
@@ -63,7 +62,7 @@ const Heading:React.FC<HeadingItems> = ({theme, size, value}) => {
                             fontSize: `${fontSize}rem`,
                             borderRight: theme?`3rem solid ${lightNormalColour}`:`3rem solid ${darkNormalColour}`,
                             borderLeft:  theme?`3rem solid ${lightNormalColour}`:`3rem solid ${darkNormalColour}`,
-                            borderRadius: ".2rem .2rem .2rem .2rem",
+                            
                             "transition-duration": "0.25s",
                             ":hover": hoverStyle
                     }

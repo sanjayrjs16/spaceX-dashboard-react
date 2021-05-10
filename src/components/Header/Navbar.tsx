@@ -1,5 +1,6 @@
 //React related
 import React, {useEffect, useState} from 'react';
+import Heading from './Heading';
 
 //Redux related
 
@@ -17,10 +18,8 @@ import { Tag, SIZE as TAG_SIZE } from 'baseui/tag';
 
 //Images and resources
 import darkThemeBG from '../../resources/planet-earth.jpg';
-import lightThemeBG from '../../resources/light-theme-bg-1.jpg'
-import Heading from './Heading';
-import { Footer } from '../Footer/Footer';
-import { H2 } from 'baseui/typography';
+import lightThemeBG from '../../resources/light-theme-bg.jpg'
+
 
 
 const MenuItem = styled('div', { width: "100%", 
@@ -46,7 +45,7 @@ interface NavBarItems  {
    
     useEffect(() => {
         //console.log("Runnung useEffect in APpp", document.body.style)
-        theme?document.body.style.backgroundImage = ` url(${lightThemeBG})`:document.body.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${darkThemeBG})`;
+        theme?document.body.style.backgroundImage = ` linear-gradient( rgba(215, 215, 215, 0.2), rgba(0, 0, 0, 0.1)),url(${lightThemeBG})`:document.body.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${darkThemeBG})`;
       }, [theme]);
       useEffect(() => {
          // console.log("Navbar detected a scroll,");
@@ -92,18 +91,18 @@ interface NavBarItems  {
                               
                     <h1 className={css({textDecoration: "none", 
                                         color: (theme?"black":"white"),
-                                        fontSize: hideMenu?"1.5rem":"2rem",
-                                        width: hideMenu?'10%':"50%",
+                                        fontSize: hideMenu?"1.2rem":"2rem",
+                                        width: hideMenu?'12%':"100%",
                                         height: '2%',
                                         
-                                        margin: hideMenu?"auto 38% auto 0%":0,
-                                        transition: "margin 0.5s , width 0.2s",
+                                        margin: hideMenu?"auto 70% auto 0%":0,
+                                        transition: "margin 0.5s , width 0.5s , font-size 0.5s",
                                         backgroundColor: hideMenu?(theme?"rgb(217, 217, 217, 0.9)":"rgb(0, 0, 0,0.9)"):theme?"rgb(217, 217, 217, 0.4)":"rgb(0, 0, 0,0.4)",
                                         padding: "1rem",
                                         textAlign: "center",
                                         borderRadius: "0rem 0rem 5rem 5rem",
                                         border: theme?".1rem solid rgb(0, 0, 0)":".1rem solid rgb(217, 217, 217)",
-                                        })} ><Link className={css({textDecoration: "none", color: "inherit" })}to="/" >{"The SpaceX dashboard"}</Link></h1>
+                                        })} ><Link className={css({textDecoration: "none", color: "inherit" })}to="/" >{"SpaceX dashboard 🚀"}</Link></h1>
        
               
                 <div title={"Change theme"} className={css({ position: "absolute", top: "15%", right: "2%"})}>
@@ -128,7 +127,7 @@ interface NavBarItems  {
                                    
                                     <div className={css({display: "flex", flexDirection: "column", padding: 0})}>
                                        
-                                        <Heading size={4} value="Menu" />
+                                        <Heading size={3} value="Menu" />
                                         
                                         <MenuItem title={"Home"} onClick={() => {setToggleMenu(showMenu)}}>
                                             <Link to="/" > 
