@@ -78,7 +78,7 @@ export const HistoryPath:React.FC<HistoryItems> = ({theme}) => {
                         return (<NumberedStep key={index}title={eventDetails.title} overrides={{Root: {
                             style: {
                                backgroundColor: currentEvent===index?(theme?"rgba(215, 215, 215, 0.7)":"rgba(0, 0, 0, 0.8)"):"rgba(115, 115, 115, 0.3)",
-                                width: "100%",
+                                width: "90%",
                                 "z-index": currentEvent===index?1:0, padding: "1rem",textAlign: "justify", textJustify:"inter-word", 
                                 
                             }

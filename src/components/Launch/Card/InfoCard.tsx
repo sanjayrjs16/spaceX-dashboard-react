@@ -39,7 +39,7 @@ const InfoCard: React.FC<CardItems> = ({theme, cardDetails, ToggleRowClick, show
     const [css] = useStyletron();
     const [expandImage, setExpandImage] = useState({status: false, link: [""], index: 0});
     // let {items} = useApiCall('https://api.spacexdata.com/','v4/launches/query', ``,'POST','launches',1, ["payloads"]);
-     console.log("The mission details in Info Card", cardDetails);
+    // console.log("The mission details in Info Card", cardDetails);
   
     return (
         <>
@@ -105,7 +105,7 @@ const InfoCard: React.FC<CardItems> = ({theme, cardDetails, ToggleRowClick, show
                         <Accordion  onChange={({ expanded }) => {console.log("Clicked accordion", expanded); }}>
                             <Panel  title="Payload details">
                                 {cardDetails.payloads.length>0?cardDetails.payloads.map((item: any, index: number) => {
-                                    return     (    <StatefulTooltip accessibilityType={'tooltip'}
+                                    return     (    <StatefulTooltip key={index}accessibilityType={'tooltip'}
                                                                         content={() =>  { console.log("Tooltip activated!!");
                                                                             return (<Block padding={"20px"} overrides={{
                                                                 Block: {
@@ -149,7 +149,7 @@ const InfoCard: React.FC<CardItems> = ({theme, cardDetails, ToggleRowClick, show
                          
                             </Panel>
                             <Panel title="Crew members">
-                                <div className={css({display: "flex", "flex-direction": "row"})}>
+                                <div className={css({display: "flex", "flex-direction": "row", flexWrap: "wrap"})}>
                                         {cardDetails.crew.length>0?cardDetails.crew.map((person: any, index: number) => {
                                                 return  <CrewCard uniqueKey={index} person={{...person, launches: [{"name": cardDetails.name}]}} showButton={false} />        
                                         }):"No data available"}

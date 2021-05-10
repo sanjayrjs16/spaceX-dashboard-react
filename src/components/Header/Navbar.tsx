@@ -17,7 +17,7 @@ import { Tag, SIZE as TAG_SIZE } from 'baseui/tag';
 
 //Images and resources
 import darkThemeBG from '../../resources/planet-earth.jpg';
-import lightThemeBG from '../../resources/light-theme-bg.png'
+import lightThemeBG from '../../resources/light-theme-bg-1.jpg'
 import Heading from './Heading';
 import { Footer } from '../Footer/Footer';
 import { H2 } from 'baseui/typography';
@@ -84,7 +84,7 @@ interface NavBarItems  {
                                    
                                 })}>
                 <div title={"Change theme"} className={css({ position: "absolute", top: "10%", left: "2%", display: showMenu?"none":"inline"})}>
-                    <Button shape={SHAPE.circle} kind={KIND.primary} onClick={() => {setToggleMenu(showMenu)}}>
+                    <Button shape={SHAPE.circle} kind={hideMenu?KIND.secondary:KIND.primary} onClick={() => {setToggleMenu(showMenu)}}>
                         <Menu />
                     </Button>
                 </div>                     
@@ -107,7 +107,7 @@ interface NavBarItems  {
        
               
                 <div title={"Change theme"} className={css({ position: "absolute", top: "15%", right: "2%"})}>
-                    <Button shape={SHAPE.circle} kind={KIND.primary} onClick={() =>
+                    <Button shape={SHAPE.circle} kind={hideMenu?KIND.secondary:KIND.primary} onClick={() =>
                                         setAppTheme(theme)}>
                             {theme?"🌙":"🌞"}
                     </Button>
