@@ -13,8 +13,7 @@ import {
     Display4,
   } from 'baseui/typography';
 
-//images
-import earth from '../../resources/light-theme-bg.jpg'
+
 
 //custom hook
 import useApiCall from '../../hooks/useApiCall';
@@ -33,7 +32,7 @@ export const AboutCompany:React.FC<AboutCompanyItems> = ({theme}) => {
         justifyContent: "center", 
         textAlign: "justify", 
         height: "45rem",
-        backgroundImage : `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${earth})`,
+        backgroundImage : `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))`,
        " background-attachment": "fixed",
         "background-repeat": "no-repeat",
         "background-size": "cover",

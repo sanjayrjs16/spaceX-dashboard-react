@@ -15,13 +15,12 @@ import { Select, SIZE as SIZESELECT } from "baseui/select";
 import { Filter} from 'baseui/icon';
 import { Tag, KIND } from "baseui/tag";
 import { Button, KIND as BTN_KIND, SIZE as BTN_SIZE, SHAPE } from "baseui/button";
-import { ArrowUp, ArrowDown } from "baseui/icon";
+import { ArrowUp, ArrowDown, Delete } from "baseui/icon";
 import {DatePicker} from 'baseui/datepicker';
-import {addDays} from 'date-fns';
+import {  Paragraph3} from 'baseui/typography';
 import { SIZE as INPUT_SIZE } from "baseui/input";
-//React query related
-// import {focusManager} from 'react-query';
-
+// import {Search} from 'baseui/icon';
+// import {Input} from 'baseui/input';
 
 
 interface TableContainerItems  {
@@ -36,6 +35,7 @@ const  TableContainer: React.FC<TableContainerItems> = ({theme, query, setLaunch
   const [showCard, setShowCard] = useState({show: false, rowIdentifier: 0});
   const [selectedRowData, setSelectedRowData] = React.useState<any>({});
   const [launchStatusFilter, setLaunchFilter] = React.useState<any>();
+  // const [searchValue, setSearchValue] = React.useState("");
   const [rangeDate, setRangeDate] = React.useState<any>([
     new Date('2006-01-01T00:00:00.000Z'),
     
@@ -48,14 +48,14 @@ const  TableContainer: React.FC<TableContainerItems> = ({theme, query, setLaunch
   
   useEffect(() => {
     console.log("Query changed", )
-    if(status!="idle"){
-      refetch();}
+    
+      refetch();
   }, [query, sort, refetch])
   
   useEffect(() => {
     console.log("Current page changed changed", )
-    if(status!="idle"){
-      refetch();}
+    
+      refetch();
   }, [currentPage, refetch])
   
   const addLaunchStatusFilter= (event:any) => { //This function to add launch status filter
@@ -89,7 +89,7 @@ const  TableContainer: React.FC<TableContainerItems> = ({theme, query, setLaunch
 }
 
 const addLaunchDateFilter = (date: any[]) => {
-  console.log("Got the date in here as", date);
+  setRangeDate(date); 
   if(date.length<=1){
     console.log("only 1 date");
     setLaunchesQuery({...query, "date_utc": {"$gte": new Date(date[0].toString()).toJSON()}});
@@ -98,6 +98,13 @@ const addLaunchDateFilter = (date: any[]) => {
     setLaunchesQuery({...query, "date_utc": {"$gte": new Date(date[0].toString()).toJSON(), "$lte": new Date(date[1].toString()).toJSON() }});
   }
 }
+
+// const addMissionSearchFilter = (value: string) => {
+//   setSearchValue(value);
+//   setLaunchesQuery({...query, "$text": {
+//     "$search": value
+//   }})
+// }
   const ToggleRowClick = (rowIdentifier: number) => {
     setShowCard((prevShowCard) => {
         return {rowIdentifier, show: !prevShowCard.show }
@@ -141,7 +148,16 @@ const addLaunchDateFilter = (date: any[]) => {
                     </Button>
                   </div>
                 </th>
-                <th>Mission name</th>
+                <th>
+                  Mission name
+                  {/* <Input
+                      value={searchValue}
+                      endEnhancer={<Search size="18px" />}
+                      onChange={(e: any) => addMissionSearchFilter(e.target.value)}
+                      placeholder="Search mission"
+                      clearOnEscape
+                    />         */}
+                </th>
                 <th>Rocket</th>
                 <th>
                   Launch Status
@@ -162,18 +178,25 @@ const addLaunchDateFilter = (date: any[]) => {
                 </th>
                 <th>
                   Launch Date
-                  <div className={css({display: "flex", width:"100%", margin: "auto", textAlign: "center"})}>
+                  <div title={"Launch date filter (From -> To)"}className={css({display: "flex", width:"100%", margin: "auto", textAlign: "center"})}>
                    
+                    
                     <DatePicker
                         range
                         value={rangeDate}
-                        onChange={({date}: any) => { setRangeDate(date); addLaunchDateFilter(date); }}
+                        onChange={({date}: any) => {addLaunchDateFilter(date); }}
                         placeholder="YYYY/MM/DD – YYYY/MM/DD"
-                        size={INPUT_SIZE.mini}
+                        size={INPUT_SIZE.default}
                         quickSelect
                         
                     />
-                     <Filter />
+          
+                    <div title={"Clear date filter"}>
+                      <Button kind={BTN_KIND.secondary}size={BTN_SIZE.default} onClick={() => {setRangeDate([new Date('2006-01-01T00:00:00.000Z')]); addLaunchDateFilter([new Date('2006-01-01T00:00:00.000Z')]);}}>
+                        <Filter />
+                         <Delete />
+                      </Button>
+                    </div>
                   </div>
                 </th>
                 <th>Launch pad</th>
@@ -183,12 +206,12 @@ const addLaunchDateFilter = (date: any[]) => {
             </thead>
             <tbody>
                   {status === 'loading' || (isFetching )? (
-                    <tr><td><StyledSpinnerNext  overrides={{Root: {style: { width: '100%', margin: "auto", padding: "2rem"}}}} />Please wait...</td></tr>
+                    <tr><td></td><td></td><td></td><td></td><StyledSpinnerNext  overrides={{Root: {style: { width: '100%', margin: "auto", padding: "2rem"}}}} />Please wait...</tr>
                   ) : status === 'error' ? (
                     <tr>An Error occured</tr>
                   ) : (data.docs.length>0?data.docs.map((item: any, index: number) => {
                     return  <TableRow key={index} theme={theme} item={item} index={index}  showCard={showCard} ToggleRowClick={ToggleRowClick} selectedRowData={selectedRowData} setSelectedRowData={setSelectedRowData} />
-                 }):<tr><td></td><td></td><td></td><td></td>There are no launches for the applied filter. </tr>)}
+                 }):<tr><td></td><td></td><td></td><td></td><Paragraph3>There are no launches for the applied filter.</Paragraph3> </tr>)}
      
             </tbody>
       </table>

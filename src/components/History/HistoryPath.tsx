@@ -60,7 +60,7 @@ export const HistoryPath:React.FC<HistoryItems> = ({theme}) => {
     return (
         <>
         <Heading size={2} value="🎉 Historic milestones 🎉" />
-        <h2 title={"Motivational caption"}className={css({color: theme?"black":"white"})}>Started from the bottom, now we're here !</h2>
+        <h2 title={"Motivational caption"}className={css({color: theme?"black":"white"})}><span className={css({ fontSize: "2rem" })} role="img" aria-label="history">🚀</span> Started from the bottom, now we're here !</h2>
         <div className={css({width: "100%" , display: "flex", justifyContent: "space-evenly"})}>
             {status==="loading" || (isFetching)?<StyledSpinnerNext />:(status==="error"?"An error occured":(
                 <>
@@ -69,7 +69,7 @@ export const HistoryPath:React.FC<HistoryItems> = ({theme}) => {
                     <Button onClick={() =>{setCurrentEvent(data.length-1); window.scrollTo({top: 0, behavior: "smooth"});}}>Latest milestone</Button>
                     <Button disabled={currentEvent>=(data.length-1)?true:false} onClick={() => {setCurrentEvent((prevValue: any) => prevValue<=(data.length-2)?prevValue + 1: prevValue); window.scrollTo({top: (scrollPositionY - 100), behavior: "smooth"});}}><ArrowUp />{"Go up"}</Button>
                     <Button disabled={ currentEvent<=0?true:false} onClick={() =>{setCurrentEvent((prevValue: any) => prevValue>=1?prevValue - 1: prevValue); window.scrollTo({top: (scrollPositionY + 100), behavior: "smooth"});}}><ArrowDown />{"Go down"}</Button>
-                    <Button onClick={() =>{setCurrentEvent(0); window.scrollTo({top: 1500, behavior: "smooth"});}}>Oldest milestone</Button>
+                    <Button onClick={() =>{setCurrentEvent(0); window.scrollTo({top: 1500, behavior: "smooth"});}}>First milestone</Button>
                     </div>
                 </div>
                   <ProgressSteps
