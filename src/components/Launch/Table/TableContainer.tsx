@@ -14,6 +14,8 @@ import { Pagination, SIZE } from "baseui/pagination";
 import { Select, SIZE as SIZESELECT } from "baseui/select";
 import { Filter} from 'baseui/icon';
 import { Tag, KIND } from "baseui/tag";
+import { Button, KIND as BTN_KIND, SIZE as BTN_SIZE, SHAPE } from "baseui/button";
+import { ArrowUp, ArrowDown } from "baseui/icon";
 
 //React query related
 // import {focusManager} from 'react-query';
@@ -28,27 +30,28 @@ interface TableContainerItems  {
 const  TableContainer: React.FC<TableContainerItems> = ({theme, query, setLaunchesQuery}) => {
   const [css] = useStyletron();
   const [currentPage, setCurrentPage] = useState(1)
+  const [sort, setSort] = useState({});
   const [showCard, setShowCard] = useState({show: false, rowIdentifier: 0});
   const [selectedRowData, setSelectedRowData] = useState({});
-  const [statusFilter, setStatueFilter] = useState({filter: "All", tagType: KIND.primary});
+  const [launchFilter, setLaunchFilter] = useState({status: {filter: "All", tagType: KIND.primary}});
   // const [query, setQuery] = useState({});
 
  
 
-  let { status, data, isFetching, isPreviousData, refetch} = useApiCall('https://api.spacexdata.com/v4','/launches/query', '','POST','launches', {page: currentPage, populate: ["payloads", "rocket", "launchpad", "crew"]},query);
+  let { status, data, isFetching, isPreviousData, refetch} = useApiCall('https://api.spacexdata.com/v4','/launches/query', '','POST','launches', {page: currentPage, populate: ["payloads", "rocket", "launchpad", "crew"], sort},query);
   
   useEffect(() => {
     console.log("Query changed", )
     refetch();
-  }, [query, refetch])
+  }, [query, currentPage, sort, refetch])
   
-  useEffect(() => {
-    console.log("Current page changed changed", )
-    refetch();
-  }, [currentPage, refetch])
+  // useEffect(() => {
+  //   console.log("Current page changed changed", )
+  //   refetch();
+  // }, [currentPage, refetch])
   
-  const setLaunchFilter = (event:any) => { 
-    setStatueFilter({filter: event.option.filter, tagType: event.option.tagType})
+  const selectLaunchQuery = (event:any) => { 
+    setLaunchFilter({status: {filter: event.option.filter, tagType: event.option.tagType}})
     switch(event.option.filter){
     case "All":{
       setLaunchesQuery({});
@@ -99,24 +102,39 @@ const  TableContainer: React.FC<TableContainerItems> = ({theme, query, setLaunch
                              })}>
             <thead>
               <TR> 
-                <th>No.</th>
+                <th>
+                  No.
+                  <div className={css({display: "flex", flexDirection: "row"})}>
+                    <Button onClick={() => setSort({ "flight_number":"asc"})}
+                            size={BTN_SIZE.mini}
+                            shape={SHAPE.square}
+                            kind={BTN_KIND.secondary}>
+                        <ArrowUp title={"Sort ascending"}/>
+                    </Button>
+                    <Button onClick={() => setSort({ "flight_number":"desc"})}
+                            size={BTN_SIZE.mini}
+                            shape={SHAPE.square}
+                            kind={BTN_KIND.secondary}>
+                        <ArrowDown title={"Sort descending"}/>
+                    </Button>
+                  </div>
+                </th>
                 <th>Mission name</th>
                 <th>Rocket</th>
                 <th>Launch Status <Select backspaceRemoves={false}
-                                                    clearable={false}
-                                                    size={SIZESELECT.mini}
-                                                    options={[
-                                                            {filter: "All", tagType: KIND.primary},
-                                                            {filter: "Success", tagType: KIND.positive},
-                                                            {filter: "Failed", tagType: KIND.negative},
-                                                            {filter: "Upcoming", tagType: KIND.orange},
-                                                          ]}
-                                                  placeholder={<><Tag kind={statusFilter.tagType} closeable={false}>{statusFilter.filter} </Tag> <Filter /></> }
-                                                 
-                                                  searchable={false}
-                                                  labelKey="filter"
-                                                  valueKey="filter"
-                                                  onChange={setLaunchFilter}/>
+                                          clearable={false}
+                                          size={SIZESELECT.mini}
+                                          options={[
+                                                  {filter: "All", tagType: KIND.primary},
+                                                  {filter: "Success", tagType: KIND.positive},
+                                                  {filter: "Failed", tagType: KIND.negative},
+                                                  {filter: "Upcoming", tagType: KIND.orange},
+                                                  ]}
+                                          placeholder={<><Tag kind={launchFilter.status.tagType} closeable={false}>{launchFilter.status.filter} </Tag> <Filter /></> }
+                                          searchable={false}
+                                          labelKey="filter"
+                                          valueKey="filter"
+                                          onChange={selectLaunchQuery}/>
                 </th>
                 <th>Launch Date</th>
                 <th>Launch pad</th>
