@@ -3,13 +3,15 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). Used react hooks thoroughout.
 TypeScript, Redux and react-router were used. Data Fetching was handled with help of [react-query🔥](https://react-query.tanstack.com/)
 Styling was done with help of [styletron](https://www.styletron.org/) and [baseWeb react UI components](https://baseweb.design/)
+Charts made with [ChartJS](https://www.chartjs.org/docs/latest/)
 
 ## I would like to thank the makers of [r/Space-X API](https://github.com/r-spacex/SpaceX-API) 🔥🔥
 
+##Listed of r/spaceX ❤️[apps list](https://github.com/r-spacex/SpaceX-API/blob/master/docs/apps.md)
 
 ## Available Scripts
 
-In the project directory, you can run:
+After cloning project, in the project directory, you can run:
 
 ### `npm start`
 
